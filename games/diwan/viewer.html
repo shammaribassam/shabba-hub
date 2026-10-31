@@ -1,0 +1,18 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ديوان أبو البسم — صفحة المتابعين</title><link rel="stylesheet" href="style.css"></head><body class="viewer"><header><h1>۞ ديوان أبو البسم ۞</h1><p>ديوان الشعر الأندلسي — ساحة المتابعين</p></header>
+<section class="diwan-audio-player" id="diwanAudioPlayer" aria-label="التحكم بصوت الديوان">
+  <div class="diwan-audio-heading"><span>♫ حنين القصور — صوت الديوان</span><small id="diwanAudioStatus" role="status" aria-live="polite">جاهز للتشغيل</small></div>
+  <div class="diwan-audio-controls">
+    <button type="button" id="diwanAudioPlay">▶ تشغيل</button>
+    <button type="button" id="diwanAudioMute">🔊 كتم</button>
+    <label for="diwanAudioVolume">مستوى الصوت</label>
+    <input id="diwanAudioVolume" type="range" min="0" max="100" step="1" value="22" aria-label="مستوى صوت الخلفية">
+    <output id="diwanAudioVolumeText" for="diwanAudioVolume">22٪</output>
+  </div>
+  <audio id="diwanBackgroundAudio" src="diwan-background.mp3" preload="metadata" loop playsinline></audio>
+</section>
+<main class="layout"><section class="box viewer-question-panel"><h2>سؤال الجولة</h2><div class="paper"><div class="rank"><span id="round"></span><span id="categoryLabel"></span></div><div id="question" class="question"></div><div id="answers"></div></div><div class="timer">⏳ <span id="timer">20</span></div><div class="badge">للمشاركة اكتب <b>!انضم</b> في شات Twitch أو TikTok أو Kick ثم أرسل رقم الإجابة من 1 إلى 4</div><div id="exileBanner" class="exile-banner" hidden></div><section class="bonus-view" id="bonusCard" hidden>
+  <h2>✦ بونص إكمال القصيدة</h2><p id="bonusMessage" class="bonus-note"></p>
+  <p id="bonusClaim" hidden></p><p id="bonusPublicPrompt" class="bonus-question" hidden></p>
+  <p id="bonusCountdown" hidden></p><p id="bonusAnswer" class="bonus-response" hidden></p>
+ </section></section>
+<section class="box viewer-portrait-panel"><img class="portrait" src="abu-albasm-portrait-20261031.png" alt="صاحب الديوان"><h2>فرسان الديوان</h2><div id="leaders"></div><p class="muted viewer-guidance">المشاركة عبر شات Twitch أو TikTok أو Kick؛ التحكم بالأسئلة من صفحة الستريمر.</p></section></main><script src="shared.js"></script><script src="cloud-sync.js"></script><script>render()</script><script src="diwan-audio.js"></script></body></html>
