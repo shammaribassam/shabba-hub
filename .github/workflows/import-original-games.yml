@@ -1,0 +1,36 @@
+name: Import original games (safe one-time copy)
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-original-games.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout independent hub
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Safely copy original games into new repository
+        run: |
+          set -euo pipefail
+          if [[ -e games/diwan/server.js || -e games/quiz/server.js ]]; then
+            echo 'Game sources already copied. No overwrites.'
+            exit 0
+          fi
+          mkdir -p games
+          git clone --depth 1 https://github.com/shammaribassam/diwan-abu-albasm.git /tmp/bsm-original-diwan
+          git clone --depth 1 https://github.com/shammaribassam/shabba-abu-albasm.git /tmp/bsm-original-quiz
+          mkdir -p games/diwan games/quiz
+          cp -a /tmp/bsm-original-diwan/. games/diwan/
+          cp -a /tmp/bsm-original-quiz/. games/quiz/
+          rm -rf games/diwan/.git games/quiz/.git
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add games/
+          git commit -m 'Copy original game code, question banks and media into new hub'
+          git push
