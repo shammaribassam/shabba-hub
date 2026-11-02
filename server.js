@@ -8,6 +8,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { spawn } = require('node:child_process');
 const majlis = require('./majlis');
+const arcade = require('./arcade');
 
 const port = Number(process.env.PORT || 3000);
 const root = __dirname;
@@ -378,6 +379,13 @@ async function unifiedKickWebhook(req, res) {
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
 
+  if (url.pathname.startsWith('/api/arcade/')) {
+    arcade.handle(req,res,url).catch(error=>{console.error('Arcade error:',error);if(!res.headersSent)send(res,500,JSON.stringify({error:'خطأ في الألعاب'}),'application/json; charset=utf-8');});
+    return;
+  }
+  if (url.pathname === '/arcade.html' && req.method === 'GET') {
+    return fs.readFile(path.join(root,'arcade.html'),(err,data)=>err?send(res,500,'Arcade unavailable'):send(res,200,data,'text/html; charset=utf-8'));
+  }
   if (url.pathname.startsWith('/api/majlis/')) {
     majlis.handle(req, res, url).catch(error => {
       console.error('Majlis request error:', error.message);
