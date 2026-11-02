@@ -57,6 +57,10 @@
     .dialog-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.dialog-actions a{display:inline-flex;justify-content:center;align-items:center;min-height:42px;padding:10px 16px;border-radius:12px;font-size:12px;font-weight:800;background:#62d7f7;color:#09202b}.dialog-actions a.viewer-link{background:rgba(96,216,249,.08);color:#e6faff;border:1px solid rgba(96,216,249,.4)}
     .dialog-actions a:hover,.dialog-actions button:hover{filter:brightness(1.15)}
     @media(max-width:700px){.wrap{width:min(100% - 30px,560px)}header{height:74px}.nav{gap:14px;font-size:10px}.nav-status{display:none}.brand-name{font-size:18px}.brand-symbol{height:40px;width:40px}.brand-sub{font-size:9px}main{padding-top:39px}.orb{width:84px;height:84px;margin-bottom:18px}.orb-core{width:68px;height:68px}.orb-core span{font-size:18px}.eyebrow{font-size:10px}h1{font-size:clamp(37px,10vw,58px);letter-spacing:-1.4px;margin:11px 0 5px}.hero-desc{font-size:12px;line-height:2.1;padding-inline:5px}.hero-rule{margin:25px auto 28px}.section-heading{align-items:center}.section-heading h2{font-size:16px}.section-heading p{font-size:10px}.cards{grid-template-columns:1fr;gap:14px}.game-card{min-height:238px;padding:23px;border-radius:19px}.card-icon{height:54px;width:54px;border-radius:16px}.card-icon svg{height:28px;width:28px}.card-content{margin-top:15px}.card-content h3{font-size:20px}.card-content p{font-size:11px}.under{font-size:10px;margin:22px 0 28px}footer{font-size:9px}.foot-brand{font-size:11px}}
+    .future-section{margin:36px 0 34px;padding:24px;border:1px solid rgba(139,183,208,.20);border-radius:22px;background:linear-gradient(130deg,rgba(18,33,47,.85),rgba(10,19,31,.95))}
+    .future-section h2{font-size:19px;margin:0 0 10px}.future-section p{font-size:12px;line-height:2.1;color:#a3b1c1;margin:0}
+    .future-pill{display:inline-block;font-size:11px;color:#a9eafa;border:1px solid rgba(88,216,250,.3);border-radius:999px;padding:5px 11px;margin-bottom:12px}
+    .future-notes{margin-top:15px;font-size:11px;color:#b9cbd7;line-height:2}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.game-card,.card-cta svg{transition:none}}
   </style>
 </head>
@@ -92,6 +96,12 @@
             <div class="card-bottom"><span class="card-cta">ادخل التحديات <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg></span><span class="card-tag">BSM / 02</span></div>
           </a>
         </div>
+      </section>
+      <section class="future-section" id="coming-soon" aria-labelledby="future-title">
+        <span class="future-pill">قريبًا في عالم أبو البسم</span>
+        <h2 id="future-title">ألعاب أكثر… وعالم يكبر معكم</h2>
+        <p>بنضيف ألعابًا جديدة مستقبلًا، بعضها مجاني وبعضها مميز يُشترى مرة واحدة فقط لكل لعبة، بدون اشتراك شهري.</p>
+        <div class="future-notes">بسام أرينا قيد التخطيط · شراء الألعاب والدعم المالي غير مفعّلين حاليًا</div>
       </section>
       <div class="under" id="about"><svg viewBox="0 0 24 24"><path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6l8-4Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span>عالم واحد، وتجربتان، والحماس ما يوقف.</span></div>
     </main>
