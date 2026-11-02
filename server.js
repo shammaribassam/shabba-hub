@@ -425,6 +425,21 @@ const server = http.createServer((req, res) => {
     );
   }
 
+  if (url.pathname === '/robots.txt') {
+    return send(res, 200,
+      'User-agent: *\\nAllow: /\\nDisallow: /diwan/api/\\nDisallow: /quiz/api/\\nSitemap: https://shabba-hub.onrender.com/sitemap.xml\\n',
+      'text/plain; charset=utf-8');
+  }
+
+  if (url.pathname === '/sitemap.xml') {
+    return send(res, 200,
+      '<?xml version="1.0" encoding="UTF-8"?>' +
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' +
+      '<url><loc>https://shabba-hub.onrender.com/</loc></url>' +
+      '</urlset>',
+      'application/xml; charset=utf-8');
+  }
+
   if (url.pathname === '/favicon.ico') {
     return send(res, 204, '');
   }
