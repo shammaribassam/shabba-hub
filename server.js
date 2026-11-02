@@ -7,6 +7,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const { spawn } = require('node:child_process');
+const majlis = require('./majlis');
 
 const port = Number(process.env.PORT || 3000);
 const root = __dirname;
@@ -376,6 +377,22 @@ async function unifiedKickWebhook(req, res) {
 // Main public server.
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
+
+  if (url.pathname.startsWith('/api/majlis/')) {
+    majlis.handle(req, res, url).catch(error => {
+      console.error('Majlis request error:', error.message);
+      if (!res.headersSent) send(res, 500, JSON.stringify({error:'خطأ في غرفة المجلس'}), 'application/json; charset=utf-8');
+      else res.end();
+    });
+    return;
+  }
+
+  if (url.pathname === '/majlis.html' && req.method === 'GET') {
+    return fs.readFile(path.join(root, 'majlis.html'), (err, data) => {
+      if (err) return send(res, 500, 'Majlis page unavailable');
+      return send(res, 200, data, 'text/html; charset=utf-8');
+    });
+  }
 
   // IMPORTANT: Kick uses this ONE public endpoint.
   if (url.pathname === '/api/kick/webhook') {
