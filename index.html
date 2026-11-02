@@ -1,30 +1,123 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#141110">
-<meta name="description" content="شبّة أبو البسم: ديوان الشعر وتحديات الأنمي والقيمنق والكورة في مكان واحد">
-<title>شبّة أبو البسم | اختر مجلسك</title>
-<style>
-:root{color-scheme:dark;--cream:#f4e8cf;--gold:#e1b871;--line:#735633;--dim:#bcae97}
-*{box-sizing:border-box}body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 50% -10%,#4e321e 0%,#1a1613 45%,#0d0b0a 100%);color:var(--cream);font-family:Tahoma,'Segoe UI',system-ui,sans-serif}
-body:before{content:"";pointer-events:none;position:fixed;inset:0;opacity:.12;background-image:repeating-linear-gradient(45deg,transparent 0 40px,#b78b4b 41px,#b78b4b 42px,transparent 43px 81px)}
-.wrap{position:relative;max-width:1060px;margin:0 auto;padding:70px 22px 50px}
-header{text-align:center;margin-bottom:40px}.mark{display:inline-block;border:1px solid #8d663c;background:#27201a;border-radius:999px;padding:10px 24px;color:var(--gold);font-size:14px;letter-spacing:.2px}
-h1{font-size:clamp(38px,6vw,68px);line-height:1.25;color:#f1d095;font-weight:750;margin:16px 0 8px;text-shadow:0 4px 25px #0008}
-.subtitle{color:#d8cbb5;font-size:clamp(16px,2.2vw,20px);line-height:1.9}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.card{background:linear-gradient(148deg,#2f271e,#1c1916);border:1px solid var(--line);border-radius:20px;padding:32px 28px;box-shadow:0 16px 30px #0005;transition:transform .18s,border-color .18s}
-.card:hover{transform:translateY(-4px);border-color:var(--gold)}.emblem{font-size:42px;margin-bottom:14px}h2{font-size:28px;margin:4px 0 14px;color:#e8c48a}
-.desc{min-height:80px;font-size:16px;color:#d2c2aa;line-height:1.9;margin-bottom:28px}.links{display:flex;flex-wrap:wrap;gap:10px}
-.btn{display:inline-flex;align-items:center;justify-content:center;flex:1;min-width:138px;padding:13px 18px;border-radius:10px;text-align:center;text-decoration:none;font-size:15px;font-weight:700;border:1px solid #927347;transition:filter .2s}
-.btn:hover{filter:brightness(1.15)}.primary{background:linear-gradient(120deg,#e5c48d,#c79a53);color:#1b130b}.secondary{background:#28221d;color:#ead3a8}
-footer{text-align:center;padding-top:38px;color:var(--dim);font-size:13px}
-@media(max-width:740px){.wrap{padding-top:42px}.cards{grid-template-columns:1fr}.card{padding:24px}.desc{min-height:auto}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080e15">
+  <meta name="description" content="شبّة أبو البسم — عالم واحد، وتجربتان ممتعتان: ديوان أبو البسم وتحديات أبو البسم.">
+  <title>عالم أبو البسم | شبّة أبو البسم</title>
+  <style>
+    :root{--bg:#080e15;--bg2:#0c1420;--surface:#111c29;--ink:#f5f9ff;--muted:#a3b1c1;--blue:#58d8fa;--line:rgba(160,194,221,.14);--glow:rgba(67,204,242,.19)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--ink);background:var(--bg);font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background:radial-gradient(ellipse 50% 34% at 50% 16%,rgba(43,133,168,.19),transparent 72%),radial-gradient(ellipse 36% 34% at 0% 65%,rgba(27,65,103,.14),transparent 80%),linear-gradient(180deg,#0b121c 0%,#080e15 55%,#0b111b 100%)}
+    body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.38;background-image:linear-gradient(rgba(115,157,183,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(115,157,183,.045) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(180deg,transparent,black 14%,black 70%,transparent)}
+    a{color:inherit;text-decoration:none}button{font:inherit}button:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:5px}
+    .wrap{width:min(1130px,calc(100% - 48px));margin-inline:auto}
+    header{height:91px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(160,194,221,.10)}
+    .brand{display:flex;align-items:center;gap:13px;direction:ltr}
+    .brand-symbol{width:45px;height:45px;display:grid;place-items:center;position:relative;border-radius:15px;border:1px solid rgba(88,216,250,.4);background:linear-gradient(145deg,rgba(88,216,250,.14),rgba(88,216,250,.02));box-shadow:inset 0 0 18px rgba(88,216,250,.05)}
+    .brand-symbol svg{width:27px;height:27px}.brand-name{font-family:Arial,sans-serif;letter-spacing:.16em;font-weight:900;font-size:21px}.brand-sub{font-size:10px;color:#93a8b8;letter-spacing:0;direction:rtl;text-align:left;margin-top:-4px}
+    .nav{display:flex;gap:33px;align-items:center;font-size:12px;color:#aebfce}.nav a:hover{color:var(--blue)}.nav .current{color:var(--ink)}
+    .nav-status{font-family:Arial,sans-serif;display:flex;align-items:center;gap:8px;font-size:11px;color:#91b9c5;direction:ltr;letter-spacing:.12em}.status-dot{height:7px;width:7px;border-radius:50%;background:#60e0d2;box-shadow:0 0 12px rgba(96,224,210,.65)}
+    main{padding-top:61px}.hero{text-align:center;position:relative}
+    .orb{width:103px;height:103px;margin:0 auto 21px;position:relative;display:grid;place-items:center}
+    .orb::before,.orb::after{content:"";position:absolute;inset:0;border:1px solid rgba(92,203,237,.26);border-radius:50%;transform:rotate(-28deg) scaleX(1.28)}.orb::after{transform:rotate(43deg) scaleX(1.28);border-color:rgba(92,203,237,.12)}
+    .orb-core{width:80px;height:80px;border-radius:24px;display:grid;place-items:center;transform:rotate(-13deg);border:1px solid rgba(97,211,245,.4);background:linear-gradient(135deg,rgba(48,134,166,.28),rgba(7,22,37,.84));box-shadow:0 0 45px rgba(47,171,217,.17),inset 0 0 24px rgba(69,197,235,.07)}
+    .orb-core span{transform:rotate(13deg);font:900 21px Arial,sans-serif;letter-spacing:-.06em;color:#e6faff}
+    .eyebrow{display:inline-flex;gap:10px;align-items:center;border:1px solid rgba(87,198,230,.21);border-radius:100px;padding:7px 18px;color:#9adbea;background:rgba(26,78,101,.15);font-size:11px;font-weight:600}
+    .eyebrow .spark{color:var(--blue);font-size:15px;line-height:1}
+    h1{font-size:clamp(41px,6.6vw,79px);line-height:1.5;letter-spacing:-2px;font-weight:900;margin:5px 0 3px;text-shadow:0 8px 30px rgba(0,0,0,.2)}
+    h1 .accent{color:#64d9f8;background:linear-gradient(110deg,#ecfaff 0%,#67dcfa 72%,#3eb5e3 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-desc{font-size:14px;color:#acbac9;line-height:2.2;margin:0 auto;max-width:620px}
+    .hero-rule{width:144px;height:1px;margin:32px auto 35px;background:linear-gradient(90deg,transparent,rgba(91,202,235,.6),transparent)}
+    .section-heading{display:flex;justify-content:space-between;align-items:end;margin-bottom:19px;gap:15px}.section-heading h2{font-size:19px;margin:0;font-weight:800}.section-heading h2 span{color:var(--blue)}.section-heading p{margin:0;color:#7e93a7;font-size:11px}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+    .game-card{min-height:297px;position:relative;overflow:hidden;border-radius:22px;border:1px solid rgba(139,183,208,.20);background:linear-gradient(145deg,rgba(25,41,57,.92),rgba(12,23,36,.96) 64%);padding:29px 30px;display:flex;flex-direction:column;transition:border-color .25s,transform .25s,box-shadow .25s;isolation:isolate}
+    .game-card::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 0% 0%,rgba(68,192,225,.09),transparent 54%)}
+    .game-card::after{content:"";position:absolute;z-index:-1;left:-38px;top:-50px;width:250px;height:250px;border-radius:50%;border:1px solid rgba(105,190,222,.08);box-shadow:0 0 0 38px rgba(94,188,218,.026),0 0 0 78px rgba(94,188,218,.018)}
+    .game-card:hover{border-color:rgba(88,216,250,.56);transform:translateY(-4px);box-shadow:0 18px 55px rgba(0,0,0,.22),0 0 30px rgba(88,216,250,.055)}
+    .card-top{display:flex;align-items:center;justify-content:space-between;gap:15px}.card-icon{height:66px;width:66px;display:grid;place-items:center;border:1px solid rgba(106,212,244,.24);border-radius:20px;background:rgba(68,165,205,.09)}.card-icon svg{width:32px;height:32px;stroke:#82def8;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}.card-num{font:700 12px Arial,sans-serif;color:#6f8da2;letter-spacing:.14em;direction:ltr}
+    .card-content{margin-top:24px}.card-content h3{font-size:22px;font-weight:800;margin:0 0 7px}.card-content p{font-size:12px;color:#9aafc1;line-height:2.2;max-width:400px;margin:0}
+    .card-bottom{margin-top:auto;padding-top:18px;display:flex;align-items:center;justify-content:space-between;gap:12px}.card-cta{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:12px;color:#d8f8ff}.card-cta svg{width:16px;height:16px;transition:transform .25s}.game-card:hover .card-cta svg{transform:translateX(-4px)}.card-tag{font:600 10px Arial,sans-serif;letter-spacing:.08em;color:#6b8799;direction:ltr}
+    .under{display:flex;align-items:center;justify-content:center;gap:12px;text-align:center;font-size:11px;color:#7d92a5;margin:24px 0 42px}.under svg{width:15px;height:15px;stroke:#69bdd4;fill:none;stroke-width:1.5}
+    footer{border-top:1px solid rgba(160,194,221,.1);min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:15px;color:#6f8497;font-size:10px}.foot-brand{font:800 13px Arial,sans-serif;letter-spacing:.2em;color:#b1c6d2;direction:ltr}
+    .dialog-backdrop{position:fixed;inset:0;background:rgba(0,5,10,.75);backdrop-filter:blur(8px);z-index:30;display:none;align-items:center;justify-content:center;padding:20px}.dialog-backdrop.open{display:flex}.dialog{width:min(430px,100%);border:1px solid rgba(99,211,242,.35);background:linear-gradient(145deg,#172737,#0b1420);box-shadow:0 30px 90px rgba(0,0,0,.5);padding:28px;border-radius:22px}.dialog h2{margin:0 0 10px;font-size:22px}.dialog p{font-size:13px;line-height:2.1;color:#a8bdcb;margin:0 0 25px}.dialog button{background:transparent;border:1px solid rgba(110,192,214,.28);color:#a9c9d9;border-radius:12px;padding:11px 16px;font-size:12px;font-weight:800;cursor:pointer}
+    .dialog-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.dialog-actions a{display:inline-flex;justify-content:center;align-items:center;min-height:42px;padding:10px 16px;border-radius:12px;font-size:12px;font-weight:800;background:#62d7f7;color:#09202b}.dialog-actions a.viewer-link{background:rgba(96,216,249,.08);color:#e6faff;border:1px solid rgba(96,216,249,.4)}
+    .dialog-actions a:hover,.dialog-actions button:hover{filter:brightness(1.15)}
+    @media(max-width:700px){.wrap{width:min(100% - 30px,560px)}header{height:74px}.nav{gap:14px;font-size:10px}.nav-status{display:none}.brand-name{font-size:18px}.brand-symbol{height:40px;width:40px}.brand-sub{font-size:9px}main{padding-top:39px}.orb{width:84px;height:84px;margin-bottom:18px}.orb-core{width:68px;height:68px}.orb-core span{font-size:18px}.eyebrow{font-size:10px}h1{font-size:clamp(37px,10vw,58px);letter-spacing:-1.4px;margin:11px 0 5px}.hero-desc{font-size:12px;line-height:2.1;padding-inline:5px}.hero-rule{margin:25px auto 28px}.section-heading{align-items:center}.section-heading h2{font-size:16px}.section-heading p{font-size:10px}.cards{grid-template-columns:1fr;gap:14px}.game-card{min-height:238px;padding:23px;border-radius:19px}.card-icon{height:54px;width:54px;border-radius:16px}.card-icon svg{height:28px;width:28px}.card-content{margin-top:15px}.card-content h3{font-size:20px}.card-content p{font-size:11px}.under{font-size:10px;margin:22px 0 28px}footer{font-size:9px}.foot-brand{font-size:11px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.game-card,.card-cta svg{transition:none}}
+  </style>
 </head>
-<body><main class="wrap"><header><div class="mark">BSM ✦ أهلاً بالضيوف</div><h1>شبّة أبو البسم</h1><p class="subtitle">من الشعر إلى التحدّي… اختر مجلسك وحيّاك الله</p></header>
-<section class="cards" aria-label="اختيار نوع المجلس">
-<article class="card"><div class="emblem" aria-hidden="true">📜</div><h2>ديوان أبو البسم</h2><p class="desc">مجلس الشعر والقصائد، أكمل البيت، اعرف الشاعر، وأثبت أنك فارس القوافي.</p><div class="links"><a class="btn primary" href="/diwan/streamer.html">لوحة الستريمر</a><a class="btn secondary" href="/diwan/viewer.html">شاشة المتابعين</a></div></article>
-<article class="card"><div class="emblem" aria-hidden="true">🔥</div><h2>تحديات أبو البسم</h2><p class="desc">تحديات الأنمي، القيمنق، الكورة، الدول، المسلسلات والمصارعة الحرة.</p><div class="links"><a class="btn primary" href="/quiz/streamer.html">لوحة الستريمر</a><a class="btn secondary" href="/quiz/viewer.html">شاشة المتابعين</a></div></article>
-</section><footer>مجالس أبو البسم • رابط واحد، ألعاب مستقلة، والشغل الأصلي محفوظ</footer>
-</main></body></html>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#home" aria-label="العودة إلى الرئيسية">
+        <div class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><path d="M14 2.5 25.5 14 14 25.5 2.5 14 14 2.5Z" stroke="#67d8f8" stroke-width="1.5"/><path d="M14 8.5 19.5 14 14 19.5 8.5 14 14 8.5Z" stroke="#c8f5ff" stroke-width="1.3"/></svg></div>
+        <div><div class="brand-name">BSM</div><div class="brand-sub">شبّة أبو البسم</div></div>
+      </a>
+      <nav class="nav" aria-label="القائمة الرئيسية"><a class="current" href="#home">الرئيسية</a><a href="#destinations">الأقسام</a><a href="#about">عن العالم</a></nav>
+      <div class="nav-status"><span class="status-dot"></span> THE BSM WORLD</div>
+    </header>
+    <main id="home">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="orb" aria-hidden="true"><div class="orb-core"><span>BSM</span></div></div>
+        <div class="eyebrow"><span class="spark">✦</span> أهلاً بك في شبّة أبو البسم <span class="spark">✦</span></div>
+        <h1 id="hero-title"><span>عالم </span><span class="accent">أبو البسم</span></h1>
+        <p class="hero-desc">حيّاك في عالمنا، اختر وجهتك وابدأ التحدي.<br>تجارب مختلفة، حماس واحد، والجوّ جوّك.</p>
+        <div class="hero-rule" aria-hidden="true"></div>
+      </section>
+      <section id="destinations" aria-labelledby="sections-title">
+        <div class="section-heading"><h2 id="sections-title">اختر <span>وجهتك</span></h2><p>مساحتك للمتعة والمنافسة</p></div>
+        <div class="cards">
+          <a class="game-card" href="/diwan/streamer.html" data-preview="ديوان أبو البسم" data-slug="diwan" aria-label="فتح قسم ديوان أبو البسم">
+            <div class="card-top"><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 8c-4-3-8-3-12-2v18c4-1 8-1 12 2 4-3 8-3 12-2V6c-4-1-8-1-12 2Z"/><path d="M16 8v18M7.5 11.5h5M19.5 11.5h5M7.5 16h5M19.5 16h5"/></svg></div><span class="card-num">01 / 02</span></div>
+            <div class="card-content"><h3>ديوان أبو البسم</h3><p>قصايد وأبيات وتحديات شعرية. اختبر معرفتك بالشِّعر ونافس على صدارة الديوان.</p></div>
+            <div class="card-bottom"><span class="card-cta">ادخل الديوان <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg></span><span class="card-tag">BSM / 01</span></div>
+          </a>
+          <a class="game-card" href="/quiz/streamer.html" data-preview="تحديات أبو البسم" data-slug="quiz" aria-label="فتح قسم تحديات أبو البسم">
+            <div class="card-top"><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M10 11h12c4 0 6 3 7 8l1 4c.4 2-1.8 3.2-3.5 2.2L21 21H11l-5.5 4.2C3.8 26.2 1.6 25 2 23l1-4c1-5 3-8 7-8Z"/><path d="M9 15v7M5.5 18.5h7M22 16.5h.1M25.5 19.5h.1"/></svg></div><span class="card-num">02 / 02</span></div>
+            <div class="card-content"><h3>تحديات أبو البسم</h3><p>أسئلة ومنافسات في القيمنق والأنمي والرياضة وغيرها. جهّز معلوماتك وادخل التحدي.</p></div>
+            <div class="card-bottom"><span class="card-cta">ادخل التحديات <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg></span><span class="card-tag">BSM / 02</span></div>
+          </a>
+        </div>
+      </section>
+      <div class="under" id="about"><svg viewBox="0 0 24 24"><path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6l8-4Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span>عالم واحد، وتجربتان، والحماس ما يوقف.</span></div>
+    </main>
+    <footer><span>© 2026 شبّة أبو البسم — جميع الحقوق محفوظة</span><span class="foot-brand">BSM WORLD</span></footer>
+  </div>
+  <div class="dialog-backdrop" id="preview-dialog" role="presentation">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+      <h2 id="dialog-title"></h2>
+      <p id="dialog-description">اختر طريقة الدخول: لوحة الستريمر للتحكم بالجولات وربط الشات، أو شاشة المتابعين للعرض في OBS.</p>
+      <div class="dialog-actions">
+        <a id="dialog-host" href="/diwan/streamer.html">لوحة الستريمر</a>
+        <a id="dialog-viewer" class="viewer-link" href="/diwan/viewer.html">شاشة المتابعين</a>
+        <button type="button" id="dialog-close">رجوع</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    (() => {
+      const dialog = document.getElementById('preview-dialog');
+      const title = document.getElementById('dialog-title');
+      const close = document.getElementById('dialog-close');
+      const hostLink = document.getElementById('dialog-host');
+      const viewerLink = document.getElementById('dialog-viewer');
+      let trigger = null;
+      document.querySelectorAll('[data-preview]').forEach(card => card.addEventListener('click', event => {
+        event.preventDefault();
+        const slug = card.dataset.slug;
+        if (!['diwan','quiz'].includes(slug)) return;
+        trigger = card; title.textContent = card.dataset.preview;
+        hostLink.href = '/' + slug + '/streamer.html';
+        viewerLink.href = '/' + slug + '/viewer.html';
+        dialog.classList.add('open'); document.body.style.overflow='hidden'; close.focus();
+      }));
+      function hide(){dialog.classList.remove('open');document.body.style.overflow='';trigger?.focus()}
+      close.addEventListener('click',hide);
+      dialog.addEventListener('click',event => {if(event.target === dialog)hide()});
+      document.addEventListener('keydown',event => {if(event.key==='Escape'&&dialog.classList.contains('open'))hide()});
+    })();
+  </script>
+</body>
+</html>
