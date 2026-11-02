@@ -8,7 +8,7 @@ const err=(s,m)=>{const e=new Error(m);e.status=s;throw e};
 const safe=s=>String(s||'').trim().slice(0,35).replace(/[<>\x00-\x1f]/g,'');
 const code=()=>{let c;do{c=String(crypto.randomInt(100000,1000000))}while(rooms.has(c));return c};
 function send(res,status,obj){res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'});res.end(JSON.stringify(obj))}
-function publicRoom(r){return {code:r.code,game:r.game,phase:r.phase,round:r.round,revision:r.rev,players:r.players.map(p=>({id:p.id,name:p.name,alive:p.alive,seat:p.seat||null,choice:p.choice||null,skip:p.skip||false})),active:r.active,holder:r.holder,chairs:r.chairs,doors:r.doors,boxes:r.boxes,opened:r.opened,limit:r.limit,log:r.log.slice(-12),winner:r.winner,settings:r.settings,deadline:r.deadline,remaining:r.remaining,startedAt:r.startedAt,now:Date.now()}}
+function publicRoom(r){return {code:r.code,game:r.game,phase:r.phase,round:r.round,revision:r.rev,players:r.players.map(p=>({id:p.id,name:p.name,alive:p.alive,seat:p.seat||null,choice:p.choice||null,skip:p.skip||false})),active:r.active,holder:r.holder,chairs:r.chairs,doors:r.doors,boxes:r.boxes.map(b=>({id:b.id,crown:r.opened?b.crown:undefined})),opened:r.opened,limit:r.limit,log:r.log.slice(-12),winner:r.winner,settings:r.settings,deadline:r.deadline,remaining:r.remaining,startedAt:r.startedAt,now:Date.now()}}
 function broadcast(r){r.rev++;const data='data: '+JSON.stringify(publicRoom(r))+'\n\n';for(const res of streams.get(r.code)||[])try{res.write(data)}catch(_){}}
 function get(c){const r=rooms.get(String(c||''));if(!r||r.expires<Date.now())err(404,'الغرفة غير موجودة أو انتهت');r.expires=Date.now()+TTL;return r}
 function host(r,b){if(b.hostToken!==r.hostToken)err(403,'صلاحية المقدم مطلوبة')}
