@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080e15"><title>وضع المجلس | عالم أبو البسم</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#080e15;color:#e8f7ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#13283b,#080e15 65%)}main{max-width:900px;margin:auto;padding:24px 16px 70px}
+a{color:#78e0fc}header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:32px}header strong{color:#91e8ff}
+h1{font-size:clamp(26px,6vw,40px);margin:8px 0}h2{font-size:20px;margin:0 0 16px}h3{font-size:16px;margin:12px 0}p{color:#a4bbcc;line-height:1.9}
+.card{background:#101f2d;border:1px solid #254356;border-radius:20px;padding:20px;margin:16px 0;box-shadow:0 12px 35px #0002}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+button,input,select,textarea{font:inherit;border-radius:11px;padding:12px;border:1px solid #315468;background:#0a1722;color:#fff;min-width:0}
+input,textarea,select{width:100%;margin:5px 0 12px}textarea{min-height:90px;resize:vertical}
+button{background:#59d5f7;color:#06202b;border:0;font-weight:800;cursor:pointer}button.secondary{background:#1d3a4c;color:#c9f6ff}button.warn{background:#563c42;color:#ffe6e6}button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #fff}
+.small{font-size:12px;color:#a2b9c8}.muted{color:#a2b9c8}.code{font-size:clamp(35px,10vw,70px);font-weight:900;letter-spacing:.15em;color:#80e9ff;direction:ltr;text-align:center}
+.score{font-size:23px;font-weight:900;color:#83eaff}.team{padding:14px;border:1px solid #2b4b60;border-radius:13px;margin:10px 0;background:#0c1a27}.team.active{border-color:#67e6ff;background:#173749}
+#notice{position:sticky;top:10px;z-index:5;border-radius:12px;padding:10px;background:#57303b;color:#fff;display:none}
+.hidden{display:none!important}.screen-question{font-size:clamp(24px,5vw,45px);line-height:1.5;text-align:center;white-space:pre-wrap}
+.screen-mode main{max-width:1200px}.screen-mode .card{padding:32px}.screen-mode .team{font-size:22px}
+.badge{display:inline-block;border-radius:999px;border:1px solid #35637a;padding:5px 12px;color:#94e9ff;font-size:12px}
+hr{border:0;border-top:1px solid #244152;margin:20px 0}
+</style>
+</head>
+<body>
+<main>
+<header><strong>BSM · عالم أبو البسم</strong><a href="/">العودة للرئيسية</a></header>
+<div id="notice" role="alert"></div>
+<div id="landing">
+  <span class="badge">جلسات الأصدقاء والعائلة</span>
+  <h1>وضع المجلس والاستراحة</h1>
+  <p>مقدم المسابقة يعرض السؤال على التلفزيون، والفرق تجاوب شفهيًا. تقدر تختار الفريق بنفسك، أو تخلي أول فريق يضغط الجرس من جواله يأخذ الدور. بدون تسجيل صوت.</p>
+  <div class="grid">
+    <section class="card"><h2>أنا مقدم المسابقة</h2><p>أنشئ غرفة، أضف الفرق، وتحكم بالأسئلة والنقاط.</p><button id="create">إنشاء غرفة جديدة</button></section>
+    <section class="card"><h2>أنا لاعب</h2><p>ادخل رمز الغرفة، واختر فريقك. تحتاج جوالك فقط لو كان نظام الجرس مفعّلًا.</p><label for="join-code">رمز الغرفة</label><input id="join-code" inputmode="numeric" maxlength="6" placeholder="000000"><button id="find-room">دخول الغرفة</button></section>
+  </div>
+  <p class="small">نسخة أولية للتجربة: الغرف مؤقتة وتختفي عند إعادة تشغيل الخادم أو بعد انتهاء صلاحيتها. لا تستخدمها لحفظ نتائج مهمة.</p>
+</div>
+<div id="room-area" class="hidden">
+  <div class="row"><h1 id="room-heading">غرفة المجلس</h1><span class="badge" id="mode-label"></span></div>
+  <div class="card"><div class="small">رمز الغرفة</div><div id="room-code" class="code"></div><div class="row"><button class="secondary" id="copy-join">نسخ رابط اللاعبين</button><button class="secondary" id="copy-screen">نسخ رابط شاشة التلفزيون</button><button class="secondary" id="go-screen">فتح شاشة التلفزيون</button></div></div>
+  <section class="card" id="host-controls">
+    <h2>لوحة مقدم المسابقة</h2>
+    <div class="grid"><div><label for="mode-select">طريقة اختيار الفريق</label><select id="mode-select"><option value="manual">المقدم يختار الفريق</option><option value="buzzer">أول فريق يضغط الجرس</option></select></div><div><label for="team-name">إضافة فريق</label><input id="team-name" maxlength="35" placeholder="مثلاً: الصقور"><button id="add-team">إضافة الفريق</button></div></div>
+    <hr><label for="question-input">السؤال المعروض على الشاشة (اختياري)</label><textarea id="question-input" maxlength="500" placeholder="اكتب السؤال هنا، أو اقرأه بصوتك من مكتبة الأسئلة..."></textarea><button id="set-question">عرض السؤال الجديد</button>
+    <div class="row" style="margin-top:18px"><button id="open-buzzer">فتح الجرس للفرق</button><button class="secondary" id="reset-buzzer">إعادة ضبط الجرس</button><button class="warn" id="reset-scores">تصفير نقاط الفرق</button></div>
+    <p class="small">في وضع الاختيار اليدوي اضغط «اختيار» بجانب الفريق. الإجابة شفهيّة والمقدم يمنح النقاط بنفسه.</p>
+  </section>
+  <section class="card"><h2>السؤال الحالي</h2><div id="question-display" class="screen-question">بانتظار سؤال المقدم</div><p id="turn-display" style="text-align:center"></p></section>
+  <section class="card"><h2>الفرق والنقاط</h2><div id="teams-list"></div></section>
+  <section class="card hidden" id="player-join"><h2>اختر فريقك</h2><div id="join-teams"></div></section>
+  <section class="card hidden" id="player-buzzer"><h2 id="my-team"></h2><p id="buzz-status"></p><button id="buzz">اضغط الجرس!</button></section>
+</div>
+</main>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+let room=params.get('room')||'', state=null, hostToken='', playerToken='', myTeamId='', es=null;
+const screen=params.get('view')==='screen';
+const notice=msg=>{const n=$('notice');n.textContent=msg;n.style.display='block';setTimeout(()=>{if(n.textContent===msg)n.style.display='none'},4500)};
+async function api(path,data){
+  const response=await fetch('/api/majlis/'+path,{
+    method:data?'POST':'GET',
+    headers:data?{'Content-Type':'application/json'}:{},
+    body:data?JSON.stringify(data):undefined
+  });
+  const result=await response.json();
+  if(!response.ok)throw Error(result.error||'تعذر الاتصال');
+  return result;
+}
+async function post(path,extra={}){
+  const result=await api(path,{room,hostToken,...extra});
+  if(result.state)render(result.state);
+  return result;
+}
+function make(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
+function action(label,fn,cls='secondary'){
+  const b=make('button',label,cls);b.addEventListener('click',()=>Promise.resolve().then(fn).catch(e=>notice(e.message)));return b;
+}
+function roomLink(view){return location.origin+'/majlis.html?room='+encodeURIComponent(room)+(view?'&view=screen':'')}
+async function copy(s){try{await navigator.clipboard.writeText(s);notice('تم نسخ الرابط')}catch(e){notice('انسخ الرابط من شريط العنوان')}}
+function start(){
+  $('landing').classList.add('hidden');$('room-area').classList.remove('hidden');
+  $('room-code').textContent=room;
+  hostToken=sessionStorage.getItem('bsm-majlis-host-'+room)||hostToken;
+  const player=sessionStorage.getItem('bsm-majlis-player-'+room);
+  if(player){try{const p=JSON.parse(player);playerToken=p.token;myTeamId=p.teamId}catch(_){}}
+  $('host-controls').classList.toggle('hidden',!hostToken||screen);
+  $('player-join').classList.toggle('hidden',Boolean(hostToken||playerToken||screen));
+  $('player-buzzer').classList.toggle('hidden',!playerToken||screen);
+  if(screen){document.body.classList.add('screen-mode');$('room-heading').textContent='شاشة المجلس'}
+  $('copy-join').classList.toggle('hidden',screen);
+  $('copy-screen').classList.toggle('hidden',screen);
+  $('go-screen').classList.toggle('hidden',screen);
+  if(es)es.close();
+  es=new EventSource('/api/majlis/events?room='+encodeURIComponent(room));
+  es.onmessage=e=>{try{render(JSON.parse(e.data))}catch(_){}};
+  es.onerror=()=>notice('الاتصال بالغرفة متقطع، جارٍ إعادة المحاولة');
+  api('state?room='+encodeURIComponent(room)).then(render).catch(e=>notice(e.message));
+}
+function render(s){
+  state=s;room=s.code;$('room-code').textContent=room;
+  $('mode-label').textContent=s.mode==='buzzer'?'نظام الجرس':'اختيار المقدم';
+  $('mode-select').value=s.mode;
+  $('open-buzzer').disabled=s.mode!=='buzzer';
+  $('reset-buzzer').disabled=s.mode!=='buzzer';
+  $('question-display').textContent=s.question||'بانتظار سؤال المقدم';
+  const active=s.teams.find(t=>t.id===s.activeTeamId);
+  $('turn-display').textContent=active?'الدور الآن: '+active.name:s.mode==='buzzer'&&s.buzzerOpen?'الجرس مفتوح — أول فريق يضغط يحصل على الدور':'بانتظار اختيار الفريق';
+  const teams=$('teams-list');teams.replaceChildren();
+  const join=$('join-teams');join.replaceChildren();
+  for(const t of [...s.teams].sort((a,b)=>b.score-a.score)){
+    const card=make('div',undefined,'team'+(t.id===s.activeTeamId?' active':''));
+    const top=make('div',undefined,'row');
+    top.append(make('strong',t.name),make('span',t.score+' نقطة','score'),make('span','('+t.players+' مشارك)','small'));
+    card.append(top);
+    if(hostToken&&!screen){
+      const controls=make('div',undefined,'row');
+      if(s.mode==='manual')controls.append(action('اختيار الفريق',()=>post('select',{teamId:t.id})));
+      controls.append(action('+10',()=>post('score',{teamId:t.id,delta:10})),action('+5',()=>post('score',{teamId:t.id,delta:5})),action('−5',()=>post('score',{teamId:t.id,delta:-5})));
+      card.append(controls);
+    }
+    teams.append(card);
+    if(!hostToken&&!playerToken&&!screen)join.append(action('انضم إلى '+t.name,async()=>{
+      const r=await api('join',{room,teamId:t.id});
+      playerToken=r.playerToken;myTeamId=t.id;
+      sessionStorage.setItem('bsm-majlis-player-'+room,JSON.stringify({token:playerToken,teamId:t.id}));
+      $('player-join').classList.add('hidden');$('player-buzzer').classList.remove('hidden');render(r.state);
+    }));
+  }
+  if(!s.teams.length)teams.append(make('p','بانتظار إضافة الفرق...','muted'));
+  if(!s.teams.length)join.append(make('p','المقدم لم يضف فرقًا بعد','muted'));
+  if(playerToken){
+    const mine=s.teams.find(t=>t.id===myTeamId);
+    $('my-team').textContent=mine?'فريقك: '+mine.name:'الفريق غير موجود';
+    $('buzz').disabled=s.mode!=='buzzer'||!s.buzzerOpen||Boolean(s.buzzedTeamId)||!mine;
+    $('buzz-status').textContent=s.mode!=='buzzer'?'المقدم يستخدم الاختيار اليدوي':s.buzzedTeamId?(s.buzzedTeamId===myTeamId?'فريقك ضغط الجرس أولًا!':'سبقكم فريق آخر'):s.buzzerOpen?'الجرس مفتوح!':'انتظر المقدم يفتح الجرس';
+  }
+}
+$('create').onclick=async()=>{try{const r=await api('create',{});room=r.room;hostToken=r.hostToken;sessionStorage.setItem('bsm-majlis-host-'+room,hostToken);history.replaceState(null,'','/majlis.html?room='+room);start()}catch(e){notice(e.message)}};
+$('find-room').onclick=()=>{const code=$('join-code').value.trim();if(!/^\\d{6}$/.test(code))return notice('اكتب رمزًا من 6 أرقام');room=code;history.replaceState(null,'','/majlis.html?room='+room);start()};
+$('copy-join').onclick=()=>copy(roomLink(false));
+$('copy-screen').onclick=()=>copy(roomLink(true));
+$('go-screen').onclick=()=>window.open(roomLink(true),'_blank','noopener');
+$('add-team').onclick=async()=>{try{await post('team',{name:$('team-name').value});$('team-name').value=''}catch(e){notice(e.message)}};
+$('mode-select').onchange=async()=>{try{await post('settings',{mode:$('mode-select').value})}catch(e){notice(e.message)}};
+$('set-question').onclick=async()=>{try{await post('question',{question:$('question-input').value})}catch(e){notice(e.message)}};
+$('open-buzzer').onclick=()=>post('buzzer',{open:true}).catch(e=>notice(e.message));
+$('reset-buzzer').onclick=()=>post('buzzer',{open:false}).catch(e=>notice(e.message));
+$('reset-scores').onclick=()=>{if(confirm('تأكيد تصفير جميع النقاط؟'))post('reset',{reset:'scores'}).catch(e=>notice(e.message))};
+$('buzz').onclick=async()=>{try{const r=await api('buzz',{room,teamId:myTeamId,playerToken});render(r.state)}catch(e){notice(e.message)}};
+if(room&&/^\\d{6}$/.test(room))start();
+})();
+</script>
+</body></html>
