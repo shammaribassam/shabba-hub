@@ -89,7 +89,7 @@ function decorate(html, slug) {
   const home = '<a href="/" style="position:fixed;bottom:14px;left:14px;z-index:99999;'
     + 'padding:10px 15px;border-radius:12px;background:#1a1713;color:#f3d9a1;'
     + 'text-decoration:none;border:1px solid #b58b49;font:14px system-ui,sans-serif">'
-    + '⌂ شبّة أبو البسم</a>';
+    + '⌂ عالم أبو البسم</a>';
 
   if (/<\/body>/i.test(result)) {
     result = result.replace(/<\/body>/i, home + '</body>');
@@ -380,6 +380,29 @@ const server = http.createServer((req, res) => {
   // IMPORTANT: Kick uses this ONE public endpoint.
   if (url.pathname === '/api/kick/webhook') {
     return unifiedKickWebhook(req, res);
+  }
+
+  // Public catalog only. No payment or purchase-grant endpoints exist.
+  if (url.pathname === '/api/catalog' && req.method === 'GET') {
+    return fs.readFile(path.join(root, 'game-catalog.json'), 'utf8', (err, data) => {
+      if (err) return send(res, 503, JSON.stringify({error:'Catalog unavailable'}), 'application/json; charset=utf-8');
+      return send(res, 200, data, 'application/json; charset=utf-8');
+    });
+  }
+
+  if (url.pathname === '/api/commerce/status' && req.method === 'GET') {
+    return send(res, 200, JSON.stringify({
+      purchaseModel: 'one_time_per_game',
+      paymentsEnabled: false,
+      donationsEnabled: false,
+      checkoutAvailable: false,
+      note: 'Payment activation requires owner approval, verified accounts and a secure payment provider.'
+    }), 'application/json; charset=utf-8');
+  }
+
+  // No client-side purchase or entitlement grants before verified billing integration.
+  if (url.pathname.startsWith('/api/commerce/') || url.pathname.startsWith('/api/purchases/')) {
+    return send(res, 403, JSON.stringify({error:'Purchases are not enabled'}), 'application/json; charset=utf-8');
   }
 
   if (url.pathname === '/health') {
