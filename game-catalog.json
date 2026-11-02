@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "currency": "SAR",
+  "monetization": {
+    "model": "one_time_per_game",
+    "paymentsEnabled": false,
+    "donationsEnabled": false
+  },
+  "games": [
+    {
+      "id": "diwan",
+      "title": "ديوان أبو البسم",
+      "access": "free",
+      "status": "available",
+      "priceHalalas": 0,
+      "streamerPath": "/diwan/streamer.html",
+      "viewerPath": "/diwan/viewer.html"
+    },
+    {
+      "id": "quiz",
+      "title": "تحديات أبو البسم",
+      "access": "free",
+      "status": "available",
+      "priceHalalas": 0,
+      "streamerPath": "/quiz/streamer.html",
+      "viewerPath": "/quiz/viewer.html"
+    },
+    {
+      "id": "arena",
+      "title": "بسام أرينا",
+      "access": "premium",
+      "status": "coming_soon",
+      "priceHalalas": null,
+      "streamerPath": null,
+      "viewerPath": null
+    }
+  ]
+}
