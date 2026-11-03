@@ -74,9 +74,12 @@ function readBody(req) {
     req.on('error',reject);
   });
 }
+function normalizeCode(value) {
+  return String(value||'').trim().replace(/[٠-٩]/g,ch=>String(ch.charCodeAt(0)-0x660)).replace(/[۰-۹]/g,ch=>String(ch.charCodeAt(0)-0x6f0));
+}
 function getRoom(code) {
-  if(!/^\\d{6}$/.test(String(code||'')))return null;
-  const room=rooms.get(String(code));
+  if(!/^\d{6}$/.test(normalizeCode(code)))return null;
+  const room=rooms.get(normalizeCode(code));
   if(!room)return null;
   if(room.expiresAt<Date.now()){rooms.delete(room.code);return null;}
   return room;
