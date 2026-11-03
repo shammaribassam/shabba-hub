@@ -46,4 +46,4 @@ render=function(){previousBonusRender();renderBonus()};
 
 // Match the viewer theme to the currently published poetry board.
 const bsmPoetryRender=render;
-render=function(){document.body.classList.toggle('poetry-nabati',state.poetryMode==='نبطي');bsmPoetryRender()};
+render=function(){document.body.classList.toggle('poetry-nabati',state.poetryMode==='نبطي');bsmPoetryRender();if(typeof window.bsmPortraitUpdate==='function')window.bsmPortraitUpdate()};
