@@ -58,9 +58,10 @@ hr{border:0;border-top:1px solid #244152;margin:20px 0}
 'use strict';
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
-let room=normalizeCode(params.get('room')), state=null, hostToken='', playerToken='', myTeamId='', es=null;
+let room='', state=null, hostToken='', playerToken='', myTeamId='', es=null;
 const screen=params.get('view')==='screen';
 const normalizeCode=value=>String(value||'').trim().replace(/[٠-٩]/g,ch=>String(ch.charCodeAt(0)-0x660)).replace(/[۰-۹]/g,ch=>String(ch.charCodeAt(0)-0x6f0));
+room=normalizeCode(params.get('room'));
 const notice=msg=>{const n=$('notice');n.textContent=msg;n.style.display='block';setTimeout(()=>{if(n.textContent===msg)n.style.display='none'},4500)};
 async function api(path,data){
   const response=await fetch('/api/majlis/'+path,{
