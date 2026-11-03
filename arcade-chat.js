@@ -46,11 +46,7 @@ function attachTwitch(){
    const channel=k.slice(7);if(hooks.isActive('twitch',channel))update('twitch',channel,'connecting','انقطع تويتش — جارٍ إعادة الاتصال');
   }
  });
- client.on('connected',()=>{
-  for(const [k] of statuses)if(k.startsWith('twitch:')){
-   const channel=k.slice(7);if(hooks.isActive('twitch',channel))void client.join(channel).then(()=>update('twitch',channel,'connected','متصل بشات تويتش — اكتب !انضم')).catch(e=>update('twitch',channel,'error','تعذر الانضمام لقناة تويتش: '+String(e.message||e).slice(0,80)));
-  }
- });
+
 }
 async function connectTwitch(channel){
  update('twitch',channel,'connecting','جارٍ الاتصال بشات تويتش...');
@@ -101,8 +97,9 @@ async function connectTikTok(channel){
  function retry(message){
   if(tiktoks.get(channel)!==entry||entry.timer)return;
   update('tiktok',channel,'waiting',message+' — إعادة المحاولة بعد دقيقة ونصف');
-  if(entry.connection){try{entry.connection.disconnect()}catch(_){}entry.connection=null}
+  const old=entry.connection;entry.connection=null;
   entry.timer=setTimeout(()=>{entry.timer=null;void tryConnect()},90000);entry.timer.unref?.();
+  if(old)try{old.disconnect()}catch(_){}
  }
  void tryConnect();
 }
