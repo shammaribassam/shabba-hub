@@ -8,6 +8,28 @@ const err=(s,m)=>{const e=new Error(m);e.status=s;throw e};
 const safe=s=>String(s||'').trim().slice(0,35).replace(/[<>\x00-\x1f]/g,'');
 const code=()=>{let c;do{c=String(crypto.randomInt(100000,1000000))}while(rooms.has(c));return c};
 function send(res,status,obj){res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'});res.end(JSON.stringify(obj))}
+function chatCommand(platform,channel,username,message){
+ const text=String(message||'').trim(),who=String(username||'').trim().slice(0,35),ch=String(channel||'').trim().toLowerCase();
+ if(!who||!ch||!text)return 0;
+ let count=0;
+ for(const r of rooms.values()){
+  if(r.expires<Date.now()||r.settings?.[platform]!==ch)continue;
+  try{
+   const cmd=text.match(/^!(انضم|طرد|إنعاش|انعاش|سكيب|نجاة|مرر|كرسي|صندوق|باب)(?:\\s+(\\d+))?$/u);
+   if(!cmd)continue;
+   const name=platform+':'+who;
+   let p=r.players.find(x=>x.name.toLowerCase()===name.toLowerCase());
+   if(cmd[1]==='انضم'){
+    if(r.phase==='lobby'&&!p&&r.players.length<100){p={id:r.players.length+1,name,token:id(),alive:true,seat:null,choice:null,skip:false};r.players.push(p);log(r,'💬 انضم '+name);broadcast(r);count++}
+    continue;
+   }
+   if(!p||!p.alive||r.phase!=='playing')continue;
+   const types={'طرد':'kick','إنعاش':'revive','انعاش':'revive','سكيب':'skip','نجاة':'save','مرر':'pass','كرسي':'chair','صندوق':'box','باب':'choose'};
+   action(r,{type:types[cmd[1]],playerToken:p.token,target:Number(cmd[2])},false);broadcast(r);count++;
+  }catch(_){}
+ }
+ return count;
+}
 function publicRoom(r){return {code:r.code,game:r.game,phase:r.phase,round:r.round,revision:r.rev,players:r.players.map(p=>({id:p.id,name:p.name,alive:p.alive,seat:p.seat||null,choice:p.choice||null,skip:p.skip||false})),active:r.active,holder:r.holder,chairs:r.chairs,doors:r.doors,boxes:r.boxes.map(b=>({id:b.id,crown:r.opened?b.crown:undefined})),opened:r.opened,limit:r.limit,log:r.log.slice(-12),winner:r.winner,settings:r.settings,deadline:r.deadline,remaining:r.remaining,startedAt:r.startedAt,now:Date.now()}}
 function broadcast(r){r.rev++;const data='data: '+JSON.stringify(publicRoom(r))+'\n\n';for(const res of streams.get(r.code)||[])try{res.write(data)}catch(_){}}
 function get(c){const r=rooms.get(String(c||''));if(!r||r.expires<Date.now())err(404,'الغرفة غير موجودة أو انتهت');r.expires=Date.now()+TTL;return r}
@@ -82,7 +104,7 @@ function action(r,b,byHost){
 }
 function hostAction(r,b){
  const type=String(b.type||'');
- if(type==='start'){start(r);return}
+ if(type==='connectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');const channel=String(b.channel||'').trim().toLowerCase().replace(/^@/,'');if(!/^[a-z0-9_.-]{2,40}$/.test(channel))err(400,'اسم القناة غير صحيح');r.settings[platform]=channel;log(r,'💬 تم تعيين قناة '+platform+': '+channel);return}\n if(type==='start'){start(r);return}
  if(type==='reset'){r.players=[];r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.chairs=[];r.doors=[];r.boxes=[];r.log=[];clearTimer(r);return}
  if(type==='open'){
   if(r.phase!=='ready')err(409,'الجولة ليست جاهزة');
@@ -169,4 +191,4 @@ async function handle(req,res,url){
   return send(res,404,{error:'المسار غير موجود'});
  }catch(e){return send(res,e.status||500,{error:e.status?e.message:'حدث خطأ في الخادم'})}
 }
-module.exports={handle};
+module.exports={handle,chatCommand};
