@@ -382,10 +382,31 @@ async function unifiedKickWebhook(req, res) {
   }
 }
 
+
+// Signed chat relay from BSM Chat; disabled until both services share ARCADE_RELAY_SECRET.
+async function arcadeChatRelay(req,res){
+ const secret=process.env.ARCADE_RELAY_SECRET;
+ if(!secret||secret.length<32)return send(res,503,'Relay not configured');
+ if(req.method!=='POST')return send(res,405,'Method not allowed');
+ try{
+  const body=await readWebhookBody(req);
+  const stamp=String(req.headers['x-bsm-timestamp']||'');
+  const signature=String(req.headers['x-bsm-signature']||'');
+  if(!/^\\d{13}$/.test(stamp)||Math.abs(Date.now()-Number(stamp))>60000||!/^sha256=[a-f0-9]{64}$/.test(signature))return send(res,401,'Invalid signature');
+  const expected='sha256='+require('node:crypto').createHmac('sha256',secret).update(stamp+'.').update(body).digest('hex');
+  if(!require('node:crypto').timingSafeEqual(Buffer.from(expected),Buffer.from(signature)))return send(res,401,'Invalid signature');
+  const data=JSON.parse(body.toString('utf8'));
+  if(data.platform!=='twitch'||typeof data.channel!=='string'||typeof data.username!=='string'||typeof data.message!=='string')return send(res,400,'Invalid event');
+  const count=arcade.chatCommand('twitch',data.channel,data.username,data.message);
+  return send(res,200,JSON.stringify({ok:true,count}),'application/json; charset=utf-8');
+ }catch(e){console.error('Arcade relay:',e.message);return send(res,400,'Invalid relay request')}
+}
+
 // Main public server.
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
 
+  if (url.pathname === '/api/arcade/chat-relay') return arcadeChatRelay(req,res);
   if (url.pathname.startsWith('/api/arcade/')) {
     arcade.handle(req,res,url).catch(error=>{console.error('Arcade error:',error);if(!res.headersSent)send(res,500,JSON.stringify({error:'خطأ في الألعاب'}),'application/json; charset=utf-8');});
     return;
