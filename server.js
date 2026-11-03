@@ -481,6 +481,14 @@ const server = http.createServer((req, res) => {
     );
   }
 
+  // Google Search Console HTML ownership verification.
+  if (req.method === 'GET' && url.pathname === '/google549c25f28aed3b9b.html') {
+    return fs.readFile(path.join(root, 'google549c25f28aed3b9b.html'), (err, data) => {
+      if (err) return send(res, 404, 'Verification file not found');
+      return send(res, 200, data, 'text/html; charset=utf-8');
+    });
+  }
+
   if (url.pathname === '/robots.txt') {
     return send(res, 200,
       'User-agent: *\\nAllow: /\\nDisallow: /diwan/api/\\nDisallow: /quiz/api/\\nSitemap: https://shabba-hub.onrender.com/sitemap.xml\\n',
