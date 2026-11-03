@@ -49,6 +49,8 @@ function attachTwitch(){
 
 }
 async function connectTwitch(channel){
+ const active=[...statuses.keys()].filter(k=>k.startsWith('twitch:')&&hooks.isActive('twitch',k.slice(7)));
+ if(!statuses.has(key('twitch',channel))&&active.length>=20){update('twitch',channel,'error','الحد الأقصى لاتصالات تويتش مؤقتًا 20 قناة');return}
  update('twitch',channel,'connecting','جارٍ الاتصال بشات تويتش...');
  attachTwitch();
  if(!twitchConnecting){
@@ -173,9 +175,9 @@ async function acceptKick(req,raw){
  return {ok:true,count};
 }
 function connect(platform,channel){
- if(platform==='twitch')return void connectTwitch(channel);
- if(platform==='tiktok')return void connectTikTok(channel);
- if(platform==='kick')return void connectKick(channel);
+ if(platform==='twitch')return void connectTwitch(channel).catch(e=>update('twitch',channel,'error',String(e.message||e).slice(0,130)));
+ if(platform==='tiktok')return void connectTikTok(channel).catch(e=>update('tiktok',channel,'error',String(e.message||e).slice(0,130)));
+ if(platform==='kick')return void connectKick(channel).catch(e=>update('kick',channel,'error',String(e.message||e).slice(0,130)));
 }
 function disconnect(platform,channel){
  if(hooks.isActive(platform,channel))return;
