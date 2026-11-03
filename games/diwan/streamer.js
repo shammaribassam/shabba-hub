@@ -23,15 +23,28 @@ function fillPoetryCategories(){
    cats.map(c=>'<option value="'+c+'">'+c+' — '+bank.filter(q=>q[0]===c).length+' سؤالًا</option>').join('');
 }
 fillPoetryCategories();
-$('poetryMode').onchange=function(){
- if(state.active){this.value=activePoetryMode;return notice('انتظر نهاية السؤال الحالي قبل تبديل نوع الشِعر');}
- activePoetryMode=this.value;
- document.body.classList.toggle('poetry-nabati',activePoetryMode==='نبطي');
+function switchPoetryMode(mode){
+ if(mode===activePoetryMode)return;
+ if(mode!=='فصيح'&&mode!=='نبطي')return;
+ if(state.active)return notice('انتهِ من السؤال الحالي أولاً، ثم بدّل الديوان بضغطة واحدة.');
+ activePoetryMode=mode;
+ state.poetryMode=mode;
+ // Reset the question panel when changing banks, while keeping leaderboard points.
+ resetBonus();
+ state.question='';state.answers=[];state.correct=-1;state.revealed=false;
+ state.category='';state.winners=[];state.remaining=20;
  fillPoetryCategories();
- state.poetryMode=activePoetryMode;
+ document.querySelectorAll('[data-poetry-choice]').forEach(button=>{
+  const selected=button.dataset.poetryChoice===mode;
+  button.classList.toggle('is-current',selected);
+  button.setAttribute('aria-pressed',String(selected));
+ });
  broadcast();
- notice('تم اختيار '+poetryNames[activePoetryMode]+' — نقاط المشاركين محفوظة');
-};
+ notice('تم الانتقال إلى '+poetryNames[mode]+' — أسئلة مستقلة، والنقاط محفوظة.');
+}
+document.querySelectorAll('[data-poetry-choice]').forEach(button=>{
+ button.addEventListener('click',()=>switchPoetryMode(button.dataset.poetryChoice));
+});
 function notice(s){$('gameStatus').textContent=s}
 let ws=null,tick=null;
 const answeredThisRound=new Set();
