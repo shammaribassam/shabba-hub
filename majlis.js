@@ -2,6 +2,12 @@
 // Majlis: local in-memory room mode for in-person oral team play.
 // No payments, microphones, recordings, external platform accounts or automatic answer grading.
 const crypto = require('node:crypto');
+const fs = require('node:fs');
+const path = require('node:path');
+const bankText = fs.readFileSync(path.join(__dirname,'games','diwan','questions.js'),'utf8');
+const bankMatch = bankText.match(/^const questions=(\[[\s\S]*\]);?\s*$/);
+const questionBank = bankMatch ? JSON.parse(bankMatch[1]) : [];
+const categories = [...new Set(questionBank.map(q=>q[0]))];
 const rooms = new Map();
 const MAX_ROOMS = 200;
 const TTL_MS = 6 * 60 * 60 * 1000;
@@ -27,7 +33,7 @@ function cleanText(value, max=80) {
 }
 function publicState(room) {
   return {
-    code:room.code, mode:room.mode, question:room.question,
+    code:room.code, mode:room.mode, question:room.question, category:room.category, options:room.options||[], revealed:!!room.revealed, answer:room.revealed?room.answer:null,
     teams:room.teams.map(t=>({id:t.id,name:t.name,score:t.score,players:t.players.length})),
     activeTeamId:room.activeTeamId, buzzerOpen:room.buzzerOpen,
     buzzedTeamId:room.buzzedTeamId, revision:room.revision,
@@ -95,6 +101,7 @@ function playerAuthorized(team, body) {
 async function handle(req,res,url) {
   if(!url.pathname.startsWith('/api/majlis/'))return false;
   cleanup();
+  if(req.method==='GET' && url.pathname==='/api/majlis/categories') return json(res,200,{categories,counts:Object.fromEntries(categories.map(c=>[c,questionBank.filter(q=>q[0]===c).length]))});
   if(req.method==='GET' && url.pathname==='/api/majlis/state') {
     const room=getRoom(url.searchParams.get('room'));
     return json(res,room?200:404,room?publicState(room):{error:'الغرفة غير موجودة أو انتهت'});
@@ -116,7 +123,7 @@ async function handle(req,res,url) {
   try{body=await readBody(req);}catch(e){return json(res,400,{error:e.message});}
   if(url.pathname==='/api/majlis/create') {
     if(rooms.size>=MAX_ROOMS)return json(res,503,{error:'الغرف ممتلئة حاليًا'});
-    const room={code:randomCode(),hostToken:token(),mode:'manual',question:'',teams:[],
+    const room={code:randomCode(),hostToken:token(),mode:'manual',question:'',category:categories[0]||'',options:[],answer:null,revealed:false,usedQuestions:[],teams:[],
       activeTeamId:null,buzzerOpen:false,buzzedTeamId:null,revision:1,expiresAt:Date.now()+TTL_MS};
     rooms.set(room.code,room);
     return json(res,201,{room:room.code,hostToken:room.hostToken,state:publicState(room)});
@@ -141,7 +148,18 @@ async function handle(req,res,url) {
     return json(res,200,{ok:true,state:publicState(room)});
   }
   if(!authorized(room,body))return json(res,403,{error:'صلاحية مقدم المسابقة مطلوبة'});
-  if(url.pathname==='/api/majlis/team') {
+  if(url.pathname==='/api/majlis/next-question') {
+    const category=String(body.category||room.category||'');
+    if(!categories.includes(category))return json(res,400,{error:'اختر فئة الأسئلة'});
+    const available=questionBank.map((q,i)=>({q,i})).filter(x=>x.q[0]===category&&!room.usedQuestions.includes(x.i));
+    if(!available.length)room.usedQuestions=room.usedQuestions.filter(i=>questionBank[i]?.[0]!==category);
+    const pool=available.length?available:questionBank.map((q,i)=>({q,i})).filter(x=>x.q[0]===category);
+    const selected=pool[crypto.randomInt(pool.length)];
+    room.usedQuestions.push(selected.i);room.category=category;room.question=selected.q[1];room.options=selected.q.slice(2,6);room.answer=Number(selected.q[6]);room.revealed=false;
+    room.activeTeamId=null;room.buzzedTeamId=null;room.buzzerOpen=false;
+  } else if(url.pathname==='/api/majlis/reveal') {
+    room.revealed=true;
+  } else if(url.pathname==='/api/majlis/team') {
     const name=cleanText(body.name,35);
     if(!name)return json(res,400,{error:'اكتب اسم الفريق'});
     if(room.teams.length>=MAX_TEAMS)return json(res,409,{error:'الحد الأقصى 12 فريقًا'});
@@ -151,7 +169,7 @@ async function handle(req,res,url) {
     if(!['manual','buzzer'].includes(body.mode))return json(res,400,{error:'وضع غير معروف'});
     room.mode=body.mode;room.activeTeamId=null;room.buzzedTeamId=null;room.buzzerOpen=false;
   } else if(url.pathname==='/api/majlis/question') {
-    room.question=cleanText(body.question,500);
+    room.question=cleanText(body.question,500);room.options=[];room.answer=null;room.revealed=false;
     room.activeTeamId=null;room.buzzedTeamId=null;room.buzzerOpen=false;
   } else if(url.pathname==='/api/majlis/select') {
     if(room.mode!=='manual')return json(res,409,{error:'غيّر إلى وضع اختيار المقدم'});
