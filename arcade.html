@@ -108,6 +108,7 @@ function ids(){return el('qualify').value.split(/[,،\s]+/).filter(Boolean).map(
 function qualify(){host('qualify',{qualified:ids()})}
 function reveal(){if(state.game==='doors')host('reveal',{qualified:ids(),limit:ids().length});else host('reveal')}
 let wheelLastKey='',wheelRotation=0,wheelTimer=null;
+function wheelName(name){return String(name||'').replace(/^(tiktok|twitch|kick):/i,'')}
 function drawWheel(s){
  const wrap=el('rouletteWheel'),disk=el('wheelDisk'),result=el('wheelResult');
  wrap.classList.toggle('hide',s.game!=='roulette'||!s.players.length);
@@ -117,12 +118,12 @@ function drawWheel(s){
  const angle=360/n;
  disk.style.background='conic-gradient('+people.map((p,i)=>(i%2?'#a64355':'#176a72')+' '+(i*angle)+'deg '+((i+1)*angle)+'deg').join(',')+')';
  disk.replaceChildren();
- people.forEach((p,i)=>{const t=document.createElement('span');t.className='wheel-name';t.textContent=p.name.length>12?p.name.slice(0,11)+'…':p.name;const theta=(i+.5)*angle*Math.PI/180;const radius=36;t.style.transform='translate(-50%,-50%) translate('+Math.sin(theta)*radius+'%, '+(-Math.cos(theta))*radius+'%) rotate('+((i+.5)*angle)+'deg)';t.style.left=(50+Math.sin(theta)*34)+'%';t.style.top=(50-Math.cos(theta)*34)+'%';t.style.transform='translate(-50%,-50%) rotate('+((i+.5)*angle)+'deg)';disk.append(t)});
+ people.forEach((p,i)=>{const t=document.createElement('span');t.className='wheel-name';const name=wheelName(p.name);t.textContent=name.length>12?name.slice(0,11)+'…':name;const theta=(i+.5)*angle*Math.PI/180;const radius=36;t.style.transform='translate(-50%,-50%) translate('+Math.sin(theta)*radius+'%, '+(-Math.cos(theta))*radius+'%) rotate('+((i+.5)*angle)+'deg)';t.style.left=(50+Math.sin(theta)*34)+'%';t.style.top=(50-Math.cos(theta)*34)+'%';t.style.transform='translate(-50%,-50%) rotate('+((i+.5)*angle)+'deg)';disk.append(t)});
  const center=document.createElement('div');center.className='wheel-center';disk.append(center);
  const key=s.code+':'+(s.spin||0);
  if(s.phase==='playing'&&s.active&&key!==wheelLastKey){
   wheelLastKey=key;const index=people.findIndex(p=>p.id===s.active);
-  if(index>=0){const desired=(360-((index+.5)*angle)%360)%360;const current=((wheelRotation%360)+360)%360;const delta=(desired-current+360)%360;wheelRotation+=1800+delta;disk.style.transform='rotate('+wheelRotation+'deg)';result.textContent='🎡 الروليت يدور...';if(wheelTimer)clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>{wheelTimer=null;result.textContent='🎯 '+people[index].name;el('heroText').textContent='🎯 صاحب الدور: '+people[index].name},5100)}
+  if(index>=0){const desired=(360-((index+.5)*angle)%360)%360;const current=((wheelRotation%360)+360)%360;const delta=(desired-current+360)%360;wheelRotation+=1800+delta;disk.style.transform='rotate('+wheelRotation+'deg)';result.textContent='🎡 الروليت يدور...';if(wheelTimer)clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>{wheelTimer=null;result.textContent='🎯 '+wheelName(people[index].name);el('heroText').textContent='🎯 صاحب الدور: '+people[index].name},5100)}
  }else if(s.phase!=='playing'){if(wheelTimer){clearTimeout(wheelTimer);wheelTimer=null}result.textContent=''}
 }
 function render(){
