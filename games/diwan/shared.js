@@ -2,7 +2,7 @@
 const $=id=>document.getElementById(id);
 // Every browser tab begins with a clean state; only the active room synchronizes viewers.
 const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let state={round:0,poetryMode:'فصيح',category:'',question:'',answers:[],correct:-1,active:false,revealed:false,remaining:20,bonus:{phase:"idle",prompt:"",claimant:null,response:"",seconds:20},joined:{},scores:{},winners:[],chat:[],seen:[],exclusions:{},exileEvent:null};
+let state={round:0,category:'',question:'',answers:[],correct:-1,active:false,revealed:false,remaining:20,bonus:{phase:"idle",prompt:"",claimant:null,response:"",seconds:20},joined:{},scores:{},winners:[],chat:[],seen:[],exclusions:{},exileEvent:null};
 function broadcast(){render()}
 function showRanks(){let arr=Object.entries(state.scores).sort((a,b)=>b[1]-a[1]);return arr.slice(0,12).map(([id,score],i)=>`<div class="rank"><span>${i+1}. ${escapeHtml(state.joined[id]||id)}</span><strong>${score} نقطة</strong></div>`).join('')||'لا يوجد متصدرون'}
 function showQuestion(){ $('round').textContent='السؤال '+state.round;$('categoryLabel').textContent=state.category||'ديوان الشعر';$('question').textContent=state.question||'أهلاً بكم في ديوان أبي البسم';$('answers').innerHTML=state.answers.map((a,i)=>`<div class="answer ${state.revealed&&state.correct===i&&state.round?'correct':''}">${i+1} — ${escapeHtml(a)}</div>`).join('');$('timer').textContent=state.remaining;$('leaders').innerHTML=showRanks();if($('winners'))$('winners').innerHTML=state.winners.map((id,i)=>`<div class="rank"><span>🏆 ${escapeHtml(state.joined[id]||id)}</span><strong>+${[10,7,5][i]}</strong></div>`).join('')||'بانتظار الإجابات الصحيحة'}
@@ -44,6 +44,3 @@ function renderBonus(){
 const previousBonusRender=render;
 render=function(){previousBonusRender();renderBonus()};
 
-// Match the viewer theme to the currently published poetry board.
-const bsmPoetryRender=render;
-render=function(){document.body.classList.toggle('poetry-nabati',state.poetryMode==='نبطي');bsmPoetryRender();if(typeof window.bsmPortraitUpdate==='function')window.bsmPortraitUpdate()};
