@@ -28,7 +28,11 @@ function chatCommand(platform,channel,username,message){
    if(!p||!p.alive||r.phase!=='playing')continue;
    const types={'طرد':'kick','إنعاش':'revive','انعاش':'revive','سكيب':'skip','نجاة':'save','مرر':'pass','كرسي':'chair','صندوق':'box','باب':'choose'};
    action(r,{type:types[cmd[1]],playerToken:p.token,target:Number(cmd[2])},false);broadcast(r);count++;
-  }catch(_){}
+  }catch(e){
+   // Surface rejected chat actions to the host so a failed command is diagnosable.
+   log(r,'⚠️ أمر '+platform+' من '+who+' لم ينفذ: '+(e.message||'خطأ غير معروف'));
+   broadcast(r);
+  }
  }
  return count;
 }
