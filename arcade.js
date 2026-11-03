@@ -112,6 +112,7 @@ function hostAction(r,b){
  const type=String(b.type||'');
  if(type==='connectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');let channel;try{channel=chat.clean(platform,b.channel)}catch(e){err(400,e.message)}const previous=r.settings[platform];r.settings[platform]=channel;log(r,'💬 ربط '+platform+': '+channel);if(previous&&previous!==channel)chat.disconnect(platform,previous);chat.connect(platform,channel);return}
  if(type==='disconnectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');const previous=r.settings[platform];delete r.settings[platform];if(previous)chat.disconnect(platform,previous);log(r,'🔌 فصل '+platform);return}
+ if(type==='switchGame'){if(!['roulette','doors','survival','bomb','chairs','boxes'].includes(b.game))err(400,'اختر لعبة صحيحة');r.game=b.game;r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.chairs=[];r.doors=[];r.boxes=[];r.opened=false;r.limit=0;r.spin=0;clearTimer(r);for(const p of r.players){p.alive=true;p.seat=null;p.choice=null;p.skip=false}r.log=[];log(r,'🎮 لعبة جديدة بنفس الغرفة وربط الشات');return}
  if(type==='start'){start(r);return}
  if(type==='reset'){r.players=[];r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.chairs=[];r.doors=[];r.boxes=[];r.log=[];clearTimer(r);return}
  if(type==='open'){
@@ -129,10 +130,10 @@ function hostAction(r,b){
    if(r.phase!=='playing')err(409,'ابدأ الجولة أولًا');
    const n=Number(b.limit);if(!Number.isInteger(n)||n<1||n>active(r).length)err(400,'عدد المتأهلين غير صحيح');
    const choices=active(r);if(choices.some(p=>!p.choice))err(409,'بعض اللاعبين لم يختاروا');
-   const eligible=Array.isArray(b.qualified)?b.qualified.map(Number):[];
-   if(eligible.length!==n||new Set(eligible).size!==n||eligible.some(id=>!choices.some(p=>p.id===id)))err(400,'حدد المتأهلين بشكل صحيح');
-   for(const p of choices)if(!eligible.includes(p.id))p.alive=false;
-   r.limit=n;r.opened=true;r.phase='between';log(r,'🚪 كشف الأبواب: تأهل '+n);finish(r);return
+   const selected=choices.map(p=>p.id);for(let i=selected.length-1;i>0;i--){const j=rnd(i+1);[selected[i],selected[j]]=[selected[j],selected[i]]}const eligible=new Set(selected.slice(0,n));
+   for(const p of choices)if(!eligible.has(p.id))p.alive=false;
+   for(const d of r.doors)d.result=choices.some(p=>p.choice===d.id&&eligible.has(p.id))?'safe':'out';
+   r.limit=n;r.opened=true;r.phase='between';log(r,'🚪 كشف الأبواب: تأهل '+n+' عشوائيًا');finish(r);return
   }
   if(r.game==='boxes'){
    if(r.phase!=='playing')err(409,'ابدأ الجولة أولًا');
