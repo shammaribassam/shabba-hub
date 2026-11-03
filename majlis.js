@@ -5,7 +5,7 @@ const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const bankText = fs.readFileSync(path.join(__dirname,'games','diwan','questions.js'),'utf8');
-const bankMatch = bankText.match(/^const questions=(\[[\s\S]*\]);?\s*$/);
+const bankMatch = bankText.match(/const questions=(\[[\s\S]*\]);?\s*$/);
 const questionBank = bankMatch ? JSON.parse(bankMatch[1]) : [];
 const categories = [...new Set(questionBank.map(q=>q[0]))];
 const rooms = new Map();
