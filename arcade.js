@@ -104,7 +104,8 @@ function action(r,b,byHost){
 }
 function hostAction(r,b){
  const type=String(b.type||'');
- if(type==='connectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');const channel=String(b.channel||'').trim().toLowerCase().replace(/^@/,'');if(!/^[a-z0-9_.-]{2,40}$/.test(channel))err(400,'اسم القناة غير صحيح');r.settings[platform]=channel;log(r,'💬 تم تعيين قناة '+platform+': '+channel);return}\n if(type==='start'){start(r);return}
+ if(type==='connectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');const channel=String(b.channel||'').trim().toLowerCase().replace(/^@/,'');if(!/^[a-z0-9_.-]{2,40}$/.test(channel))err(400,'اسم القناة غير صحيح');(r.settings||(r.settings={}))[platform]=channel;log(r,'💬 تم تعيين قناة '+platform+': '+channel);return}
+ if(type==='start'){start(r);return}
  if(type==='reset'){r.players=[];r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.chairs=[];r.doors=[];r.boxes=[];r.log=[];clearTimer(r);return}
  if(type==='open'){
   if(r.phase!=='ready')err(409,'الجولة ليست جاهزة');
