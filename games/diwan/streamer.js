@@ -13,41 +13,8 @@ const reverseQuestions=questions.filter(q=>q[0]==='أكمل البيت').map((q,
  options.splice(correctAt,0,first);
  return ['أكمل البيت','أكمل صدر البيت الذي عجزه «'+second+'»',...options,correctAt,q[7],q[8],q[9]];
 }).filter(Boolean);
-const poetryNames={'فصيح':'الشِعر الفصيح','نبطي':'الشِعر النبطي'};
-let activePoetryMode=(window.BSM_POETRY_FORCED_MODE==='نبطي')?'نبطي':'فصيح';
-function currentQuestionBank(){return activePoetryMode==='نبطي'?nabatiQuestions:questions.concat(reverseQuestions)}
-function fillPoetryCategories(){
- const bank=currentQuestionBank();
- const cats=[...new Set(bank.map(q=>q[0]))];
- $('cat').innerHTML='<option value="الكل">كل الفئات — '+bank.length+' سؤال</option>'+
-   cats.map(c=>'<option value="'+c+'">'+c+' — '+bank.filter(q=>q[0]===c).length+' سؤالًا</option>').join('');
-}
-fillPoetryCategories();
-state.poetryMode=activePoetryMode;
-document.body.classList.toggle('poetry-nabati',activePoetryMode==='نبطي');
-function switchPoetryMode(mode){
- if(window.BSM_POETRY_FORCED_MODE)return;
- if(mode===activePoetryMode)return;
- if(mode!=='فصيح'&&mode!=='نبطي')return;
- if(state.active)return notice('انتهِ من السؤال الحالي أولاً، ثم بدّل الديوان بضغطة واحدة.');
- activePoetryMode=mode;
- state.poetryMode=mode;
- // Reset the question panel when changing banks, while keeping leaderboard points.
- resetBonus();
- state.question='';state.answers=[];state.correct=-1;state.revealed=false;
- state.category='';state.winners=[];state.remaining=20;
- fillPoetryCategories();
- document.querySelectorAll('[data-poetry-choice]').forEach(button=>{
-  const selected=button.dataset.poetryChoice===mode;
-  button.classList.toggle('is-current',selected);
-  button.setAttribute('aria-pressed',String(selected));
- });
- broadcast();
- notice('تم الانتقال إلى '+poetryNames[mode]+' — أسئلة مستقلة، والنقاط محفوظة.');
-}
-document.querySelectorAll('[data-poetry-choice]').forEach(button=>{
- button.addEventListener('click',()=>switchPoetryMode(button.dataset.poetryChoice));
-});
+const cats=[...new Set(questions.map(q=>q[0]))];
+$('cat').innerHTML='<option value="الكل">كل الفئات — '+(questions.length+reverseQuestions.length)+' سؤال</option>'+cats.map(c=>'<option value="'+c+'">'+c+' — '+(questions.filter(q=>q[0]===c).length+reverseQuestions.filter(q=>q[0]===c).length)+' سؤالًا</option>').join('');
 function notice(s){$('gameStatus').textContent=s}
 let ws=null,tick=null;
 const answeredThisRound=new Set();
@@ -156,7 +123,7 @@ function runQuestion(){
 function next(){
  finish();answeredThisRound.clear();
  const cat=$('cat').value.split(' — ')[0];
- const pool=currentQuestionBank().filter(q=>cat==='الكل'||q[0]===cat);
+ const pool=questions.concat(reverseQuestions).filter(q=>cat==='الكل'||q[0]===cat);
  let available=pool.filter(q=>!state.seen.includes(q[1]));
  if(!available.length){const poolKeys=new Set(pool.map(q=>q[1]));state.seen=state.seen.filter(x=>!poolKeys.has(x));available=pool}
  const q=available[Math.floor(Math.random()*available.length)];
@@ -164,7 +131,7 @@ function next(){
  resetBonus();currentBonusPoemKey=q[8]||'';currentBonusVerse=Number.isInteger(q[9])?q[9]:-1;
  state.seen.push(q[1]);state.round++;
  for(const [id,e] of Object.entries(state.exclusions||{})){if(state.round>=e.untilRound)delete state.exclusions[id]}
- state.poetryMode=activePoetryMode;state.category=q[0];state.question=q[1];state.answers=q.slice(2,6);state.correct=q[6];
+ state.category=q[0];state.question=q[1];state.answers=q.slice(2,6);state.correct=q[6];
  state.remaining=20;state.winners=[];state.active=false;state.revealed=false;
  // No separate "change round" or "start round" click is needed after this.
  runQuestion();
