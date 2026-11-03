@@ -49,3 +49,13 @@ button,input,select,textarea{font:600 15px Cairo;padding:10px 12px;border-radius
 body.poetry-nabati{--night:#30251e;--night-2:#463023;--night-3:#513c29;--gold:#d9af70;--gold-light:#ffe0a2;--ivory:#f6e6c7;--sand:#e7cfaa;--ink:#382719;--green:#846341;--line:#a47a4a;--muted:#d6bea4;background:radial-gradient(ellipse at top,#6f4c30 0%,#30221a 65%,#1c1612 100%)}
 body.poetry-nabati .box{background:linear-gradient(155deg,#503823,#2d2119);border-color:#c9a06b;box-shadow:inset 0 0 0 3px #2e221b,0 18px 30px #0004}
 body.poetry-nabati header p::after{content:' • مجلس الشِعر النبطي الخليجي'}
+
+/* One-tap poetry board switching */
+.poetry-switch-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.poetry-tab{font-family:Cairo,sans-serif;font-weight:800;font-size:clamp(14px,2vw,19px);padding:14px 9px;border-radius:14px;border:2px solid #b5a17b;background:#293c40;color:#f4e8cf;cursor:pointer;min-height:58px}
+.poetry-tab:hover,.poetry-tab:focus-visible{background:#4a5650;outline-offset:3px}
+.poetry-tab.is-current{background:#e4c58b;color:#2a2116;border-color:#fff0c1;box-shadow:0 0 0 2px #e6c7935e}
+.poetry-nabati .poetry-tab{background:#4a3425;border-color:#a58a65}
+.poetry-nabati .poetry-tab.is-current{background:#ebc484;color:#30221a;border-color:#ffe1ae}
+.portrait{object-fit:contain;object-position:center;max-width:100%;height:auto}
+@media(max-width:480px){.poetry-switch{margin:10px 12px}.poetry-tab{padding:12px 5px;font-size:13px}}
