@@ -14,7 +14,7 @@ const reverseQuestions=questions.filter(q=>q[0]==='أكمل البيت').map((q,
  return ['أكمل البيت','أكمل صدر البيت الذي عجزه «'+second+'»',...options,correctAt,q[7],q[8],q[9]];
 }).filter(Boolean);
 const poetryNames={'فصيح':'الشِعر الفصيح','نبطي':'الشِعر النبطي'};
-let activePoetryMode='فصيح';
+let activePoetryMode=(window.BSM_POETRY_FORCED_MODE==='نبطي')?'نبطي':'فصيح';
 function currentQuestionBank(){return activePoetryMode==='نبطي'?nabatiQuestions:questions.concat(reverseQuestions)}
 function fillPoetryCategories(){
  const bank=currentQuestionBank();
@@ -23,7 +23,10 @@ function fillPoetryCategories(){
    cats.map(c=>'<option value="'+c+'">'+c+' — '+bank.filter(q=>q[0]===c).length+' سؤالًا</option>').join('');
 }
 fillPoetryCategories();
+state.poetryMode=activePoetryMode;
+document.body.classList.toggle('poetry-nabati',activePoetryMode==='نبطي');
 function switchPoetryMode(mode){
+ if(window.BSM_POETRY_FORCED_MODE)return;
  if(mode===activePoetryMode)return;
  if(mode!=='فصيح'&&mode!=='نبطي')return;
  if(state.active)return notice('انتهِ من السؤال الحالي أولاً، ثم بدّل الديوان بضغطة واحدة.');
