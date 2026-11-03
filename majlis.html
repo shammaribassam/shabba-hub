@@ -58,8 +58,9 @@ hr{border:0;border-top:1px solid #244152;margin:20px 0}
 'use strict';
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
-let room=params.get('room')||'', state=null, hostToken='', playerToken='', myTeamId='', es=null;
+let room=normalizeCode(params.get('room')), state=null, hostToken='', playerToken='', myTeamId='', es=null;
 const screen=params.get('view')==='screen';
+const normalizeCode=value=>String(value||'').trim().replace(/[٠-٩]/g,ch=>String(ch.charCodeAt(0)-0x660)).replace(/[۰-۹]/g,ch=>String(ch.charCodeAt(0)-0x6f0));
 const notice=msg=>{const n=$('notice');n.textContent=msg;n.style.display='block';setTimeout(()=>{if(n.textContent===msg)n.style.display='none'},4500)};
 async function api(path,data){
   const response=await fetch('/api/majlis/'+path,{
@@ -141,7 +142,7 @@ function render(s){
   }
 }
 $('create').onclick=async()=>{try{const r=await api('create',{});room=r.room;hostToken=r.hostToken;sessionStorage.setItem('bsm-majlis-host-'+room,hostToken);history.replaceState(null,'','/majlis.html?room='+room);start()}catch(e){notice(e.message)}};
-$('find-room').onclick=()=>{const code=$('join-code').value.trim();if(!/^\\d{6}$/.test(code))return notice('اكتب رمزًا من 6 أرقام');room=code;history.replaceState(null,'','/majlis.html?room='+room);start()};
+$('find-room').onclick=()=>{const code=normalizeCode($('join-code').value);if(!/^\d{6}$/.test(code))return notice('اكتب رمزًا من 6 أرقام');room=code;history.replaceState(null,'','/majlis.html?room='+room);start()};
 $('copy-join').onclick=()=>copy(roomLink(false));
 $('copy-screen').onclick=()=>copy(roomLink(true));
 $('go-screen').onclick=()=>window.open(roomLink(true),'_blank','noopener');
@@ -152,7 +153,7 @@ $('open-buzzer').onclick=()=>post('buzzer',{open:true}).catch(e=>notice(e.messag
 $('reset-buzzer').onclick=()=>post('buzzer',{open:false}).catch(e=>notice(e.message));
 $('reset-scores').onclick=()=>{if(confirm('تأكيد تصفير جميع النقاط؟'))post('reset',{reset:'scores'}).catch(e=>notice(e.message))};
 $('buzz').onclick=async()=>{try{const r=await api('buzz',{room,teamId:myTeamId,playerToken});render(r.state)}catch(e){notice(e.message)}};
-if(room&&/^\\d{6}$/.test(room))start();
+if(room&&/^\d{6}$/.test(room))start();
 })();
 </script>
 </body></html>
