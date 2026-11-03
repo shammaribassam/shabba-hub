@@ -92,6 +92,13 @@ function decorate(html, slug) {
       result = result.replaceAll('ديوان أبو البسم', 'أمسية أبو البسم');
       result = result.replaceAll('ديوان الشعر الأندلسي', 'مجلس الشِعر النبطي الخليجي');
       result = result.replaceAll('مجلس الشعر في الأندلس', 'مجلس الشِعر النبطي الخليجي');
+      // The Nabati poetry evening is intentionally silent. No player, audio element,
+      // autoplay or background-audio bootstrap appears in its host or viewer HTML.
+      result = result.replace(/<section class="diwan-audio-player"[\s\S]*?<\/section>/i, '');
+      result = result.replace(/<script src="diwan-audio\.js"><\/script>/g, '');
+      result = result.replace(/<audio\b[^>]*>[\s\S]*?<\/audio>/gi, '');
+      result = result.replace(/<audio\b[^>]*\/>/gi, '');
+
     }
     const forced = '<script>window.BSM_POETRY_FORCED_MODE=' + JSON.stringify(isAmsiya ? 'نبطي' : 'فصيح') + ';</script>';
     result = result.replace(/<head\b[^>]*>/i, m => m + forced);
