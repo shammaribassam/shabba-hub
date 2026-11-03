@@ -19,11 +19,6 @@ const games = {
     port: 4101,
     name: 'ديوان أبو البسم'
   },
-  amsiya: {
-    folder: 'diwan',
-    port: 4103,
-    name: 'أمسية أبو البسم'
-  },
   quiz: {
     folder: 'quiz',
     port: 4102,
@@ -83,25 +78,6 @@ function decorate(html, slug) {
       'شبّة أبو البسم',
       'تحديات أبو البسم'
     );
-  }
-
-  if (slug === 'amsiya' || slug === 'diwan') {
-    const isAmsiya = slug === 'amsiya';
-    result = result.replace(/<section class="poetry-switch"[\s\S]*?<\/section>/, '');
-    if (isAmsiya) {
-      result = result.replaceAll('ديوان أبو البسم', 'أمسية أبو البسم');
-      result = result.replaceAll('ديوان الشعر الأندلسي', 'مجلس الشِعر النبطي الخليجي');
-      result = result.replaceAll('مجلس الشعر في الأندلس', 'مجلس الشِعر النبطي الخليجي');
-      // The Nabati poetry evening is intentionally silent. No player, audio element,
-      // autoplay or background-audio bootstrap appears in its host or viewer HTML.
-      result = result.replace(/<section class="diwan-audio-player"[\s\S]*?<\/section>/i, '');
-      result = result.replace(/<script src="diwan-audio\.js"><\/script>/g, '');
-      result = result.replace(/<audio\b[^>]*>[\s\S]*?<\/audio>/gi, '');
-      result = result.replace(/<audio\b[^>]*\/>/gi, '');
-
-    }
-    const forced = '<script>window.BSM_POETRY_FORCED_MODE=' + JSON.stringify(isAmsiya ? 'نبطي' : 'فصيح') + ';</script>';
-    result = result.replace(/<head\b[^>]*>/i, m => m + forced);
   }
 
   const extra = shim('/' + slug);
@@ -515,7 +491,7 @@ const server = http.createServer((req, res) => {
 
   if (url.pathname === '/robots.txt') {
     return send(res, 200,
-      'User-agent: *\\nAllow: /\\nDisallow: /diwan/api/\\nDisallow: /amsiya/api/\\nDisallow: /quiz/api/\\nSitemap: https://shabba-hub.onrender.com/sitemap.xml\\n',
+      'User-agent: *\\nAllow: /\\nDisallow: /diwan/api/\\nDisallow: /quiz/api/\\nSitemap: https://shabba-hub.onrender.com/sitemap.xml\\n',
       'text/plain; charset=utf-8');
   }
 
@@ -533,7 +509,7 @@ const server = http.createServer((req, res) => {
   }
 
   const match = url.pathname.match(
-    /^\/(diwan|amsiya|quiz)(?:\/|$)/
+    /^\/(diwan|quiz)(?:\/|$)/
   );
 
   if (match) {
