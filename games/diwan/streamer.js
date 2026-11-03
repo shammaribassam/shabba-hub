@@ -1,7 +1,21 @@
 
+// Reverse-hemistich questions use the SAME authenticated poem and verse.
+// All four options come from a single poem, preserving its meter and literary style.
+const reverseQuestions=questions.filter(q=>q[0]==='أكمل البيت').map((q,i)=>{
+ const entry=bonusPoems[q[8]], verse=entry?.verses?.[q[9]];
+ if(!entry||!verse||!verse[0]||!verse[1])return null;
+ const first=verse[0],second=verse[1];
+ const alternatives=entry.verses.map(v=>v[0]).filter(v=>v&&v!==first)
+  .sort((a,b)=>Math.abs(a.length-first.length)-Math.abs(b.length-first.length))
+  .slice(0,3);
+ if(alternatives.length<3)return null;
+ const correctAt=(i+2)%4,options=alternatives.slice();
+ options.splice(correctAt,0,first);
+ return ['أكمل البيت','أكمل صدر البيت الذي عجزه «'+second+'»',...options,correctAt,q[7],q[8],q[9]];
+}).filter(Boolean);
 const poetryNames={'فصيح':'الشِعر الفصيح','نبطي':'الشِعر النبطي'};
 let activePoetryMode='فصيح';
-function currentQuestionBank(){return activePoetryMode==='نبطي'?nabatiQuestions:questions}
+function currentQuestionBank(){return activePoetryMode==='نبطي'?nabatiQuestions:questions.concat(reverseQuestions)}
 function fillPoetryCategories(){
  const bank=currentQuestionBank();
  const cats=[...new Set(bank.map(q=>q[0]))];
