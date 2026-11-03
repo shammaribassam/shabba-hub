@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js"
+    "check": "node --check server.js && node --check arcade.js && node --check arcade-chat.js"
   },
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
-    "tiktok-live-connector": "^2.1.0"
+    "tiktok-live-connector": "^2.1.0",
+    "tmi.js": "^1.8.5"
   }
 }
