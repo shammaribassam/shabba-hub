@@ -59,3 +59,44 @@ body.poetry-nabati header p::after{content:' • مجلس الشِعر النب�
 .poetry-nabati .poetry-tab.is-current{background:#ebc484;color:#30221a;border-color:#ffe1ae}
 .portrait{object-fit:contain;object-position:center;max-width:100%;height:auto}
 @media(max-width:480px){.poetry-switch{margin:10px 12px}.poetry-tab{padding:12px 5px;font-size:13px}}
+
+
+/* Nabati evening: warm Gulf majlis, intentionally visually distinct from Andalusian Diwan. */
+body.poetry-nabati{
+  --night:#251b15;--night-2:#33241b;--night-3:#473022;
+  --gold:#d6ae78;--gold-light:#f4dcaf;--ivory:#f6ecd9;
+  --sand:#ead6b8;--ink:#37271e;--green:#806246;--line:#b68b5e;--muted:#d5bea4;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(155,101,54,.32),transparent 59%),
+    linear-gradient(180deg,#3c2b20,#251b15 57%,#1b1511 100%)!important;
+}
+body.poetry-nabati::before{
+  opacity:.18;
+  background-image:
+    repeating-linear-gradient(90deg,transparent 0 42px,rgba(218,166,100,.2) 43px,transparent 44px 84px),
+    repeating-linear-gradient(0deg,transparent 0 55px,rgba(218,166,100,.10) 56px,transparent 57px 112px);
+}
+body.poetry-nabati header{
+  padding-top:30px;
+  background:linear-gradient(180deg,rgba(77,48,28,.6),transparent);
+  border-bottom:1px solid rgba(222,174,112,.23)
+}
+body.poetry-nabati header h1{color:#f6d8a0;text-shadow:0 2px 9px #090603}
+body.poetry-nabati header p::after{content:""}
+body.poetry-nabati .box{
+  background:linear-gradient(135deg,rgba(79,54,34,.97),rgba(36,26,20,.97))!important;
+  border-color:#b68b5e!important;
+  box-shadow:inset 0 0 0 4px #33241b,0 14px 32px #0c0907bb!important;
+}
+body.poetry-nabati .box:before{content:"❖";color:#eac28b}
+body.poetry-nabati h2{color:#f8d8a0;border-bottom-color:#a9805659}
+body.poetry-nabati .paper{box-shadow:0 0 0 1px #ba94674d}
+body.poetry-nabati .portrait{
+  display:block;width:100%;height:auto!important;max-height:600px;
+  object-fit:contain!important;object-position:center;
+  image-rendering:auto;filter:none!important;
+  transform:none!important;backdrop-filter:none!important;
+  border-radius:13px;
+}
+body.poetry-nabati .diwan-audio-player{display:none!important}
+@media(max-width:800px){body.poetry-nabati .portrait{max-height:none}}
