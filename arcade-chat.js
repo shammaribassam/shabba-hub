@@ -50,7 +50,7 @@ function attachTwitch(){
 }
 async function connectTwitch(channel){
  const active=[...statuses.keys()].filter(k=>k.startsWith('twitch:')&&hooks.isActive('twitch',k.slice(7)));
- if(!statuses.has(key('twitch',channel))&&active.length>=20){update('twitch',channel,'error','الحد الأقصى لاتصالات تويتش مؤقتًا 20 قناة');return}
+ if(!statuses.has(key('twitch',channel))&&active.length>20){update('twitch',channel,'error','الحد الأقصى لاتصالات تويتش مؤقتًا 20 قناة');return}
  update('twitch',channel,'connecting','جارٍ الاتصال بشات تويتش...');
  attachTwitch();
  if(!twitchConnecting){
