@@ -15,7 +15,7 @@ function chatCommand(platform,channel,username,message){
  for(const r of rooms.values()){
   if(r.expires<Date.now()||r.settings?.[platform]!==ch)continue;
   try{
-   const cmd=text.match(/^!(انضم|طرد|إنعاش|انعاش|سكيب|نجاة|مرر|كرسي|صندوق|باب)(?:\\s+(\\d+))?$/u);
+   const cmd=text.match(/^!(انضم|طرد|إنعاش|انعاش|سكيب|نجاة|مرر|كرسي|صندوق|باب)(?:\s+(\d+))?$/u);
    if(!cmd)continue;
    const name=platform+':'+who;
    let p=r.players.find(x=>x.name.toLowerCase()===name.toLowerCase());
@@ -30,7 +30,7 @@ function chatCommand(platform,channel,username,message){
  }
  return count;
 }
-function publicRoom(r){return {code:r.code,game:r.game,phase:r.phase,round:r.round,revision:r.rev,players:r.players.map(p=>({id:p.id,name:p.name,alive:p.alive,seat:p.seat||null,choice:p.choice||null,skip:p.skip||false})),active:r.active,holder:r.holder,chairs:r.chairs,doors:r.doors,boxes:r.boxes.map(b=>({id:b.id,crown:r.opened?b.crown:undefined})),opened:r.opened,limit:r.limit,log:r.log.slice(-12),winner:r.winner,settings:r.settings,deadline:r.deadline,remaining:r.remaining,startedAt:r.startedAt,now:Date.now()}}
+function publicRoom(r){return {code:r.code,game:r.game,phase:r.phase,round:r.round,revision:r.rev,players:r.players.map(p=>({id:p.id,name:p.name,alive:p.alive,seat:p.seat||null,choice:p.choice||null,skip:p.skip||false})),active:r.active,holder:r.holder,chairs:r.chairs,doors:r.doors,boxes:r.boxes.map(b=>({id:b.id,crown:r.opened?b.crown:undefined})),opened:r.opened,limit:r.limit,log:r.log.slice(-12),winner:r.winner,settings:r.settings,spin:r.spin||0,now:Date.now()}}
 function broadcast(r){r.rev++;const data='data: '+JSON.stringify(publicRoom(r))+'\n\n';for(const res of streams.get(r.code)||[])try{res.write(data)}catch(_){}}
 function get(c){const r=rooms.get(String(c||''));if(!r||r.expires<Date.now())err(404,'الغرفة غير موجودة أو انتهت');r.expires=Date.now()+TTL;return r}
 function host(r,b){if(b.hostToken!==r.hostToken)err(403,'صلاحية المقدم مطلوبة')}
@@ -48,10 +48,10 @@ function start(r){
  r.round++;r.phase='playing';r.startedAt=Date.now();clearTimer(r);r.active=null;r.holder=null;r.opened=false;
  for(const p of r.players){p.choice=null;p.seat=null}
  const a=active(r);
- if(r.game==='roulette'){r.active=pick(a).id;log(r,'🎡 صاحب الدور: '+a.find(p=>p.id===r.active).name)}
+ if(r.game==='roulette'){r.spin=(r.spin||0)+1;r.active=pick(a).id;log(r,'🎡 صاحب الدور: '+a.find(p=>p.id===r.active).name)}
  if(r.game==='doors'){r.doors=Array.from({length:Math.min(18,a.length)},(_,i)=>({id:i+1,result:null}));log(r,'🚪 اختاروا الأبواب')}
- if(r.game==='survival'){r.phase='ready';r.limit=Math.max(1,a.length-1);log(r,'🚨 بانتظار إشارة المقدم')}
- if(r.game==='bomb'){r.holder=pick(a).id;r.remaining=crypto.randomInt(12000,32001);r.phase='ready';log(r,'💣 القنبلة عند '+a.find(p=>p.id===r.holder).name)}
+ if(r.game==='survival'){r.limit=Math.min(8,Math.max(1,a.length-1));log(r,'🚨 زر النجاة مفتوح الآن')}
+ if(r.game==='bomb'){r.holder=pick(a).id;r.remaining=crypto.randomInt(12000,32001);endAt(r,r.remaining);log(r,'💣 القنبلة عند '+a.find(p=>p.id===r.holder).name)}
  if(r.game==='chairs'){r.chairs=Array.from({length:a.length-1},(_,i)=>i+1).sort(()=>Math.random()-.5);r.phase='ready';log(r,'🪑 شغّل المقطع ثم أظهر الكراسي')}
  if(r.game==='boxes'){r.boxes=Array.from({length:a.length},(_,i)=>({id:i+1,crown:false}));r.boxes[rnd(r.boxes.length)].crown=true;log(r,'🎁 اختر صندوقًا، واحد فيه التاج')}
 }
@@ -72,7 +72,7 @@ function action(r,b,byHost){
    if(type==='kick'){if(!target.alive)err(409,'اللاعب مستبعد أصلًا');target.alive=false;log(r,'🚫 '+p.name+' طرد '+target.name)}
    else {if(target.alive)err(409,'اللاعب موجود أصلًا');target.alive=true;log(r,'❤️ '+p.name+' أنعش '+target.name)}
   }else err(400,'الأمر غير معروف');
-  if(!finish(r)){const survivors=active(r);r.active=pick(survivors).id}
+  if(!finish(r)){const survivors=active(r);r.active=pick(survivors).id;r.spin=(r.spin||0)+1}
  }else if(r.game==='doors'){
   if(type!=='choose')err(400,'اختر بابًا');
   if(p.choice)err(409,'اخترت بابك مسبقًا');
@@ -115,7 +115,7 @@ function hostAction(r,b){
  if(type==='stop'){
   if(r.phase!=='playing')err(409,'الجولة ليست مفتوحة');
   if(r.game==='bomb'&&r.deadline)r.remaining=Math.max(0,r.deadline-Date.now());
-  clearTimer(r);r.phase='ready';log(r,'⏸️ أوقف المقدم الجولة');return
+  r.deadline=0;if(r.game!=='bomb')r.remaining=0;r.phase='ready';log(r,'⏸️ أوقف المقدم الجولة');return
  }
  if(type==='reveal'){
   if(r.game==='doors'){
@@ -175,7 +175,7 @@ async function handle(req,res,url){
   if(url.pathname==='/api/arcade/create'){
    if(rooms.size>=150)err(503,'الغرف ممتلئة');
    if(!['roulette','doors','survival','bomb','chairs','boxes'].includes(b.game))err(400,'اختر لعبة صحيحة');
-   const r={code:code(),game:b.game,hostToken:id(),players:[],phase:'lobby',round:0,rev:1,expires:Date.now()+TTL,active:null,holder:null,chairs:[],doors:[],boxes:[],opened:false,limit:0,log:[],winner:null,settings:{},deadline:0,remaining:0,startedAt:0};
+   const r={code:code(),game:b.game,hostToken:id(),players:[],phase:'lobby',round:0,rev:1,expires:Date.now()+TTL,active:null,holder:null,chairs:[],doors:[],boxes:[],opened:false,limit:0,log:[],winner:null,settings:{},deadline:0,remaining:0,startedAt:0,spin:0};
    rooms.set(r.code,r);return send(res,201,{room:r.code,hostToken:r.hostToken,state:publicRoom(r)})
   }
   const r=get(b.room);tick(r);
