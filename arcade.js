@@ -186,6 +186,7 @@ async function handle(req,res,url){
    if(r.phase!=='lobby')err(409,'التسجيل مقفل بعد بدء اللعب');
    if(r.players.length>=100)err(409,'الحد الأقصى 100 لاعب');
    const name=safe(b.name);if(!name)err(400,'اكتب اسمك');
+   if(/^(twitch|kick|tiktok):/i.test(name))err(400,'اختر اسمًا بدون اسم المنصة؛ هذا التنسيق محجوز للشات');
    if(r.players.some(p=>p.name.toLowerCase()===name.toLowerCase()))err(409,'الاسم مستخدم');
    const p={id:r.players.length+1,name,token:id(),alive:true,seat:null,choice:null,skip:false};
    r.players.push(p);broadcast(r);return send(res,201,{playerToken:p.token,playerId:p.id,state:publicRoom(r)})
