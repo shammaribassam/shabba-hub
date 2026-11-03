@@ -335,6 +335,13 @@ async function unifiedKickWebhook(req, res) {
     );
 
     if (results.every(x => x.ok)) {
+      // The original game webhooks verify Kick's signed payload first.
+      if (req.headers['kick-event-type'] === 'chat.message.sent') {
+        try {
+          const event = JSON.parse(body.toString('utf8'));
+          arcade.chatCommand('kick', event.broadcaster?.channel_slug || event.broadcaster?.username, event.sender?.username, event.content);
+        } catch (e) { console.warn('Arcade Kick event ignored:', e.message); }
+      }
       return send(
         res,
         200,
