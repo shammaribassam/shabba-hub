@@ -43,11 +43,12 @@ hr{border:0;border-top:1px solid #244152;margin:20px 0}
   <section class="card" id="host-controls">
     <h2>لوحة مقدم المسابقة</h2>
     <div class="grid"><div><label for="mode-select">طريقة اختيار الفريق</label><select id="mode-select"><option value="manual">المقدم يختار الفريق</option><option value="buzzer">أول فريق يضغط الجرس</option></select></div><div><label for="team-name">إضافة فريق</label><input id="team-name" maxlength="35" placeholder="مثلاً: الصقور"><button id="add-team">إضافة الفريق</button></div></div>
+    <hr><h3>أسئلة الديوان التلقائية</h3><div class="row"><select id="bank-category" aria-label="فئة الأسئلة" style="flex:1;min-width:180px"></select><button id="next-bank-question">السؤال التالي</button><button class="secondary" id="reveal-answer">إظهار الإجابة</button></div><p class="small" id="bank-info">تُسحب الأسئلة من بنك الديوان، ولا تتكرر حتى تنتهي أسئلة الفئة.</p>
     <hr><label for="question-input">السؤال المعروض على الشاشة (اختياري)</label><textarea id="question-input" maxlength="500" placeholder="اكتب السؤال هنا، أو اقرأه بصوتك من مكتبة الأسئلة..."></textarea><button id="set-question">عرض السؤال الجديد</button>
     <div class="row" style="margin-top:18px"><button id="open-buzzer">فتح الجرس للفرق</button><button class="secondary" id="reset-buzzer">إعادة ضبط الجرس</button><button class="warn" id="reset-scores">تصفير نقاط الفرق</button></div>
     <p class="small">في وضع الاختيار اليدوي اضغط «اختيار» بجانب الفريق. الإجابة شفهيّة والمقدم يمنح النقاط بنفسه.</p>
   </section>
-  <section class="card"><h2>السؤال الحالي</h2><div id="question-display" class="screen-question">بانتظار سؤال المقدم</div><p id="turn-display" style="text-align:center"></p></section>
+  <section class="card"><h2>السؤال الحالي</h2><div id="question-display" class="screen-question">بانتظار سؤال المقدم</div><div id="question-options" class="grid" style="margin-top:18px"></div><p id="answer-display" style="text-align:center;color:#83eaff"></p><p id="turn-display" style="text-align:center"></p></section>
   <section class="card"><h2>الفرق والنقاط</h2><div id="teams-list"></div></section>
   <section class="card hidden" id="player-join"><h2>اختر فريقك</h2><div id="join-teams"></div></section>
   <section class="card hidden" id="player-buzzer"><h2 id="my-team"></h2><p id="buzz-status"></p><button id="buzz">اضغط الجرس!</button></section>
@@ -110,6 +111,9 @@ function render(s){
   $('open-buzzer').disabled=s.mode!=='buzzer';
   $('reset-buzzer').disabled=s.mode!=='buzzer';
   $('question-display').textContent=s.question||'بانتظار سؤال المقدم';
+  const opts=$('question-options');opts.replaceChildren();(s.options||[]).forEach((o,i)=>{const item=make('div',(i+1)+' — '+o,'team');if(s.revealed&&i===s.answer)item.style.borderColor='#83eaff';opts.append(item)});
+  $('answer-display').textContent=s.revealed&&s.answer!==null?'الإجابة الصحيحة: '+(s.options||[])[s.answer]:'';
+  if($('bank-category').options.length&&s.category)$('bank-category').value=s.category;
   const active=s.teams.find(t=>t.id===s.activeTeamId);
   $('turn-display').textContent=active?'الدور الآن: '+active.name:s.mode==='buzzer'&&s.buzzerOpen?'الجرس مفتوح — أول فريق يضغط يحصل على الدور':'بانتظار اختيار الفريق';
   const teams=$('teams-list');teams.replaceChildren();
@@ -142,6 +146,9 @@ function render(s){
     $('buzz-status').textContent=s.mode!=='buzzer'?'المقدم يستخدم الاختيار اليدوي':s.buzzedTeamId?(s.buzzedTeamId===myTeamId?'فريقك ضغط الجرس أولًا!':'سبقكم فريق آخر'):s.buzzerOpen?'الجرس مفتوح!':'انتظر المقدم يفتح الجرس';
   }
 }
+api('categories').then(r=>{const el=$('bank-category');el.replaceChildren();for(const c of r.categories){const opt=document.createElement('option');opt.value=c;opt.textContent=c+' ('+r.counts[c]+' سؤال)';el.append(opt)}}).catch(e=>notice('تعذر تحميل فئات الأسئلة: '+e.message));
+$('next-bank-question').onclick=()=>post('next-question',{category:$('bank-category').value}).catch(e=>notice(e.message));
+$('reveal-answer').onclick=()=>post('reveal').catch(e=>notice(e.message));
 $('create').onclick=async()=>{try{const r=await api('create',{});room=r.room;hostToken=r.hostToken;sessionStorage.setItem('bsm-majlis-host-'+room,hostToken);history.replaceState(null,'','/majlis.html?room='+room);start()}catch(e){notice(e.message)}};
 $('find-room').onclick=()=>{const code=normalizeCode($('join-code').value);if(!/^\d{6}$/.test(code))return notice('اكتب رمزًا من 6 أرقام');room=code;history.replaceState(null,'','/majlis.html?room='+room);start()};
 $('copy-join').onclick=()=>copy(roomLink(false));
