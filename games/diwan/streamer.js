@@ -1,6 +1,23 @@
 
-const cats=[...new Set(questions.map(q=>q[0]))];
-$('cat').innerHTML=`<option value="الكل">كل الفئات — ${questions.length} سؤال</option>`+cats.map(c=>`<option>${c} — ${questions.filter(q=>q[0]===c).length} سؤالًا</option>`).join('');
+const poetryNames={'فصيح':'الشِعر الفصيح','نبطي':'الشِعر النبطي'};
+let activePoetryMode='فصيح';
+function currentQuestionBank(){return activePoetryMode==='نبطي'?nabatiQuestions:questions}
+function fillPoetryCategories(){
+ const bank=currentQuestionBank();
+ const cats=[...new Set(bank.map(q=>q[0]))];
+ $('cat').innerHTML='<option value="الكل">كل الفئات — '+bank.length+' سؤال</option>'+
+   cats.map(c=>'<option value="'+c+'">'+c+' — '+bank.filter(q=>q[0]===c).length+' سؤالًا</option>').join('');
+}
+fillPoetryCategories();
+$('poetryMode').onchange=function(){
+ if(state.active){this.value=activePoetryMode;return notice('انتظر نهاية السؤال الحالي قبل تبديل نوع الشِعر');}
+ activePoetryMode=this.value;
+ document.body.classList.toggle('poetry-nabati',activePoetryMode==='نبطي');
+ fillPoetryCategories();
+ state.poetryMode=activePoetryMode;
+ broadcast();
+ notice('تم اختيار '+poetryNames[activePoetryMode]+' — نقاط المشاركين محفوظة');
+};
 function notice(s){$('gameStatus').textContent=s}
 let ws=null,tick=null;
 const answeredThisRound=new Set();
@@ -109,7 +126,7 @@ function runQuestion(){
 function next(){
  finish();answeredThisRound.clear();
  const cat=$('cat').value.split(' — ')[0];
- const pool=questions.filter(q=>cat==='الكل'||q[0]===cat);
+ const pool=currentQuestionBank().filter(q=>cat==='الكل'||q[0]===cat);
  let available=pool.filter(q=>!state.seen.includes(q[1]));
  if(!available.length){const poolKeys=new Set(pool.map(q=>q[1]));state.seen=state.seen.filter(x=>!poolKeys.has(x));available=pool}
  const q=available[Math.floor(Math.random()*available.length)];
@@ -117,7 +134,7 @@ function next(){
  resetBonus();currentBonusPoemKey=q[8]||'';currentBonusVerse=Number.isInteger(q[9])?q[9]:-1;
  state.seen.push(q[1]);state.round++;
  for(const [id,e] of Object.entries(state.exclusions||{})){if(state.round>=e.untilRound)delete state.exclusions[id]}
- state.category=q[0];state.question=q[1];state.answers=q.slice(2,6);state.correct=q[6];
+ state.poetryMode=activePoetryMode;state.category=q[0];state.question=q[1];state.answers=q.slice(2,6);state.correct=q[6];
  state.remaining=20;state.winners=[];state.active=false;state.revealed=false;
  // No separate "change round" or "start round" click is needed after this.
  runQuestion();
