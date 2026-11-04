@@ -16,7 +16,7 @@ function chatCommand(platform,channel,username,message){
  for(const r of rooms.values()){
   if(r.expires<Date.now()||r.settings?.[platform]!==ch)continue;
   try{
-   const cmd=text.match(/^(?:!|！)?(انضم|طرد|إنعاش|انعاش|سكيب|نجاة|مرر|كرسي|صندوق|باب)(?:\s+(\d+))?$/u);
+   const cmd=text.match(/^(?:!|！)?(انضم|طرد|إنعاش|انعاش|سكيب|نجاة|مرر|صندوق|باب)(?:\s+(\d+))?$/u);
    if(platform!=='tiktok'&&!text.startsWith('!'))continue;
    if(!cmd)continue;
    const name=platform+':'+who;
@@ -26,7 +26,7 @@ function chatCommand(platform,channel,username,message){
     continue;
    }
    if(!p||!p.alive||r.phase!=='playing')continue;
-   const types={'طرد':'kick','إنعاش':'revive','انعاش':'revive','سكيب':'skip','نجاة':'save','مرر':'pass','كرسي':'chair','صندوق':'box','باب':'choose'};
+   const types={'طرد':'kick','إنعاش':'revive','انعاش':'revive','سكيب':'skip','نجاة':'save','مرر':'pass','صندوق':'box','باب':'choose'};
    action(r,{type:types[cmd[1]],playerToken:p.token,target:Number(cmd[2])},false);broadcast(r);count++;
   }catch(e){
    // Surface rejected chat actions to the host so a failed command is diagnosable.
@@ -36,7 +36,7 @@ function chatCommand(platform,channel,username,message){
  }
  return count;
 }
-function publicRoom(r){return {code:r.code,game:r.game,phase:r.phase,round:r.round,revision:r.rev,players:r.players.map(p=>({id:p.id,name:p.name,alive:p.alive,seat:p.seat||null,choice:p.choice||null,skip:p.skip||false})),active:r.active,holder:r.holder,chairs:r.chairs,doors:r.doors,boxes:r.boxes.map(b=>({id:b.id,crown:r.opened?b.crown:undefined})),opened:r.opened,limit:r.limit,log:r.log.slice(-12),winner:r.winner,settings:r.settings,chat:Object.fromEntries(Object.entries(r.settings).map(([p,c])=>[p,{channel:c,...chat.status(p,c)}])),spin:r.spin||0,now:Date.now()}}
+function publicRoom(r){return {code:r.code,game:r.game,phase:r.phase,round:r.round,revision:r.rev,players:r.players.map(p=>({id:p.id,name:p.name,alive:p.alive,seat:p.seat||null,choice:p.choice||null,skip:p.skip||false})),active:r.active,holder:r.holder,doors:r.doors,boxes:r.boxes.map(b=>({id:b.id,crown:r.opened?b.crown:undefined})),opened:r.opened,limit:r.limit,log:r.log.slice(-12),winner:r.winner,settings:r.settings,chat:Object.fromEntries(Object.entries(r.settings).map(([p,c])=>[p,{channel:c,...chat.status(p,c)}])),spin:r.spin||0,now:Date.now()}}
 function broadcast(r){r.rev++;const data='data: '+JSON.stringify(publicRoom(r))+'\n\n';for(const res of streams.get(r.code)||[])try{res.write(data)}catch(_){}}
 function get(c){const r=rooms.get(String(c||''));if(!r||r.expires<Date.now())err(404,'الغرفة غير موجودة أو انتهت');r.expires=Date.now()+TTL;return r}
 function host(r,b){if(b.hostToken!==r.hostToken)err(403,'صلاحية المقدم مطلوبة')}
@@ -58,7 +58,6 @@ function start(r){
  if(r.game==='doors'){r.doors=Array.from({length:Math.min(18,a.length)},(_,i)=>({id:i+1,result:null}));log(r,'🚪 اختاروا الأبواب')}
  if(r.game==='survival'){r.limit=Math.min(8,Math.max(1,a.length-1));log(r,'🚨 زر النجاة مفتوح الآن')}
  if(r.game==='bomb'){r.holder=pick(a).id;r.remaining=crypto.randomInt(12000,32001);endAt(r,r.remaining);log(r,'💣 القنبلة عند '+a.find(p=>p.id===r.holder).name)}
- if(r.game==='chairs'){r.chairs=Array.from({length:a.length-1},(_,i)=>i+1).sort(()=>Math.random()-.5);r.phase='ready';log(r,'🪑 شغّل المقطع ثم أظهر الكراسي')}
  if(r.game==='boxes'){r.boxes=Array.from({length:a.length},(_,i)=>({id:i+1,crown:false}));r.boxes[rnd(r.boxes.length)].crown=true;log(r,'🎁 اختر صندوقًا، واحد فيه التاج')}
 }
 function tick(r){if(r.game==='bomb'&&r.phase==='playing'&&r.deadline&&Date.now()>=r.deadline){const p=r.players.find(p=>p.id===r.holder);if(p){p.alive=false;log(r,'💥 خرج '+p.name)}clearTimer(r);if(!finish(r))r.phase='between';broadcast(r)}}
@@ -93,14 +92,7 @@ function action(r,b,byHost){
   if(type!=='pass'||p.id!==r.holder)err(403,'التمرير لحامل القنبلة فقط');
   const target=a.find(q=>q.id===Number(b.target)&&q.id!==p.id);if(!target)err(400,'اختر لاعبًا آخر');
   r.holder=target.id;log(r,'💣 '+p.name+' مرر إلى '+target.name);
- }else if(r.game==='chairs'){
-  if(type!=='chair')err(400,'اختر كرسيًا');
-  if(p.seat)err(409,'حجزت كرسيًا بالفعل');
-  const n=Number(b.target);
-  if(!r.chairs.includes(n)||a.some(q=>q.seat===n))err(409,'الكرسي غير متاح');
-  p.seat=n;log(r,'🪑 '+p.name+' حجز كرسي '+n);
-  if(a.filter(q=>q.seat).length===r.chairs.length){for(const q of a)if(!q.seat)q.alive=false;r.phase='between';log(r,'انتهت جولة الكراسي');finish(r)}
- }else if(r.game==='boxes'){
+ }else if(r.game==='boxes'){{
   if(type!=='box')err(400,'اختر صندوقًا');
   if(p.choice)err(409,'اخترت صندوقك');
   const n=Number(b.target);
@@ -112,9 +104,9 @@ function hostAction(r,b){
  const type=String(b.type||'');
  if(type==='connectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');let channel;try{channel=chat.clean(platform,b.channel)}catch(e){err(400,e.message)}const previous=r.settings[platform];r.settings[platform]=channel;log(r,'💬 ربط '+platform+': '+channel);if(previous&&previous!==channel)chat.disconnect(platform,previous);chat.connect(platform,channel);return}
  if(type==='disconnectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');const previous=r.settings[platform];delete r.settings[platform];if(previous)chat.disconnect(platform,previous);log(r,'🔌 فصل '+platform);return}
- if(type==='switchGame'){if(!['roulette','doors','survival','bomb','chairs','boxes'].includes(b.game))err(400,'اختر لعبة صحيحة');r.game=b.game;r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.chairs=[];r.doors=[];r.boxes=[];r.opened=false;r.limit=0;r.spin=0;clearTimer(r);for(const p of r.players){p.alive=true;p.seat=null;p.choice=null;p.skip=false}r.log=[];log(r,'🎮 لعبة جديدة بنفس الغرفة وربط الشات');return}
+ if(type==='switchGame'){if(!['roulette','doors','survival','bomb','boxes'].includes(b.game))err(400,'اختر لعبة صحيحة');r.game=b.game;r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.doors=[];r.boxes=[];r.opened=false;r.limit=0;r.spin=0;clearTimer(r);for(const p of r.players){p.alive=true;p.seat=null;p.choice=null;p.skip=false}r.log=[];log(r,'🎮 لعبة جديدة بنفس الغرفة وربط الشات');return}
  if(type==='start'){start(r);return}
- if(type==='reset'){r.players=[];r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.chairs=[];r.doors=[];r.boxes=[];r.log=[];clearTimer(r);return}
+ if(type==='reset'){r.players=[];r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.doors=[];r.boxes=[];r.log=[];clearTimer(r);return}
  if(type==='open'){
   if(r.phase!=='ready')err(409,'الجولة ليست جاهزة');
   r.phase='playing';if(r.game==='bomb')endAt(r,r.remaining);
@@ -182,8 +174,8 @@ async function handle(req,res,url){
   const b=await body(req);
   if(url.pathname==='/api/arcade/create'){
    if(rooms.size>=150)err(503,'الغرف ممتلئة');
-   if(!['roulette','doors','survival','bomb','chairs','boxes'].includes(b.game))err(400,'اختر لعبة صحيحة');
-   const r={code:code(),game:b.game,hostToken:id(),players:[],phase:'lobby',round:0,rev:1,expires:Date.now()+TTL,active:null,holder:null,chairs:[],doors:[],boxes:[],opened:false,limit:0,log:[],winner:null,settings:{},deadline:0,remaining:0,startedAt:0,spin:0};
+   if(!['roulette','doors','survival','bomb','boxes'].includes(b.game))err(400,'اختر لعبة صحيحة');
+   const r={code:code(),game:b.game,hostToken:id(),players:[],phase:'lobby',round:0,rev:1,expires:Date.now()+TTL,active:null,holder:null,doors:[],boxes:[],opened:false,limit:0,log:[],winner:null,settings:{},deadline:0,remaining:0,startedAt:0,spin:0};
    rooms.set(r.code,r);return send(res,201,{room:r.code,hostToken:r.hostToken,state:publicRoom(r)})
   }
   const r=get(b.room);tick(r);
