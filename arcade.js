@@ -92,7 +92,7 @@ function action(r,b,byHost){
   if(type!=='pass'||p.id!==r.holder)err(403,'التمرير لحامل القنبلة فقط');
   const target=a.find(q=>q.id===Number(b.target)&&q.id!==p.id);if(!target)err(400,'اختر لاعبًا آخر');
   r.holder=target.id;log(r,'💣 '+p.name+' مرر إلى '+target.name);
- }else if(r.game==='boxes'){{
+ }else if(r.game==='boxes'){
   if(type!=='box')err(400,'اختر صندوقًا');
   if(p.choice)err(409,'اخترت صندوقك');
   const n=Number(b.target);
