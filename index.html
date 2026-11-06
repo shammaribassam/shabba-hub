@@ -100,7 +100,7 @@
       <section class="future-section" id="arcade"><span class="future-pill">جديد — ألعاب أبو البسم</span><h2>🎮 ألعاب أبو البسم</h2><p>اختر لعبتك وابدأ التحدي.</p><div class="future-notes"><a href="/arcade.html" style="color:#84e6ff;font-size:15px;font-weight:800">ادخل ألعاب أبو البسم ←</a></div></section><section class="future-section" id="majlis" aria-labelledby="future-title">
         <span class="future-pill">📱 متاح للتجربة على الجوال</span>
         <h2 id="future-title">🏠 وضع المجلس والاستراحة</h2>
-        <p>مسابقة جماعية للأصدقاء والعائلة: المقدم ينشئ غرفة ويضيف الفرق، والشباب يدخلون من جوالاتهم برمز الغرفة. اختَر الفرق يدويًا أو فعّل جرس السرعة، واعرض الأسئلة والنقاط على شاشة التلفزيون. تقدر تستخدم أسئلة ديوان أبو البسم أو تكتب أسئلتك.</p>
+        <p>مسابقة جماعية للأصدقاء والعائلة: المقدم ينشئ غرفة ويضيف الفرق، والشباب يدخلون من جوالاتهم برمز الغرفة. اختَر الفرق يدويًا أو فعّل جرس السرعة، واعرض الأسئلة والنقاط على شاشة التلفزيون. تقدر تختار ديوان أبو البسم أو تحديات أبو البسم أو واحدة من ألعاب أبو البسم الخمس، وتلعبون من الجوالات بدون بث.</p>
         <div class="future-notes"><a href="/majlis.html" style="color:#84e6ff;font-size:15px;font-weight:800">ادخل وضع المجلس — إنشاء غرفة أو انضمام لاعب ←</a><div style="margin-top:6px">نسخة تجريبية: الغرف مؤقتة، وقد تنقطع عند إعادة تشغيل الخادم.</div></div>
       </section>
       <div class="under" id="about"><svg viewBox="0 0 24 24"><path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6l8-4Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span>عالم واحد، ومسابقات للبث وللجوال والاستراحات.</span></div>
@@ -110,11 +110,11 @@
   <div class="dialog-backdrop" id="preview-dialog" role="presentation">
     <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description">
       <h2 id="dialog-title"></h2>
-      <p id="dialog-description">اختر طريقة الدخول الحالية للبث المباشر. وضع المجلس متاح للتجربة بنظام الفرق والجرس والنقاط، مع أسئلة تلقائية من الديوان أو أسئلة يكتبها المقدم. المتابعون في البث يستمرون باللعب من الشات.</p>
+      <p id="dialog-description">اختر طريقة الدخول. وضع المجلس يفتح لعبة القسم نفسه للعب مع الأهل والأصحاب من الجوال، بدون بث مباشر.</p>
       <div class="dialog-actions">
         <a id="dialog-host" href="/diwan/streamer.html">لوحة الستريمر</a>
         <a id="dialog-viewer" class="viewer-link" href="/diwan/viewer.html">شاشة المتابعين</a>
-        <a class="viewer-link" href="/majlis.html">وضع المجلس </a><button type="button" id="dialog-close">رجوع</button>
+        <a class="viewer-link" id="dialog-majlis" href="/majlis.html?game=diwan">وضع المجلس</a><button type="button" id="dialog-close">رجوع</button>
       </div>
     </div>
   </div>
@@ -125,6 +125,7 @@
       const close = document.getElementById('dialog-close');
       const hostLink = document.getElementById('dialog-host');
       const viewerLink = document.getElementById('dialog-viewer');
+      const majlisLink = document.getElementById('dialog-majlis');
       let trigger = null;
       document.querySelectorAll('[data-preview]').forEach(card => card.addEventListener('click', event => {
         event.preventDefault();
@@ -133,6 +134,7 @@
         trigger = card; title.textContent = card.dataset.preview;
         hostLink.href = '/' + slug + '/streamer.html';
         viewerLink.href = '/' + slug + '/viewer.html';
+        majlisLink.href = '/majlis.html?game=' + encodeURIComponent(slug);
         dialog.classList.add('open'); document.body.style.overflow='hidden'; close.focus();
       }));
       function hide(){dialog.classList.remove('open');document.body.style.overflow='';trigger?.focus()}
