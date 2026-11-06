@@ -4,10 +4,17 @@
 const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
-const bankText = fs.readFileSync(path.join(__dirname,'games','diwan','questions.js'),'utf8');
-const bankMatch = bankText.match(/const questions=(\[[\s\S]*\]);?\s*$/);
-const questionBank = bankMatch ? JSON.parse(bankMatch[1]) : [];
-const categories = [...new Set(questionBank.map(q=>q[0]))];
+// Each Majlis question room uses the source bank of its chosen game.
+const diwanText = fs.readFileSync(path.join(__dirname,'games','diwan','questions.js'),'utf8');
+const diwanMatch = diwanText.match(/const questions=(\[[\s\S]*\]);?\s*$/);
+const quizText = fs.readFileSync(path.join(__dirname,'games','quiz','questions.js'),'utf8');
+const quizMatch = quizText.match(/^\s*window\.BSM_QUESTIONS\s*=\s*(\[[\s\S]*\])\s*;?\s*$/);
+if(!diwanMatch||!quizMatch)throw new Error('Majlis question banks missing');
+const banks = {
+  diwan: JSON.parse(diwanMatch[1]).map(q=>({category:q[0],question:q[1],options:q.slice(2,6),correct:Number(q[6])})),
+  quiz: JSON.parse(quizMatch[1]).map(q=>({category:q.category,question:q.question,options:q.options,correct:Number(q.correct)}))
+};
+const categoriesByGame = Object.fromEntries(Object.entries(banks).map(([game,list])=>[game,[...new Set(list.map(q=>q.category))]]));
 const rooms = new Map();
 const MAX_ROOMS = 200;
 const TTL_MS = 6 * 60 * 60 * 1000;
@@ -33,7 +40,7 @@ function cleanText(value, max=80) {
 }
 function publicState(room) {
   return {
-    code:room.code, mode:room.mode, question:room.question, category:room.category, options:room.options||[], revealed:!!room.revealed, answer:room.revealed?room.answer:null,
+    code:room.code, game:room.game, mode:room.mode, question:room.question, category:room.category, options:room.options||[], revealed:!!room.revealed, answer:room.revealed?room.answer:null,
     teams:room.teams.map(t=>({id:t.id,name:t.name,score:t.score,players:t.players.length})),
     activeTeamId:room.activeTeamId, buzzerOpen:room.buzzerOpen,
     buzzedTeamId:room.buzzedTeamId, revision:room.revision,
@@ -101,7 +108,12 @@ function playerAuthorized(team, body) {
 async function handle(req,res,url) {
   if(!url.pathname.startsWith('/api/majlis/'))return false;
   cleanup();
-  if(req.method==='GET' && url.pathname==='/api/majlis/categories') return json(res,200,{categories,counts:Object.fromEntries(categories.map(c=>[c,questionBank.filter(q=>q[0]===c).length]))});
+  if(req.method==='GET' && url.pathname==='/api/majlis/categories') {
+    const game=url.searchParams.get('game')||'diwan';
+    if(!banks[game])return json(res,400,{error:'لعبة غير معروفة'});
+    const categories=categoriesByGame[game];
+    return json(res,200,{game,categories,counts:Object.fromEntries(categories.map(c=>[c,banks[game].filter(q=>q.category===c).length]))});
+  }
   if(req.method==='GET' && url.pathname==='/api/majlis/state') {
     const room=getRoom(url.searchParams.get('room'));
     return json(res,room?200:404,room?publicState(room):{error:'الغرفة غير موجودة أو انتهت'});
@@ -123,7 +135,9 @@ async function handle(req,res,url) {
   try{body=await readBody(req);}catch(e){return json(res,400,{error:e.message});}
   if(url.pathname==='/api/majlis/create') {
     if(rooms.size>=MAX_ROOMS)return json(res,503,{error:'الغرف ممتلئة حاليًا'});
-    const room={code:randomCode(),hostToken:token(),mode:'manual',question:'',category:categories[0]||'',options:[],answer:null,revealed:false,usedQuestions:[],teams:[],
+    const game=String(body.game||'diwan');
+    if(!banks[game])return json(res,400,{error:'اختر لعبة صحيحة'});
+    const room={code:randomCode(),hostToken:token(),game,mode:'manual',question:'',category:categoriesByGame[game][0]||'',options:[],answer:null,revealed:false,usedQuestions:[],teams:[],
       activeTeamId:null,buzzerOpen:false,buzzedTeamId:null,revision:1,expiresAt:Date.now()+TTL_MS};
     rooms.set(room.code,room);
     return json(res,201,{room:room.code,hostToken:room.hostToken,state:publicState(room)});
@@ -150,12 +164,13 @@ async function handle(req,res,url) {
   if(!authorized(room,body))return json(res,403,{error:'صلاحية مقدم المسابقة مطلوبة'});
   if(url.pathname==='/api/majlis/next-question') {
     const category=String(body.category||room.category||'');
-    if(!categories.includes(category))return json(res,400,{error:'اختر فئة الأسئلة'});
-    const available=questionBank.map((q,i)=>({q,i})).filter(x=>x.q[0]===category&&!room.usedQuestions.includes(x.i));
-    if(!available.length)room.usedQuestions=room.usedQuestions.filter(i=>questionBank[i]?.[0]!==category);
-    const pool=available.length?available:questionBank.map((q,i)=>({q,i})).filter(x=>x.q[0]===category);
+    const bank=banks[room.game];
+    if(!categoriesByGame[room.game].includes(category))return json(res,400,{error:'اختر فئة الأسئلة'});
+    const available=bank.map((q,i)=>({q,i})).filter(x=>x.q.category===category&&!room.usedQuestions.includes(x.i));
+    if(!available.length)room.usedQuestions=room.usedQuestions.filter(i=>bank[i]?.category!==category);
+    const pool=available.length?available:bank.map((q,i)=>({q,i})).filter(x=>x.q.category===category);
     const selected=pool[crypto.randomInt(pool.length)];
-    room.usedQuestions.push(selected.i);room.category=category;room.question=selected.q[1];room.options=selected.q.slice(2,6);room.answer=Number(selected.q[6]);room.revealed=false;
+    room.usedQuestions.push(selected.i);room.category=category;room.question=selected.q.question;room.options=selected.q.options;room.answer=selected.q.correct;room.revealed=false;
     room.activeTeamId=null;room.buzzedTeamId=null;room.buzzerOpen=false;
   } else if(url.pathname==='/api/majlis/reveal') {
     room.revealed=true;
