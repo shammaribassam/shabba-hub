@@ -21,6 +21,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .screen-mode main{max-width:1200px}.screen-mode .card{padding:32px}.screen-mode .team{font-size:22px}
 .badge{display:inline-block;border-radius:999px;border:1px solid #35637a;padding:5px 12px;color:#94e9ff;font-size:12px}
 hr{border:0;border-top:1px solid #244152;margin:20px 0}
+.game-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin:16px 0}
+.game-option{display:flex;flex-direction:column;gap:8px;justify-content:center;min-height:95px;padding:14px;text-decoration:none;text-align:center;background:#132c3c;border:1px solid #37566b;border-radius:15px;color:#ecfaff;cursor:pointer}
+.game-option span{font-size:26px}.game-option strong{font-size:14px}.game-option.active{outline:2px solid #80e9ff;background:#19465b}
+.game-option:hover,.game-option:focus-visible{border-color:#80e9ff}
+@media(max-width:620px){main{padding:15px 10px 60px}header{margin-bottom:18px}.card{padding:15px}.game-options{grid-template-columns:repeat(2,minmax(0,1fr))}.game-option{min-height:88px;padding:12px 7px}#host-controls .row>button{flex:1;min-height:46px}}
 </style>
 </head>
 <body>
@@ -30,9 +35,20 @@ hr{border:0;border-top:1px solid #244152;margin:20px 0}
 <div id="landing">
   <span class="badge">جلسات الأصدقاء والعائلة</span>
   <h1>وضع المجلس والاستراحة</h1>
-  <p>مقدم المسابقة يعرض السؤال على التلفزيون، والفرق تجاوب شفهيًا. تقدر تختار الفريق بنفسك، أو تخلي أول فريق يضغط الجرس من جواله يأخذ الدور. بدون تسجيل صوت.</p>
+  <p>اختر اللعبة اللي تبيها للاستراحة أو الجلسة العائلية. تقدر تعرض الأسئلة على التلفزيون، وتخلي الشباب يشاركون من جوالاتهم بدون بث مباشر.</p>
+  <section class="card" aria-labelledby="choose-game-title"><h2 id="choose-game-title">🎮 اختر لعبتك للمجلس</h2>
+    <div class="game-options" id="game-options">
+      <button type="button" class="game-option active" data-majlis-game="diwan"><span>📜</span><strong>ديوان أبو البسم</strong></button>
+      <button type="button" class="game-option" data-majlis-game="quiz"><span>🧠</span><strong>تحديات أبو البسم</strong></button>
+      <a class="game-option" href="/arcade.html?mode=majlis&game=roulette"><span>🎡</span><strong>روليت الغدر</strong></a>
+      <a class="game-option" href="/arcade.html?mode=majlis&game=doors"><span>🚪</span><strong>أبواب المصير</strong></a>
+      <a class="game-option" href="/arcade.html?mode=majlis&game=survival"><span>🚨</span><strong>زر النجاة</strong></a>
+      <a class="game-option" href="/arcade.html?mode=majlis&game=bomb"><span>💣</span><strong>القنبلة الموقوتة</strong></a>
+      <a class="game-option" href="/arcade.html?mode=majlis&game=boxes"><span>🎁</span><strong>الصناديق الغامضة</strong></a>
+    </div><p class="small">الديوان والتحديات بنظام الفرق والأسئلة والجرس. ألعاب الغدر والمصير والنجاة والقنبلة والصناديق لها غرف خاصة للعب الجماعي من الجوال.</p>
+  </section>
   <div class="grid">
-    <section class="card"><h2>أنا مقدم المسابقة</h2><p>أنشئ غرفة، أضف الفرق، وتحكم بالأسئلة والنقاط.</p><button id="create">إنشاء غرفة جديدة</button></section>
+    <section class="card"><h2>أنا مقدم المسابقة</h2><p id="selected-intro">اللعبة المختارة: ديوان أبو البسم. أنشئ غرفة، أضف الفرق، وتحكم بالأسئلة والنقاط.</p><button id="create">إنشاء غرفة ديوان أبو البسم</button></section>
     <section class="card"><h2>أنا لاعب</h2><p>ادخل رمز الغرفة، واختر فريقك. تحتاج جوالك فقط لو كان نظام الجرس مفعّلًا.</p><label for="join-code">رمز الغرفة</label><input id="join-code" inputmode="numeric" maxlength="6" placeholder="000000"><button id="find-room">دخول الغرفة</button></section>
   </div>
   <p class="small">نسخة أولية للتجربة: الغرف مؤقتة وتختفي عند إعادة تشغيل الخادم أو بعد انتهاء صلاحيتها. لا تستخدمها لحفظ نتائج مهمة.</p>
@@ -43,7 +59,7 @@ hr{border:0;border-top:1px solid #244152;margin:20px 0}
   <section class="card" id="host-controls">
     <h2>لوحة مقدم المسابقة</h2>
     <div class="grid"><div><label for="mode-select">طريقة اختيار الفريق</label><select id="mode-select"><option value="manual">المقدم يختار الفريق</option><option value="buzzer">أول فريق يضغط الجرس</option></select></div><div><label for="team-name">إضافة فريق</label><input id="team-name" maxlength="35" placeholder="مثلاً: الصقور"><button id="add-team">إضافة الفريق</button></div></div>
-    <hr><h3>أسئلة الديوان التلقائية</h3><div class="row"><select id="bank-category" aria-label="فئة الأسئلة" style="flex:1;min-width:180px"></select><button id="next-bank-question">السؤال التالي</button><button class="secondary" id="reveal-answer">إظهار الإجابة</button></div><p class="small" id="bank-info">تُسحب الأسئلة من بنك الديوان، ولا تتكرر حتى تنتهي أسئلة الفئة.</p>
+    <hr><h3 id="bank-title">أسئلة الديوان التلقائية</h3><div class="row"><select id="bank-category" aria-label="فئة الأسئلة" style="flex:1;min-width:180px"></select><button id="next-bank-question">السؤال التالي</button><button class="secondary" id="reveal-answer">إظهار الإجابة</button></div><p class="small" id="bank-info">تُسحب الأسئلة من بنك الديوان، ولا تتكرر حتى تنتهي أسئلة الفئة.</p>
     <hr><label for="question-input">السؤال المعروض على الشاشة (اختياري)</label><textarea id="question-input" maxlength="500" placeholder="اكتب السؤال هنا، أو اقرأه بصوتك من مكتبة الأسئلة..."></textarea><button id="set-question">عرض السؤال الجديد</button>
     <div class="row" style="margin-top:18px"><button id="open-buzzer">فتح الجرس للفرق</button><button class="secondary" id="reset-buzzer">إعادة ضبط الجرس</button><button class="warn" id="reset-scores">تصفير نقاط الفرق</button></div>
     <p class="small">في وضع الاختيار اليدوي اضغط «اختيار» بجانب الفريق. الإجابة شفهيّة والمقدم يمنح النقاط بنفسه.</p>
@@ -59,6 +75,9 @@ hr{border:0;border-top:1px solid #244152;margin:20px 0}
 'use strict';
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
+const GAME_TITLES={diwan:'ديوان أبو البسم',quiz:'تحديات أبو البسم'};
+let selectedGame=params.get('game')==='quiz'?'quiz':'diwan';
+let loadedCategoriesGame='',loadingCategoriesGame='';
 let room='', state=null, hostToken='', playerToken='', myTeamId='', es=null;
 const screen=params.get('view')==='screen';
 const normalizeCode=value=>String(value||'').trim().replace(/[٠-٩]/g,ch=>String(ch.charCodeAt(0)-0x660)).replace(/[۰-۹]/g,ch=>String(ch.charCodeAt(0)-0x6f0));
@@ -84,6 +103,26 @@ function action(label,fn,cls='secondary'){
   const b=make('button',label,cls);b.addEventListener('click',()=>Promise.resolve().then(fn).catch(e=>notice(e.message)));return b;
 }
 function roomLink(view){return location.origin+'/majlis.html?room='+encodeURIComponent(room)+(view?'&view=screen':'')}
+function selectGame(game){
+  if(!GAME_TITLES[game])return;
+  selectedGame=game;
+  document.querySelectorAll('[data-majlis-game]').forEach(b=>{const on=b.dataset.majlisGame===game;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on))});
+  $('selected-intro').textContent='اللعبة المختارة: '+GAME_TITLES[game]+'. أنشئ غرفة، أضف الفرق، وتحكم بالأسئلة والنقاط.';
+  $('create').textContent='إنشاء غرفة '+GAME_TITLES[game];
+}
+async function loadCategories(game){
+  if(!GAME_TITLES[game]||loadedCategoriesGame===game||loadingCategoriesGame===game)return;
+  loadingCategoriesGame=game;
+  try{
+    const r=await api('categories?game='+encodeURIComponent(game));
+    if((state?.game||selectedGame)!==game)return;
+    const list=$('bank-category');list.replaceChildren();
+    for(const c of r.categories){const opt=document.createElement('option');opt.value=c;opt.textContent=c+' ('+r.counts[c]+' سؤال)';list.append(opt)}
+    if(state?.category&&r.categories.includes(state.category))list.value=state.category;
+    loadedCategoriesGame=game;
+  }catch(e){notice('تعذر تحميل فئات الأسئلة: '+e.message)}
+  finally{loadingCategoriesGame=''}
+}
 async function copy(s){try{await navigator.clipboard.writeText(s);notice('تم نسخ الرابط')}catch(e){notice('انسخ الرابط من شريط العنوان')}}
 function start(){
   $('landing').classList.add('hidden');$('room-area').classList.remove('hidden');
@@ -106,6 +145,12 @@ function start(){
 }
 function render(s){
   state=s;room=s.code;$('room-code').textContent=room;
+  const game=GAME_TITLES[s.game]?s.game:'diwan';selectedGame=game;
+  $('room-heading').textContent=(screen?'شاشة ':'غرفة ')+GAME_TITLES[game]+' — المجلس';
+  $('bank-title').textContent='أسئلة '+GAME_TITLES[game]+' التلقائية';
+  $('bank-info').textContent='تُسحب الأسئلة من بنك '+GAME_TITLES[game]+'، ولا تتكرر حتى تنتهي أسئلة الفئة.';
+  loadCategories(game);
+
   $('mode-label').textContent=s.mode==='buzzer'?'نظام الجرس':'اختيار المقدم';
   $('mode-select').value=s.mode;
   $('open-buzzer').disabled=s.mode!=='buzzer';
@@ -146,10 +191,12 @@ function render(s){
     $('buzz-status').textContent=s.mode!=='buzzer'?'المقدم يستخدم الاختيار اليدوي':s.buzzedTeamId?(s.buzzedTeamId===myTeamId?'فريقك ضغط الجرس أولًا!':'سبقكم فريق آخر'):s.buzzerOpen?'الجرس مفتوح!':'انتظر المقدم يفتح الجرس';
   }
 }
-api('categories').then(r=>{const el=$('bank-category');el.replaceChildren();for(const c of r.categories){const opt=document.createElement('option');opt.value=c;opt.textContent=c+' ('+r.counts[c]+' سؤال)';el.append(opt)}}).catch(e=>notice('تعذر تحميل فئات الأسئلة: '+e.message));
+document.querySelectorAll('[data-majlis-game]').forEach(b=>b.addEventListener('click',()=>selectGame(b.dataset.majlisGame)));
+selectGame(selectedGame);
+loadCategories(selectedGame);
 $('next-bank-question').onclick=()=>post('next-question',{category:$('bank-category').value}).catch(e=>notice(e.message));
 $('reveal-answer').onclick=()=>post('reveal').catch(e=>notice(e.message));
-$('create').onclick=async()=>{try{const r=await api('create',{});room=r.room;hostToken=r.hostToken;sessionStorage.setItem('bsm-majlis-host-'+room,hostToken);history.replaceState(null,'','/majlis.html?room='+room);start()}catch(e){notice(e.message)}};
+$('create').onclick=async()=>{try{const r=await api('create',{game:selectedGame});room=r.room;hostToken=r.hostToken;sessionStorage.setItem('bsm-majlis-host-'+room,hostToken);history.replaceState(null,'','/majlis.html?room='+room);start()}catch(e){notice(e.message)}};
 $('find-room').onclick=()=>{const code=normalizeCode($('join-code').value);if(!/^\d{6}$/.test(code))return notice('اكتب رمزًا من 6 أرقام');room=code;history.replaceState(null,'','/majlis.html?room='+room);start()};
 $('copy-join').onclick=()=>copy(roomLink(false));
 $('copy-screen').onclick=()=>copy(roomLink(true));
