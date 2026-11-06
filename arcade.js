@@ -16,18 +16,32 @@ function chatCommand(platform,channel,username,message){
  for(const r of rooms.values()){
   if(r.expires<Date.now()||r.settings?.[platform]!==ch)continue;
   try{
-   const cmd=text.match(/^(?:!|！)?(انضم|طرد|إنعاش|انعاش|سكيب|نجاة|مرر|صندوق|باب)(?:\s+(\d+))?$/u);
-   if(platform!=='tiktok'&&!text.startsWith('!'))continue;
-   if(!cmd)continue;
+   // Every platform accepts short game-specific chat commands; old !commands still work.
+   const normalized=text.replace(/^[!！]/u,'').trim();
+   const cmd=normalized.match(/^(انضم|طرد|إنعاش|انعاش|سكيب|نجاة|مرر|صندوق|باب)(?:\s+([0-9٠-٩۰-۹]+))?$/u);
+   const bareNumber=normalized.match(/^([0-9٠-٩۰-۹]+)$/u);
    const name=platform+':'+who;
    let p=r.players.find(x=>x.name.toLowerCase()===name.toLowerCase());
-   if(cmd[1]==='انضم'){
+   if(cmd?.[1]==='انضم'&&!cmd[2]){
     if(r.phase==='lobby'&&!p&&r.players.length<100){p={id:r.players.length+1,name,token:id(),alive:true,seat:null,choice:null,skip:false};r.players.push(p);log(r,'💬 انضم '+name);broadcast(r);count++}
     continue;
    }
    if(!p||!p.alive||r.phase!=='playing')continue;
-   const types={'طرد':'kick','إنعاش':'revive','انعاش':'revive','سكيب':'skip','نجاة':'save','مرر':'pass','صندوق':'box','باب':'choose'};
-   action(r,{type:types[cmd[1]],playerToken:p.token,target:Number(cmd[2])},false);broadcast(r);count++;
+   const typesByGame={
+    roulette:{'طرد':'kick','إنعاش':'revive','انعاش':'revive','سكيب':'skip'},
+    doors:{'باب':'choose'},
+    survival:{'نجاة':'save'},
+    bomb:{'مرر':'pass'},
+    boxes:{'صندوق':'box'}
+   };
+   const numberText=bareNumber?.[1]||cmd?.[2]||'';
+   const westernDigits=numberText.replace(/[٠-٩]/g,d=>String(d.charCodeAt(0)-0x660)).replace(/[۰-۹]/g,d=>String(d.charCodeAt(0)-0x6f0));
+   const type=bareNumber?(r.game==='doors'?'choose':r.game==='boxes'?'box':null):typesByGame[r.game]?.[cmd?.[1]];
+   if(!type)continue;
+   const needsNumber=['kick','revive','pass','box','choose'].includes(type);
+   if(needsNumber&&!/^[0-9]+$/.test(westernDigits))continue;
+   if(!needsNumber&&westernDigits)continue;
+   action(r,{type,playerToken:p.token,target:needsNumber?Number(westernDigits):undefined},false);broadcast(r);count++;
   }catch(e){
    // Surface rejected chat actions to the host so a failed command is diagnosable.
    log(r,'⚠️ أمر '+platform+' من '+who+' لم ينفذ: '+(e.message||'خطأ غير معروف'));
