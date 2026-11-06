@@ -22,7 +22,9 @@ function chatCommand(platform,channel,username,message){
    const bareNumber=normalized.match(/^([0-9٠-٩۰-۹]+)$/u);
    const name=platform+':'+who;
    let p=r.players.find(x=>x.name.toLowerCase()===name.toLowerCase());
+   // Joining must use !انضم. Other game actions do not require an exclamation.
    if(cmd?.[1]==='انضم'&&!cmd[2]){
+    if(!/^[!！]\s*انضم$/u.test(text))continue;
     if(r.phase==='lobby'&&!p&&r.players.length<100){p={id:r.players.length+1,name,token:id(),alive:true,seat:null,choice:null,skip:false};r.players.push(p);log(r,'💬 انضم '+name);broadcast(r);count++}
     continue;
    }
