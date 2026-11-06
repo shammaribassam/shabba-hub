@@ -54,14 +54,15 @@ a,.status,details summary{color:#f6cb79}
 .platform p{margin:10px 0 0;line-height:1.6;overflow-wrap:anywhere}
 #chatBadge{margin-inline-start:7px;background:#403025;border-color:#a6794a;color:#ffe2a8}
 @media(max-width:650px){.platforms{grid-template-columns:1fr}.platform{padding:15px}.platform input{flex-basis:100%}}
-</style></head><body><main><header><div><b style="color:var(--cyan)">BSM WORLD</b> · ألعاب أبو البسم</div><a href="/">⌂ الرئيسية</a></header>
-<h1>🎮 ألعاب أبو البسم</h1><p>اختر لعبتك وابدأ التحدي.</p>
+</style></head><body><main><header><div><b style="color:var(--cyan)">BSM WORLD</b> · ألعاب أبو البسم</div><a id="backToHome" href="/">⌂ الرئيسية</a></header>
+<h1 id="arcadeHeading">🎮 ألعاب أبو البسم</h1><p id="arcadeSubtitle">اختر لعبتك وابدأ التحدي.</p>
+<div id="localModeInfo" class="notice hide">🏠 <b>وضع المجلس والاستراحة:</b> ما تحتاج بث ولا ربط شات. المقدم ينشئ غرفة ويرسل رابط اللاعبين، ويقدر يعرض شاشة اللعبة على التلفزيون.</div>
 <section id="choose" class="panel"><h2><span class="step-num">١</span> اختر لعبتك</h2><div class="games" id="games"></div><p class="small">اضغط على اللعبة، ونفتح لك غرفة المقدم مباشرة.</p><button class="secondary" onclick="showJoin()">🔑 عندي رمز غرفة — دخول لاعب</button></section>
 <section id="joinPanel" class="panel hide"><h2>انضم إلى غرفة</h2><div class="flex"><input id="roomInput" placeholder="رمز الغرفة 6 أرقام" inputmode="numeric" maxlength="6"><input id="nameInput" placeholder="اسمك في اللعبة" maxlength="35"><button onclick="join()">انضم</button></div></section>
 <section id="roomPanel" class="hide">
  <div class="panel"><div class="room-intro"><div><h2 id="gameTitle"></h2><span class="tag" id="phase"></span></div><div class="center"><div class="small muted">رمز الغرفة</div><b class="room-code" id="roomCode"></b></div></div>
  <div class="invite" id="invitePanel"><strong><span class="step-num">٢</span> ادع اللاعبين</strong><p>انسخ الرابط وأرسله للشباب، أو خلهم يدخلون برمز الغرفة.</p><button class="gold big-action" onclick="copyLink('player')">🔗 نسخ رابط دخول اللاعبين</button> <span class="tag" id="waitingCount">بانتظار اللاعبين</span></div>
- <details><summary>📺 شاشة البث وروابط إضافية</summary><div class="flex"><button class="secondary" onclick="copyLink('screen')">نسخ رابط شاشة OBS</button><button class="secondary" onclick="openScreen()">فتح شاشة العرض</button><button class="secondary" onclick="location.href='/arcade.html'">اختيار لعبة أخرى</button></div></details></div>
+ <details><summary>📺 شاشة البث وروابط إضافية</summary><div class="flex"><button class="secondary" onclick="copyLink('screen')">نسخ رابط الشاشة</button><button class="secondary" onclick="openScreen()">فتح شاشة العرض</button><button class="secondary" onclick="location.href='/arcade.html'">اختيار لعبة أخرى</button></div></details></div>
  <details id="rulesPanel" class="panel" open><summary>📣 شرح اللعبة للمشاركين</summary><div class="rules-grid"><p><b>🎯 الفكرة:</b> <span id="rulesIntro"></span></p><p><b>🎮 طريقة اللعب:</b> <span id="rulesHow"></span></p><p><b>🏆 الفوز:</b> <span id="rulesWin"></span></p><button class="secondary" onclick="copyRules()">📋 نسخ شرح اللعبة</button></div></details>
  <div class="panel" id="hostControls"><h2><span class="step-num">٣</span> تشغيل اللعبة</h2><details id="chatDetails"><summary>💬 ربط الشات <span id="chatBadge" class="tag">اختياري</span></summary>
  <p class="small">اربط قنواتك من هنا، والمتابع يشارك بأمر <b>!انضم</b> في الشات أو يدخل من الرابط. لا يحتاج المتابع إلى تسجيل دخول.</p>
@@ -83,6 +84,9 @@ a,.status,details summary{color:#f6cb79}
 </section><div id="toast"></div>
 <script>
 const G={roulette:['🎡','روليت الغدر','السكيب مرة واحدة لكل لاعب، والطرد والإنعاش لصاحب الدور فقط'],doors:['🚪','أبواب المصير','اللاعب يختار بابًا، والمقدم يحدد الناجين ويكشف النتيجة'],survival:['🚨','زر النجاة','أول اللاعبين ضغطًا يتأهلون'],bomb:['💣','القنبلة الموقوتة','مؤقت مخفي والقنبلة تنتقل بين اللاعبين'],boxes:['🎁','الصناديق الغامضة','صندوق واحد فيه التاج، والفائز صاحبه']};
+const landingParams=new URLSearchParams(location.search);
+const majlisMode=landingParams.get('mode')==='majlis';
+const chosenGame=G[landingParams.get('game')]?landingParams.get('game'):null;
 const RULES={
  roulette:{intro:'عجلة الحظ تختار لاعبًا في كل دور.',how:'صاحب الدور يقدر يطرد لاعبًا، أو يرجّع لاعبًا مستبعدًا، أو يستخدم سكيب مرة واحدة فقط طوال اللعبة. بعدها تدور العجلة من جديد.',win:'آخر لاعب يبقى في المنافسة يفوز.'},
  doors:{intro:'كل لاعب يختار بابًا من الأبواب المرقّمة.',how:'بعد ما يختار الجميع، يحدد المقدم عدد الناجين، والنظام يختار المتأهلين عشوائيًا ويكشف الأبواب. ما فيه باب مضمون.',win:'يستمر المتأهلون للجولات التالية حتى يبقى لاعب واحد.'},
@@ -94,7 +98,7 @@ let room=new URLSearchParams(location.search).get('room')||'',role=new URLSearch
 const el=id=>document.getElementById(id),num=id=>Number(el(id).value);
 function toast(msg){const t=el('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>t.style.display='none',3800)}
 async function api(route,b,method='POST'){const url='/api/arcade/'+route+(route==='state'&&method==='GET'?'?room='+encodeURIComponent(room):'');let resp;try{resp=await fetch(url,{method,headers:{'content-type':'application/json'},body:method==='POST'?JSON.stringify(b):undefined})}catch(_){throw Error('تعذّر الاتصال بالخادم. تأكد من اتصال الإنترنت وحاول مجددًا')}let data;try{data=await resp.json()}catch(_){throw Error('تعذّر قراءة استجابة الخادم ('+resp.status+')')}if(!resp.ok)throw Error(data.error||'تعذّر تنفيذ الطلب ('+resp.status+')');return data}
-function url(r){return location.origin+'/arcade.html?room='+encodeURIComponent(room)+'&role='+r}
+function url(r){return location.origin+'/arcade.html?room='+encodeURIComponent(room)+'&role='+r+(majlisMode?'&mode=majlis':'')}
 function copyRules(){if(!state)return;const r=RULES[state.game],g=G[state.game];const t=g[0]+' '+g[1]+'\n🎯 الفكرة: '+r.intro+'\n🎮 طريقة اللعب: '+r.how+'\n🏆 الفوز: '+r.win;if(navigator.clipboard?.writeText)navigator.clipboard.writeText(t).then(()=>toast('تم نسخ شرح اللعبة')).catch(()=>prompt('انسخ شرح اللعبة',t));else prompt('انسخ شرح اللعبة',t)}
 function copyLink(r){navigator.clipboard.writeText(url(r)).then(()=>toast('تم نسخ الرابط')).catch(()=>prompt('انسخ الرابط',url(r)))}
 function openScreen(){window.open(url('screen'),'_blank')}
@@ -138,7 +142,7 @@ function drawWheel(s){
 function render(){
  if(!state)return;const s=state,g=G[s.game];document.body.classList.toggle('screen-role',role==='screen');drawWheel(s);el('arena').classList.toggle('roulette-active',s.game==='roulette'&&s.players.length>0);const visible=(id,on)=>el(id).classList.toggle("hide",!on);visible("startBtn",s.phase==="lobby");visible("openBtn",s.phase==="ready");visible("stopBtn",s.phase==="playing"&&["bomb","survival"].includes(s.game));visible("nextBtn",s.phase==="between");visible("endBtn",s.game==="roulette"&&s.phase==="playing");visible("playerExtra",s.game==="roulette"||s.game==="bomb");visible("boxesRevealBtn",s.game==="boxes"&&s.phase==="playing");visible("doorsTools",s.game==="doors"&&s.phase==="playing");visible("rouletteTools",s.game==="roulette"&&s.phase==="playing");el("rouletteActive").textContent=s.active?"صاحب الدور: "+(s.players.find(p=>p.id===s.active)?.name||""):"";el("waitingCount").textContent=s.players.length+" مشارك";el("invitePanel").classList.toggle("hide",s.phase!=="lobby");if(document.activeElement!==el('switchGameSelect'))el('switchGameSelect').value=s.game;el('gameTitle').textContent=g[0]+' '+g[1];const rules=RULES[s.game];el('rulesPanel').classList.toggle('hide',role!=='host');el('rulesIntro').textContent=rules.intro;el('rulesHow').textContent=rules.how;el('rulesWin').textContent=rules.win;el('roomCode').textContent=room;el('phase').textContent=({lobby:'التسجيل مفتوح',ready:'بانتظار المقدم',playing:'الجولة جارية',between:'انتهت الجولة',finished:'انتهت اللعبة'})[s.phase];el('hostControls').classList.toggle('hide',role!=='host');el('playerControls').classList.toggle('hide',role!=='player');el('hostHint').textContent=g[2];el('actionHint').textContent=g[2];el('myIdentity').textContent='رقمك في اللعبة: '+playerId;const names={twitch:'تويتش',kick:'كيك',tiktok:'تيك توك'},states={connected:'🟢',connecting:'🟡',waiting:'🟡',error:'🔴',idle:'⚪'};let linked=0;
  for(const p of ['twitch','kick','tiktok']){const info=s.chat?.[p],channel=s.settings?.[p],input=el(p+'Channel');if(channel&&document.activeElement!==input)input.value=channel;if(channel)linked++;el(p+'Status').textContent=channel?(states[info?.state]||'⚪')+' @'+channel+' — '+(info?.detail||'جارٍ الإعداد'):'⚪ غير مربوط'}
- el('chatBadge').textContent=linked+' / 3';
+ el('chatBadge').textContent=linked+' / 3';el('chatDetails').classList.toggle('hide',majlisMode);
  const a=s.players.filter(p=>p.alive);el('count').textContent='('+a.length+' نشط / '+s.players.length+')';
  el('players').replaceChildren();for(const p of s.players){const d=document.createElement('div');d.className='player'+(!p.alive?' out':'')+(s.active===p.id||s.holder===p.id?' active':'');const b=document.createElement('strong');b.textContent='#'+p.id+' '+p.name;const t=document.createElement('small');t.textContent=!p.alive?'مستبعد':p.choice?'اختيار '+p.choice:s.active===p.id?'صاحب الدور':s.holder===p.id?'حامل القنبلة':'مشارك';d.append(b,t);el('players').append(d)}
  el('heroEmoji').textContent=g[0];let title=({lobby:'بانتظار انضمام اللاعبين',ready:'المقدم يجهّز الجولة',playing:'الجولة شغّالة',between:'انتهت الجولة — ابدأ التالية',finished:'🏆 انتهت اللعبة'})[s.phase];
@@ -158,6 +162,7 @@ function render(){
  el('log').replaceChildren();for(const line of [...s.log].reverse()){const d=document.createElement('div');d.textContent=line;el('log').append(d)}
  if(role==='screen'){el('hostControls').classList.add('hide');el('playerControls').classList.add('hide')}
 }
-el('games').innerHTML=Object.entries(G).map(([id,g])=>'<button class="game" onclick="create(\''+id+'\')"><span class="emoji">'+g[0]+'</span><strong>'+g[1]+'</strong><small>'+g[2]+'</small></button>').join('');
+el('games').innerHTML=Object.entries(G).filter(([id])=>!majlisMode||!chosenGame||id===chosenGame).map(([id,g])=>'<button class="game" onclick="create(\''+id+'\')"><span class="emoji">'+g[0]+'</span><strong>'+g[1]+'</strong><small>'+g[2]+'</small><span style="margin-top:8px;color:#ffe0a1">'+(majlisMode?'إنشاء غرفة مجلس':'إنشاء غرفة')+'</span></button>').join('');
+if(majlisMode){el('localModeInfo').classList.remove('hide');el('backToHome').href='/majlis.html';el('backToHome').textContent='⌂ اختيار لعبة المجلس';el('arcadeHeading').textContent=chosenGame?'🏠 '+G[chosenGame][1]+' — وضع المجلس':'🏠 ألعاب أبو البسم — وضع المجلس';el('arcadeSubtitle').textContent='اضغط إنشاء غرفة، وبعدها أرسل رابط الدعوة للشباب على جوالاتهم. ما تحتاج بثًا مباشرًا.';}
 if(!room)el('joinPanel').classList.add('hide');if(room){load();el('roomInput').value=room;if(role==='host'&&!hostToken)role='player';if(role==='screen'){enter()}else if(role==='host'&&hostToken||role==='player'&&playerToken){enter()}else{el('choose').classList.add('hide');el('joinPanel').classList.remove('hide')}} 
 </script></main></body></html>
