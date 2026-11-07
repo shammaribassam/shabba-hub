@@ -1,0 +1,65 @@
+{
+  "category": "wrestling",
+  "questions": [
+    {
+      "question": "من المصارع المعروف بلقب The Phenomenal One؟",
+      "answer": "إيه جي ستايلز",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2006؟",
+      "answer": "ري ميستيريو",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2010؟",
+      "answer": "إيدج",
+      "value": 200
+    },
+    {
+      "question": "من المصارع الذي اشتهر بلقب The Game؟",
+      "answer": "تربل إتش",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2005؟",
+      "answer": "باتيستا",
+      "value": 400
+    },
+    {
+      "question": "من أول بطل WWE Universal عند إطلاق اللقب عام 2016؟",
+      "answer": "فين بالور",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة WWE في WrestleMania 21 بعد هزيمة جون برادشو ليفيلد؟",
+      "answer": "جون سينا",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة WWE في WrestleMania 20 بالمباراة الثلاثية؟",
+      "answer": "كريس بنوا",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة G1 Climax في NJPW عام 2018؟",
+      "answer": "هيروشي تاناهاشي",
+      "value": 600
+    },
+    {
+      "question": "من فاز ببطولة Best of the Super Juniors في NJPW عام 2015؟",
+      "answer": "كوشيدا",
+      "value": 600
+    },
+    {
+      "question": "من كان أول بطل NXT UK عام 2017؟",
+      "answer": "بيت دان",
+      "value": 600
+    },
+    {
+      "question": "من فاز ببطولة IWGP World Heavyweight الأولى عام 2021 بعد توحيد الألقاب؟",
+      "answer": "كوتا إيبوشي",
+      "value": 600
+    }
+  ]
+}
