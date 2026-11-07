@@ -83,3 +83,14 @@ test('question timeouts advance to steal and then to next turn',async()=>{
   assert.equal(s.phase,'board');assert.equal(s.turn,1);assert.equal(s.used,1);
  }finally{Date.now=original}
 });
+
+test('homepage ordering and inline viewer script are valid',()=>{
+ const fs=require('node:fs'),vm=require('node:vm');
+ const home=fs.readFileSync(require('node:path').join(__dirname,'index.html'),'utf8');
+ const arcade=home.indexOf('id="arcade"'),seen=home.indexOf('id="seen"'),majlis=home.indexOf('id="majlis"');
+ assert.ok(arcade>=0&&arcade<seen&&seen<majlis,'majlis must remain the final game section');
+ const html=fs.readFileSync(require('node:path').join(__dirname,'seen.html'),'utf8');
+ const script=html.match(/<script>([\\s\\S]*?)<\\/script>/);
+ assert.ok(script,'trivia browser script exists');
+ new vm.Script(script[1],{filename:'seen.html'});
+});
