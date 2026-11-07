@@ -17,7 +17,17 @@ function clean(platform,value){
  if(!pattern.test(v))throw Error('اسم القناة غير صحيح لهذه المنصة');
  return v;
 }
-function bind(value){hooks={...hooks,...value}}
+const subscribers=[];
+function bind(value){
+ subscribers.push(value);
+ hooks={
+  onMessage:(...args)=>subscribers.reduce((count,listener)=>{
+   try{return count+Number(listener.onMessage?.(...args)||0)}catch(e){console.error('Chat listener:',e.message);return count}
+  },0),
+  onStatus:(...args)=>{for(const listener of subscribers)try{listener.onStatus?.(...args)}catch(e){console.error('Status listener:',e.message)}},
+  isActive:(...args)=>subscribers.some(listener=>{try{return !!listener.isActive?.(...args)}catch(_){return false}})
+ };
+}
 function status(platform,channel){return statuses.get(key(platform,channel))||{state:'idle',detail:'لم يتم الربط'}}
 function update(platform,channel,state,detail){
  const k=key(platform,channel),previous=statuses.get(k);
