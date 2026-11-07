@@ -311,12 +311,51 @@ const raw = {
  ['ما الشركة التي صنعت سيارة 300SL Gullwing؟','مرسيدس بنز']
  ]]
 };
+// Large question banks are stored as separate JSON packs under seen-question-packs/.
+// The target is 2,000 genuinely distinct, reviewed questions in EACH category.
+// Do not fake progress by rephrasing existing facts or duplicating answers.
+const fs=require('node:fs');
+const path=require('node:path');
+const crypto=require('node:crypto');
+const TARGET_PER_CATEGORY=2000;
+const LEVELS=[200,400,600];
 const categories=Object.entries(raw).map(([id,[name,...tiers]])=>({
- id,name,tiers:tiers.map((items,tier)=>items.map(([question,answer],i)=>({
- id:id+'-'+tier+'-'+i,question,answer,value:[200,400,600][tier]
+ id,name,target:TARGET_PER_CATEGORY,
+ tiers:tiers.map((items,tier)=>items.map(([question,answer],i)=>({
+ id:id+'-'+tier+'-'+i,question,answer,value:LEVELS[tier]
  })))
 }));
+function normalized(text){
+ return String(text||'').normalize('NFKC').replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim().toLowerCase();
+}
+function loadPacks(dir=path.join(__dirname,'seen-question-packs')){
+ if(!fs.existsSync(dir))return;
+ const files=fs.readdirSync(dir).filter(f=>f.endsWith('.json')).sort();
+ const index=new Map(categories.map(c=>[c.id,c]));
+ const seen=new Map(categories.map(c=>[c.id,new Set(c.tiers.flat().map(q=>normalized(q.question)))]));
+ for(const filename of files){
+  const full=path.join(dir,filename);
+  const pack=JSON.parse(fs.readFileSync(full,'utf8'));
+  const cat=index.get(pack.category);
+  if(!cat)throw Error('Unknown trivia category in '+filename);
+  if(!Array.isArray(pack.questions))throw Error('Missing questions array in '+filename);
+  for(let i=0;i<pack.questions.length;i++){
+   const item=pack.questions[i],question=String(item.question||'').trim(),answer=String(item.answer||'').trim();
+   const value=Number(item.value),tier=LEVELS.indexOf(value),key=normalized(question);
+   if(!key||!answer||tier<0||question.length>500||answer.length>500)throw Error('Invalid question '+filename+':'+(i+1));
+   if(seen.get(cat.id).has(key))throw Error('Duplicate question '+filename+':'+(i+1));
+   if(cat.tiers.reduce((n,t)=>n+t.length,0)>=TARGET_PER_CATEGORY)throw Error('Category exceeds 2000 questions: '+cat.id);
+   seen.get(cat.id).add(key);
+   const id=cat.id+'-p-'+crypto.createHash('sha256').update(key).digest('hex').slice(0,16);
+   cat.tiers[tier].push({id,question,answer,value});
+  }
+ }
+}
+loadPacks();
 for(const c of categories){
- if(c.tiers.length!==3||c.tiers.some(t=>t.length!==6))throw Error('Bad category '+c.id);
+ if(c.tiers.length!==3||c.tiers.some(t=>t.length<2))throw Error('Not enough questions in '+c.id);
+ const total=c.tiers.reduce((n,t)=>n+t.length,0);
+ if(total>TARGET_PER_CATEGORY)throw Error('Exceeded target in '+c.id);
+ c.count=total;c.remaining=TARGET_PER_CATEGORY-total;
 }
 module.exports=categories;
