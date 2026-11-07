@@ -148,6 +148,7 @@ function openRoom(id){
 function update(next){
  if(!next||next.room!==roomId)return;
  const questionChanged=state?.current?.slot!==next.current?.slot||state?.current?.stage!==next.current?.stage;
+ if(questionChanged)secret='';
  state=next;serverOffset=Date.now()-next.now;
  render();if(questionChanged)getSecret();
 }
