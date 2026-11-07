@@ -22,14 +22,14 @@ async function call(endpoint,data={},method='POST',id=''){
 }
 test('bank tracks real progress toward 2000 unique questions per category',()=>{
  assert.equal(questions.length,14);
- assert.equal(questions.reduce((n,c)=>n+c.tiers.flat().length,0),336);
+ assert.ok(questions.reduce((n,c)=>n+c.tiers.flat().length,0)>=588);
  for(const c of questions){
-  assert.deepEqual(c.tiers.map(t=>t.length),[8,8,8]);
+  assert.ok(c.tiers.every(t=>t.length>=14),c.id+' needs at least 14 questions per tier');
   assert.equal(c.target,2000);
-  assert.equal(c.count,24);
-  assert.equal(c.remaining,1976);
-  assert.equal(new Set(c.tiers.flat().map(q=>q.question)).size,24);
-  assert.equal(new Set(c.tiers.flat().map(q=>q.id)).size,24);
+  assert.equal(c.count,c.tiers.flat().length);
+  assert.equal(c.remaining,2000-c.count);
+  assert.equal(new Set(c.tiers.flat().map(q=>q.question)).size,c.count);
+  assert.equal(new Set(c.tiers.flat().map(q=>q.id)).size,c.count);
  }
 });
 test('two captains, turn-taking, steal, score, privacy and undo',async()=>{
