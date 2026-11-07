@@ -1,0 +1,95 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "من أدى دور جاك سبارو في سلسلة Pirates of the Caribbean؟",
+      "answer": "جوني ديب",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم Jaws الصادر عام 1975؟",
+      "answer": "ستيفن سبيلبرغ",
+      "value": 200
+    },
+    {
+      "question": "ما سلسلة أفلام بيكسار التي تظهر فيها شخصيتا وودي وباز يطير؟",
+      "answer": "Toy Story",
+      "value": 200
+    },
+    {
+      "question": "ما اسم الشخصية التي يؤديها توم كروز في Mission: Impossible؟",
+      "answer": "إيثان هانت",
+      "value": 200
+    },
+    {
+      "question": "من حمل الخاتم إلى موردور في ثلاثية The Lord of the Rings؟",
+      "answer": "فرودو باغنز",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور بروس واين في فيلم The Batman عام 2022؟",
+      "answer": "روبرت باتينسون",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم Pulp Fiction؟",
+      "answer": "كوينتن تارانتينو",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Parasite الصادر عام 2019؟",
+      "answer": "بونغ جون هو",
+      "value": 400
+    },
+    {
+      "question": "من أدى دور ماكسيموس في فيلم Gladiator عام 2000؟",
+      "answer": "راسل كرو",
+      "value": 400
+    },
+    {
+      "question": "في Interstellar، ما اسم الكوكب الذي يهبط عليه الفريق ويعاني تمددًا شديدًا للزمن؟",
+      "answer": "كوكب ميلر",
+      "value": 400
+    },
+    {
+      "question": "ما اسم الفندق المعزول في فيلم The Shining عام 1980؟",
+      "answer": "فندق أوفرلوك",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Mad Max: Fury Road؟",
+      "answer": "جورج ميلر",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Rashomon الياباني الصادر عام 1950؟",
+      "answer": "أكيرا كوروساوا",
+      "value": 600
+    },
+    {
+      "question": "من أخرج الفيلم الإيطالي 8½ عام 1963؟",
+      "answer": "فيديريكو فيليني",
+      "value": 600
+    },
+    {
+      "question": "من ألّف الموسيقى التصويرية لفيلم Once Upon a Time in the West؟",
+      "answer": "إنيو موريكوني",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The Seventh Seal السويدي؟",
+      "answer": "إنغمار برغمان",
+      "value": 600
+    },
+    {
+      "question": "من أدى دور العقيد كورتز في فيلم Apocalypse Now؟",
+      "answer": "مارلون براندو",
+      "value": 600
+    },
+    {
+      "question": "من كان مدير التصوير في فيلم Children of Men عام 2006؟",
+      "answer": "إيمانويل لوبيزكي",
+      "value": 600
+    }
+  ]
+}
