@@ -1,0 +1,35 @@
+{
+  "category": "series",
+  "questions": [
+    {
+      "question": "ما اسم شقيق دين وينشستر في Supernatural؟",
+      "answer": "سام وينشستر",
+      "value": 200
+    },
+    {
+      "question": "من قائد فريق The Seven في مسلسل The Boys في بداية أحداثه؟",
+      "answer": "هوملاندر",
+      "value": 200
+    },
+    {
+      "question": "ما اسم زوجة والتر وايت في Breaking Bad؟",
+      "answer": "سكايلر وايت",
+      "value": 400
+    },
+    {
+      "question": "ما اسم شقيق جيمي ماكغيل الأكبر في Better Call Saul؟",
+      "answer": "تشاك ماكغيل",
+      "value": 400
+    },
+    {
+      "question": "في Lost، ما اسم المبادرة البحثية التي أنشأت محطات على الجزيرة؟",
+      "answer": "مبادرة دارما",
+      "value": 600
+    },
+    {
+      "question": "في Dark، ما اسم ابن أولريش نيلسن الذي يختفي عام 2019؟",
+      "answer": "ميكيل",
+      "value": 600
+    }
+  ]
+}
