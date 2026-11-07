@@ -192,7 +192,7 @@ test('every category includes at least 126 original questions, balanced by value
 
 test('every 008/009 question has unique normalized text within its category',()=>{
  const fs=require('node:fs'),path=require('node:path');
- const normalized=s=>String(s).normalize('NFKC').replace(/[\\u064B-\\u065F\\u0670\\u0640]/g,'').replace(/[^\\p{L}\\p{N}]+/gu,' ').trim().toLowerCase();
+ const normalized=s=>String(s).normalize('NFKC').replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').trim().toLowerCase();
  for(const cat of questions){
   const keys=cat.tiers.flat().map(q=>normalized(q.question));
   assert.equal(new Set(keys).size,keys.length,cat.id+' has a normalized duplicate');
