@@ -1,0 +1,95 @@
+{
+  "category": "series",
+  "questions": [
+    {
+      "question": "في أي مدينة أمريكية تدور أحداث مسلسل Friends؟",
+      "answer": "نيويورك",
+      "value": 200
+    },
+    {
+      "question": "ما اسم عائلة تيريون في Game of Thrones؟",
+      "answer": "لانيستر",
+      "value": 200
+    },
+    {
+      "question": "من الممثل الذي أدى دور والتر وايت في Breaking Bad؟",
+      "answer": "براين كرانستون",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور جويل في مسلسل The Last of Us؟",
+      "answer": "بيدرو باسكال",
+      "value": 200
+    },
+    {
+      "question": "في The Mandalorian، ما الاسم الحقيقي للطفل المعروف باسم بيبي يودا؟",
+      "answer": "غروغو",
+      "value": 200
+    },
+    {
+      "question": "من الممثل الذي أدى دور تومي شيلبي في Peaky Blinders؟",
+      "answer": "كيليان مورفي",
+      "value": 200
+    },
+    {
+      "question": "في Stranger Things، ما اسم المختبر الذي أجرى تجارب على إليفن؟",
+      "answer": "مختبر هوكينز",
+      "value": 400
+    },
+    {
+      "question": "في The Boys، ما اسم الشركة التي تدير الأبطال الخارقين؟",
+      "answer": "فوت إنترناشونال (Vought)",
+      "value": 400
+    },
+    {
+      "question": "في Peaky Blinders، ما اسم شقيقة تومي شيلبي؟",
+      "answer": "آدا شيلبي",
+      "value": 400
+    },
+    {
+      "question": "في The Walking Dead، ما اسم البلدة التي حكمها الحاكم؟",
+      "answer": "وودبري",
+      "value": 400
+    },
+    {
+      "question": "في Game of Thrones، ما اسم سيف جون سنو الذي ورثه من جيور مورمونت؟",
+      "answer": "لونغكلو",
+      "value": 400
+    },
+    {
+      "question": "في Vikings، أي أبناء راغنار اشتهر بلقب عديم العظام؟",
+      "answer": "إيفار",
+      "value": 400
+    },
+    {
+      "question": "في Better Call Saul، ما اختصار مكتب المحاماة الذي شارك تشاك ماكغيل في تأسيسه؟",
+      "answer": "HHM",
+      "value": 600
+    },
+    {
+      "question": "في Dark، من والدة شارلوت دوبلر بحسب مفارقة السفر عبر الزمن؟",
+      "answer": "إليزابيث دوبلر",
+      "value": 600
+    },
+    {
+      "question": "في The Wire، ما اسم شخصية مايكل كينيث ويليامز الشهيرة؟",
+      "answer": "عمر ليتل",
+      "value": 600
+    },
+    {
+      "question": "في Succession، من الابن الأكبر للوجان روي؟",
+      "answer": "كونور روي",
+      "value": 600
+    },
+    {
+      "question": "في The Sopranos، ما اسم نادي التعري المرتبط بطاقم توني سوبرانو؟",
+      "answer": "بادا بينغ (Bada Bing)",
+      "value": 600
+    },
+    {
+      "question": "في Lost، ما اسم محطة دارما التي يتكرر فيها إدخال الأرقام كل 108 دقائق؟",
+      "answer": "محطة البجعة (The Swan)",
+      "value": 600
+    }
+  ]
+}
