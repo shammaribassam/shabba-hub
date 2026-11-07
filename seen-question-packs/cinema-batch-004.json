@@ -1,0 +1,65 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "من أدى دور غاندالف في ثلاثية The Lord of the Rings؟",
+      "answer": "إيان ماكيلين",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور الجوكر في فيلم Joker الصادر عام 2019؟",
+      "answer": "خواكين فينيكس",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور روكي بالبوا في سلسلة أفلام Rocky؟",
+      "answer": "سيلفستر ستالون",
+      "value": 200
+    },
+    {
+      "question": "من أدى صوت شخصية وودي في النسخة الإنجليزية من Toy Story؟",
+      "answer": "توم هانكس",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم Dune الصادر عام 2021؟",
+      "answer": "دينيس فيلنوف",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم La La Land الصادر عام 2016؟",
+      "answer": "داميان شازيل",
+      "value": 400
+    },
+    {
+      "question": "من أدت الدور الرئيسي في فيلم Black Swan عام 2010؟",
+      "answer": "ناتالي بورتمان",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Blade Runner الأصلي الصادر عام 1982؟",
+      "answer": "ريدلي سكوت",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم The 400 Blows الفرنسي عام 1959؟",
+      "answer": "فرانسوا تروفو",
+      "value": 600
+    },
+    {
+      "question": "من كان مدير التصوير في فيلم The Godfather عام 1972؟",
+      "answer": "غوردون ويليس",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم Tokyo Story الياباني عام 1953؟",
+      "answer": "ياسوجيرو أوزو",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم Persona السويدي عام 1966؟",
+      "answer": "إنغمار برغمان",
+      "value": 600
+    }
+  ]
+}
