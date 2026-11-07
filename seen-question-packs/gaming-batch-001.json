@@ -1,0 +1,35 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "ما اسم رفيقة جويل في لعبة The Last of Us؟",
+      "answer": "إيلي",
+      "value": 200
+    },
+    {
+      "question": "في أي سلسلة ألعاب تظهر شخصية جيرالت من ريفيا؟",
+      "answer": "The Witcher",
+      "value": 200
+    },
+    {
+      "question": "ما اسم شقيق كريتوس في لعبة God of War: Ghost of Sparta؟",
+      "answer": "ديموس",
+      "value": 400
+    },
+    {
+      "question": "ما اسم الروبوت الذي يرافق اللاعبة في بداية Portal 2؟",
+      "answer": "ويتلي",
+      "value": 400
+    },
+    {
+      "question": "من الزعيم الأخير في مسار Immortal Severance بلعبة Sekiro؟",
+      "answer": "إيشين قديس السيف",
+      "value": 600
+    },
+    {
+      "question": "في Elden Ring، ما اسم المدينة الأبدية الواقعة تحت ليمغريف؟",
+      "answer": "نوكرون",
+      "value": 600
+    }
+  ]
+}
