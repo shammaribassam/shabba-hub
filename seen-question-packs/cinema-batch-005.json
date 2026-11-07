@@ -1,0 +1,65 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "من أدى دور جون ويك في سلسلة الأفلام؟",
+      "answer": "كيانو ريفز",
+      "value": 200
+    },
+    {
+      "question": "ما فيلم ديزني الذي تدور قصته حول الأختين إلسا وآنا؟",
+      "answer": "Frozen",
+      "value": 200
+    },
+    {
+      "question": "من أخرج ثلاثية The Lord of the Rings السينمائية؟",
+      "answer": "بيتر جاكسون",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور بيتر باركر في فيلم Spider-Man: No Way Home؟",
+      "answer": "توم هولاند",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور دانيال بلينفيو في فيلم There Will Be Blood؟",
+      "answer": "دانيال داي لويس",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Oppenheimer الصادر عام 2023؟",
+      "answer": "كريستوفر نولان",
+      "value": 400
+    },
+    {
+      "question": "من أدى دور غوردون غيكو في فيلم Wall Street عام 1987؟",
+      "answer": "مايكل دوغلاس",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم The Shape of Water الصادر عام 2017؟",
+      "answer": "غييرمو ديل تورو",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم The Passion of Joan of Arc الصامت عام 1928؟",
+      "answer": "كارل تيودور دراير",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The Battle of Algiers الصادر عام 1966؟",
+      "answer": "جيلو بونتيكورفو",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم Metropolis الألماني الصامت عام 1927؟",
+      "answer": "فريتز لانغ",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم La Dolce Vita الإيطالي عام 1960؟",
+      "answer": "فيديريكو فيليني",
+      "value": 600
+    }
+  ]
+}
