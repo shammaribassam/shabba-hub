@@ -22,9 +22,9 @@ async function call(endpoint,data={},method='POST',id=''){
 }
 test('bank tracks real progress toward 2000 unique questions per category',()=>{
  assert.equal(questions.length,14);
- assert.ok(questions.reduce((n,c)=>n+c.tiers.flat().length,0)>=588);
+ assert.ok(questions.reduce((n,c)=>n+c.tiers.flat().length,0)>=756);
  for(const c of questions){
-  assert.ok(c.tiers.every(t=>t.length>=14),c.id+' needs at least 14 questions per tier');
+  assert.ok(c.tiers.every(t=>t.length>=18),c.id+' needs at least 18 questions per tier');
   assert.equal(c.target,2000);
   assert.equal(c.count,c.tiers.flat().length);
   assert.equal(c.remaining,2000-c.count);
