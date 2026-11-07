@@ -1,0 +1,65 @@
+{
+  "category": "anime",
+  "questions": [
+    {
+      "question": "في One Piece، من طبيب طاقم قبعة القش؟",
+      "answer": "توني توني تشوبر",
+      "value": 200
+    },
+    {
+      "question": "في Naruto، من زميل ساسكي وناروتو في الفريق السابع قبل ساي؟",
+      "answer": "ساكورا هارونو",
+      "value": 200
+    },
+    {
+      "question": "في Death Note، ما اسم المحقق الذي يواجه لايت ياغامي في بداية القصة؟",
+      "answer": "إل (L)",
+      "value": 200
+    },
+    {
+      "question": "في Dragon Ball، من زوجة غوكو؟",
+      "answer": "تشي تشي",
+      "value": 200
+    },
+    {
+      "question": "في One Piece، من قائد قراصنة القلب؟",
+      "answer": "ترافالغار لاو",
+      "value": 400
+    },
+    {
+      "question": "في Naruto، من عضو الأكاتسوكي الذي يستخدم فن الدمى؟",
+      "answer": "ساسوري",
+      "value": 400
+    },
+    {
+      "question": "في Bleach، من نائب قائد الفرقة العاشرة خلال أحداث مجتمع الأرواح؟",
+      "answer": "رانغيكو ماتسوموتو",
+      "value": 400
+    },
+    {
+      "question": "في Hunter x Hunter، من والد غون فريكس؟",
+      "answer": "جين فريكس",
+      "value": 400
+    },
+    {
+      "question": "في One Piece، من عضو CP9 الذي يمتلك فاكهة الذئب؟",
+      "answer": "جابرا",
+      "value": 600
+    },
+    {
+      "question": "في Demon Slayer، من حامل رتبة القمر العلوي الثاني؟",
+      "answer": "دوما",
+      "value": 600
+    },
+    {
+      "question": "في Bleach، ما اسم زانباكتو شونسوي كيوراكو؟",
+      "answer": "كاتين كيوكوتسو",
+      "value": 600
+    },
+    {
+      "question": "في Fullmetal Alchemist: Brotherhood، من الهومونكولوس الذي ينتحل شخصية الملك برادلي؟",
+      "answer": "راث (Wrath)",
+      "value": 600
+    }
+  ]
+}
