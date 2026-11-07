@@ -21,7 +21,7 @@ function room(value){
  if(!r||r.expires<Date.now())fail(404,'الغرفة غير موجودة أو انتهت');
  r.expires=Date.now()+TTL;return r;
 }
-function categoryList(){return questions.map(c=>({id:c.id,name:c.name,count:c.tiers.reduce((n,t)=>n+t.length,0)}))}
+function categoryList(){return questions.map(c=>({id:c.id,name:c.name,count:c.count,target:c.target,remaining:c.remaining,levels:c.tiers.map(t=>t.length)}))}
 function publicState(r){
  return {
   room:r.code,phase:r.phase,revision:r.rev,now:Date.now(),
@@ -72,7 +72,7 @@ function tick(r){
  else endQuestion(r);
  return true;
 }
-function selectSlots(ids){
+function selectSlots(ids,history){
  if(!Array.isArray(ids)||ids.length!==6||new Set(ids).size!==6)fail(400,'اختر ست فئات مختلفة');
  const categories=ids.map(id=>questions.find(c=>c.id===id));
  if(categories.some(c=>!c))fail(400,'فئة غير موجودة');
@@ -81,7 +81,12 @@ function selectSlots(ids){
   for(let tier=0;tier<3;tier++){
    const pool=[...c.tiers[tier]];
    for(let i=pool.length-1;i>0;i--){const j=crypto.randomInt(i+1);[pool[i],pool[j]]=[pool[j],pool[i]]}
-   for(const item of pool.slice(0,2))slots.push({...item,category:c.id,used:false});
+   const historyKey=c.id+':'+tier,used=history[historyKey]||[];
+   const available=pool.filter(q=>!used.includes(q.id));
+   const picked=[...available.slice(0,2),...pool.filter(q=>!available.includes(q)).slice(0,Math.max(0,2-available.length))].slice(0,2);
+   if(picked.length!==2)fail(500,'أسئلة غير كافية في '+c.name);
+   history[historyKey]=available.length>=2?[...used,...picked.map(q=>q.id)]:picked.map(q=>q.id);
+   for(const item of picked)slots.push({...item,category:c.id,used:false});
   }
  }
  return slots;
@@ -133,7 +138,7 @@ function hostAction(r,b){
   if(names.length!==2||names.some(x=>!x)||names[0]===names[1])fail(400,'اكتب اسمين مختلفين للفريقين');
   const duration=Number(b.duration||60),stealDuration=Number(b.stealDuration||15);
   if(![30,45,60,90].includes(duration)||![10,15,20].includes(stealDuration))fail(400,'وقت غير مدعوم');
-  r.slots=selectSlots(b.categories);r.categories=[...b.categories];r.names=names;
+  r.slots=selectSlots(b.categories,r.history);r.categories=[...b.categories];r.names=names;
   r.scores=[0,0];r.turn=0;r.current=null;r.phase='board';r.winner=null;r.lastAward=null;
   r.duration=duration;r.stealDuration=stealDuration;
   log(r,'🎲 بدأت اللعبة: ٦ فئات و٣٦ سؤالًا');return;
@@ -240,7 +245,7 @@ async function handle(req,res,url){
   const b=await body(req);
   if(url.pathname==='/api/seen/create'){
    if(rooms.size>=limits.rooms)fail(503,'الغرف ممتلئة مؤقتًا');
-   const r={code:code(),hostToken:token(),phase:'lobby',rev:1,expires:Date.now()+TTL,names:['فريق الصقور','فريق الذئاب'],scores:[0,0],turn:0,categories:[],slots:[],players:[],captains:[null,null],settings:{},current:null,log:[],winner:null,duration:60,stealDuration:15,lastAward:null};
+   const r={code:code(),hostToken:token(),phase:'lobby',rev:1,expires:Date.now()+TTL,names:['فريق الصقور','فريق الذئاب'],scores:[0,0],turn:0,categories:[],slots:[],players:[],captains:[null,null],settings:{},history:{},current:null,log:[],winner:null,duration:60,stealDuration:15,lastAward:null};
    rooms.set(r.code,r);return reply(res,201,{room:r.code,hostToken:r.hostToken,state:publicState(r)});
   }
   const r=room(b.room);if(tick(r))broadcast(r);
