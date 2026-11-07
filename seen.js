@@ -68,7 +68,7 @@ function beginSteal(r){
 function tick(r){
  const c=r.current;
  if(!c||c.paused||c.waiting||!c.deadline||Date.now()<c.deadline)return false;
- if(c.stage==='question')beginSteal(r);
+ if(c.stage==='question'&&!c.revealed)beginSteal(r);
  else endQuestion(r);
  return true;
 }
