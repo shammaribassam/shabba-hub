@@ -22,9 +22,9 @@ async function call(endpoint,data={},method='POST',id=''){
 }
 test('bank tracks real progress toward 2000 unique questions per category',()=>{
  assert.equal(questions.length,14);
- assert.ok(questions.reduce((n,c)=>n+c.tiers.flat().length,0)>=756);
+ assert.ok(questions.reduce((n,c)=>n+c.tiers.flat().length,0)>=1092);
  for(const c of questions){
-  assert.ok(c.tiers.every(t=>t.length>=18),c.id+' needs at least 18 questions per tier');
+  assert.ok(c.tiers.every(t=>t.length>=26),c.id+' needs at least 26 questions per tier');
   assert.equal(c.target,2000);
   assert.equal(c.count,c.tiers.flat().length);
   assert.equal(c.remaining,2000-c.count);
@@ -165,4 +165,18 @@ test('new rooms reuse browser rotation without repeating questions until tier de
  const result=await call('host',{room:created.room,hostToken:created.hostToken,type:'start',names:['أ','ب'],categories:chosen,rotation});
  assert.equal(result.status,200);
  assert.equal(result.data.state.slots.length,36);
+});
+
+test('batch 004 and 005 each contain balanced tiers for every category',()=>{
+ const fs=require('node:fs'),path=require('node:path');
+ const ids=questions.map(c=>c.id);
+ for(const id of ids){
+  for(const batch of ['004','005']){
+   const pack=JSON.parse(fs.readFileSync(path.join(__dirname,'seen-question-packs',id+'-batch-'+batch+'.json'),'utf8'));
+   assert.equal(pack.category,id);
+   assert.equal(pack.questions.length,12);
+   assert.deepEqual([200,400,600].map(value=>pack.questions.filter(q=>q.value===value).length),[4,4,4]);
+   assert.equal(new Set(pack.questions.map(q=>q.question)).size,12);
+  }
+ }
 });
