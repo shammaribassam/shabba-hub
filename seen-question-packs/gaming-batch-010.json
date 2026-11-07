@@ -1,0 +1,50 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "من الشخصية الرئيسية القابلة للعب في Marvel's Spider-Man الصادرة عام 2018؟",
+      "answer": "بيتر باركر",
+      "value": 200
+    },
+    {
+      "question": "في Resident Evil 4، من التاجر الذي يعرض الأسلحة والترقيات على ليون؟",
+      "answer": "التاجر (The Merchant)",
+      "value": 200
+    },
+    {
+      "question": "في The Last of Us، ما اسم الفتاة التي يرافقها جويل؟",
+      "answer": "إيلي",
+      "value": 200
+    },
+    {
+      "question": "في Resident Evil 7، ما اسم العائلة التي يحتجز أفرادها إيثان في لويزيانا؟",
+      "answer": "عائلة بيكر",
+      "value": 400
+    },
+    {
+      "question": "في Elden Ring، في أي منطقة تقع قلعة ريدمان التي تقام فيها احتفالية رادان؟",
+      "answer": "كايلد",
+      "value": 400
+    },
+    {
+      "question": "في Metal Gear Solid 2، ما اسم المنشأة البحرية التي تدور فيها معظم مهمة رايدن؟",
+      "answer": "بيغ شيل (Big Shell)",
+      "value": 400
+    },
+    {
+      "question": "في Resident Evil 0، من الجندي الهارب الذي يرافق ريبيكا تشامبرز؟",
+      "answer": "بيلي كوين",
+      "value": 600
+    },
+    {
+      "question": "في Sekiro، في أي منطقة يقاتل وولف الزعيمة ليدي باترفلاي؟",
+      "answer": "عقار هيراتا",
+      "value": 600
+    },
+    {
+      "question": "في Hollow Knight، ما الاسم الحقيقي للزعيم Dung Defender؟",
+      "answer": "أوغريم",
+      "value": 600
+    }
+  ]
+}

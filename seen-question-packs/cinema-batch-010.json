@@ -1,0 +1,50 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "من أخرج فيلم Pulp Fiction عام 1994؟",
+      "answer": "كوينتن تارانتينو",
+      "value": 200
+    },
+    {
+      "question": "ما اسم فيلم بيكسار الذي تظهر فيه شخصيتا وودي وباز يطير؟",
+      "answer": "Toy Story",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور جاك سبارو في سلسلة Pirates of the Caribbean؟",
+      "answer": "جوني ديب",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم Whiplash عام 2014؟",
+      "answer": "داميان شازيل",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Blade Runner عام 1982؟",
+      "answer": "ريدلي سكوت",
+      "value": 400
+    },
+    {
+      "question": "من أدى دور الجوكر في فيلم Joker الصادر عام 2019؟",
+      "answer": "خواكين فينيكس",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Tokyo Story الياباني عام 1953؟",
+      "answer": "ياسوجيرو أوزو",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم Jeanne Dielman الصادر عام 1975؟",
+      "answer": "شانتال أكرمان",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The Battle of Algiers الصادر عام 1966؟",
+      "answer": "جيلو بونتيكورفو",
+      "value": 600
+    }
+  ]
+}
