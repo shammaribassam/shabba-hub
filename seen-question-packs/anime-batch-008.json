@@ -1,0 +1,65 @@
+{
+  "category": "anime",
+  "questions": [
+    {
+      "question": "في Naruto، من شقيق ساسكي الأكبر؟",
+      "answer": "إيتاتشي أوتشيها",
+      "value": 200
+    },
+    {
+      "question": "في One Piece، ما اسم سفينة طاقم قبعة القش الأولى؟",
+      "answer": "غوينغ ميري",
+      "value": 200
+    },
+    {
+      "question": "في Dragon Ball Z، من ابن غوكو الأكبر؟",
+      "answer": "غوهان",
+      "value": 200
+    },
+    {
+      "question": "في Attack on Titan، من قائد فرقة الاستطلاع الذي فقد ذراعه في مهمة إنقاذ إيرين؟",
+      "answer": "إروين سميث",
+      "value": 200
+    },
+    {
+      "question": "في One Piece، من قائد فرقة العنقاء ضمن قراصنة اللحية البيضاء؟",
+      "answer": "ماركو",
+      "value": 400
+    },
+    {
+      "question": "في Naruto، ما اسم السيف الذي حمله زابوزا موموتشي؟",
+      "answer": "كوبوكيري بوتشو",
+      "value": 400
+    },
+    {
+      "question": "في Hunter x Hunter، من قائد جماعة العناكب؟",
+      "answer": "كرولو لوسيلفر",
+      "value": 400
+    },
+    {
+      "question": "في Fullmetal Alchemist: Brotherhood، من العقيد الذي يستخدم قفازات خاصة لإشعال اللهب؟",
+      "answer": "روي موستانغ",
+      "value": 400
+    },
+    {
+      "question": "في Bleach، ما اسم زانباكتو هيتسوغايا توشيرو؟",
+      "answer": "هيورينمارو",
+      "value": 600
+    },
+    {
+      "question": "في One Piece، من عضو CP9 الذي يتحول إلى زرافة؟",
+      "answer": "كاكو",
+      "value": 600
+    },
+    {
+      "question": "في Naruto، من عضو الأكاتسوكي الذي يستخدم خمسة قلوب في جسده؟",
+      "answer": "كاكوزو",
+      "value": 600
+    },
+    {
+      "question": "في Demon Slayer، من حامل رتبة القمر العلوي الرابع قبل انقسامه إلى عدة تجسدات؟",
+      "answer": "هانتينغو",
+      "value": 600
+    }
+  ]
+}
