@@ -1,0 +1,65 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "من أدى دور فيتو كورليوني في فيلم The Godfather عام 1972؟",
+      "answer": "مارلون براندو",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور الملك ليونيداس في فيلم 300؟",
+      "answer": "جيرارد باتلر",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم E.T. the Extra-Terrestrial؟",
+      "answer": "ستيفن سبيلبرغ",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور هان سولو في ثلاثية Star Wars الأصلية؟",
+      "answer": "هاريسون فورد",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور ريك بلين في فيلم Casablanca؟",
+      "answer": "همفري بوغارت",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Spirited Away الصادر عام 2001؟",
+      "answer": "هاياو ميازاكي",
+      "value": 400
+    },
+    {
+      "question": "من ألّف الموسيقى التصويرية لفيلم Interstellar؟",
+      "answer": "هانز زيمر",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Whiplash الصادر عام 2014؟",
+      "answer": "داميان شازيل",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم The Rules of the Game الفرنسي عام 1939؟",
+      "answer": "جان رينوار",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The Wages of Fear الفرنسي عام 1953؟",
+      "answer": "هنري جورج كلوزو",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The Mirror السوفيتي عام 1975؟",
+      "answer": "أندريه تاركوفسكي",
+      "value": 600
+    },
+    {
+      "question": "من كتب سيناريو فيلم Chinatown الصادر عام 1974؟",
+      "answer": "روبرت تاون",
+      "value": 600
+    }
+  ]
+}
