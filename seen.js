@@ -21,7 +21,7 @@ function room(value){
  if(!r||r.expires<Date.now())fail(404,'الغرفة غير موجودة أو انتهت');
  r.expires=Date.now()+TTL;return r;
 }
-function categoryList(){return questions.map(c=>({id:c.id,name:c.name,count:c.count,target:c.target,remaining:c.remaining,levels:c.tiers.map(t=>t.length)}))}
+function categoryList(){return questions.map(c=>({id:c.id,name:c.name}))}
 function publicState(r){
  return {
   room:r.code,phase:r.phase,revision:r.rev,now:Date.now(),
@@ -72,24 +72,41 @@ function tick(r){
  else endQuestion(r);
  return true;
 }
-function selectSlots(ids,history){
+// A compact deterministic shuffled deck per category/tier. Only a 16-hex seed
+// and an offset need to survive browser reloads, even with 2,000 questions.
+function shuffleDeck(items,seed){
+ return items.map(q=>({q,sort:crypto.createHash('sha256').update(seed+':'+q.id).digest('hex')}))
+  .sort((a,b)=>a.sort.localeCompare(b.sort)).map(x=>x.q);
+}
+function selectSlots(ids,rotation){
  if(!Array.isArray(ids)||ids.length!==6||new Set(ids).size!==6)fail(400,'اختر ست فئات مختلفة');
- const categories=ids.map(id=>questions.find(c=>c.id===id));
- if(categories.some(c=>!c))fail(400,'فئة غير موجودة');
+ const cats=ids.map(id=>questions.find(c=>c.id===id));
+ if(cats.some(c=>!c))fail(400,'فئة غير موجودة');
+ const order=[...cats];
+ for(let i=order.length-1;i>0;i--){const j=crypto.randomInt(i+1);[order[i],order[j]]=[order[j],order[i]]}
  const slots=[];
- for(const c of categories){
+ for(const cat of order){
   for(let tier=0;tier<3;tier++){
-   const pool=[...c.tiers[tier]];
-   for(let i=pool.length-1;i>0;i--){const j=crypto.randomInt(i+1);[pool[i],pool[j]]=[pool[j],pool[i]]}
-   const historyKey=c.id+':'+tier,used=history[historyKey]||[];
-   const available=pool.filter(q=>!used.includes(q.id));
-   const picked=[...available.slice(0,2),...pool.filter(q=>!available.includes(q)).slice(0,Math.max(0,2-available.length))].slice(0,2);
-   if(picked.length!==2)fail(500,'أسئلة غير كافية في '+c.name);
-   history[historyKey]=available.length>=2?[...used,...picked.map(q=>q.id)]:picked.map(q=>q.id);
-   for(const item of picked)slots.push({...item,category:c.id,used:false});
+   const pool=cat.tiers[tier],key=cat.id+':'+tier;
+   let progress=rotation[key];
+   if(!progress||typeof progress.seed!=='string'||!/^[a-f0-9]{16}$/.test(progress.seed)||
+      !Number.isInteger(progress.offset)||progress.offset<0||progress.offset>pool.length){
+    progress={seed:crypto.randomBytes(8).toString('hex'),offset:0};
+   }
+   let deck=shuffleDeck(pool,progress.seed),picked=[];
+   while(picked.length<2){
+    if(progress.offset>=deck.length){
+     progress={seed:crypto.randomBytes(8).toString('hex'),offset:0};
+     deck=shuffleDeck(pool,progress.seed);
+    }
+    const next=deck[progress.offset++];
+    if(!picked.some(q=>q.id===next.id))picked.push(next);
+   }
+   rotation[key]=progress;
+   for(const q of picked)slots.push({...q,category:cat.id,used:false});
   }
  }
- return slots;
+ return {slots,categories:order.map(c=>c.id)};
 }
 function ensureHost(r,b){if(typeof b.hostToken!=='string'||b.hostToken!==r.hostToken)fail(403,'صلاحية المقدم مطلوبة')}
 function addPlayer(r,name,platform='manual'){
@@ -138,7 +155,18 @@ function hostAction(r,b){
   if(names.length!==2||names.some(x=>!x)||names[0]===names[1])fail(400,'اكتب اسمين مختلفين للفريقين');
   const duration=Number(b.duration||60),stealDuration=Number(b.stealDuration||15);
   if(![30,45,60,90].includes(duration)||![10,15,20].includes(stealDuration))fail(400,'وقت غير مدعوم');
-  r.slots=selectSlots(b.categories,r.history);r.categories=[...b.categories];r.names=names;
+  if(!r.startedOnce&&b.rotation&&typeof b.rotation==='object'&&!Array.isArray(b.rotation)){
+   for(const cat of questions)for(let tier=0;tier<3;tier++){
+    const key=cat.id+':'+tier,value=b.rotation[key];
+    if(value&&typeof value==='object'&&typeof value.seed==='string'&&
+       /^[a-f0-9]{16}$/.test(value.seed)&&Number.isInteger(value.offset)&&
+       value.offset>=0&&value.offset<=cat.tiers[tier].length){
+      r.rotation[key]={seed:value.seed,offset:value.offset};
+    }
+   }
+  }
+  const board=selectSlots(b.categories,r.rotation);
+  r.slots=board.slots;r.categories=board.categories;r.names=names;r.startedOnce=true;
   r.scores=[0,0];r.turn=0;r.current=null;r.phase='board';r.winner=null;r.lastAward=null;
   r.duration=duration;r.stealDuration=stealDuration;
   log(r,'🎲 بدأت اللعبة: ٦ فئات و٣٦ سؤالًا');return;
@@ -245,7 +273,7 @@ async function handle(req,res,url){
   const b=await body(req);
   if(url.pathname==='/api/seen/create'){
    if(rooms.size>=limits.rooms)fail(503,'الغرف ممتلئة مؤقتًا');
-   const r={code:code(),hostToken:token(),phase:'lobby',rev:1,expires:Date.now()+TTL,names:['فريق الصقور','فريق الذئاب'],scores:[0,0],turn:0,categories:[],slots:[],players:[],captains:[null,null],settings:{},history:{},current:null,log:[],winner:null,duration:60,stealDuration:15,lastAward:null};
+   const r={code:code(),hostToken:token(),phase:'lobby',rev:1,expires:Date.now()+TTL,names:['فريق الصقور','فريق الذئاب'],scores:[0,0],turn:0,categories:[],slots:[],players:[],captains:[null,null],settings:{},rotation:Object.create(null),startedOnce:false,current:null,log:[],winner:null,duration:60,stealDuration:15,lastAward:null};
    rooms.set(r.code,r);return reply(res,201,{room:r.code,hostToken:r.hostToken,state:publicState(r)});
   }
   const r=room(b.room);if(tick(r))broadcast(r);
@@ -253,7 +281,7 @@ async function handle(req,res,url){
    ensureHost(r,b);return reply(res,200,{answer:r.current?.slot.answer||null,question:r.current?.slot.question||null});
   }
   if(url.pathname==='/api/seen/host'){
-   ensureHost(r,b);hostAction(r,b);broadcast(r);return reply(res,200,{ok:true,state:publicState(r),answer:r.current?.slot.answer||null});
+   ensureHost(r,b);hostAction(r,b);broadcast(r);return reply(res,200,{ok:true,state:publicState(r),answer:r.current?.slot.answer||null,rotation:(b.type==='start'||b.type==='restart')?r.rotation:undefined});
   }
   return reply(res,404,{error:'المسار غير موجود'});
  }catch(e){return reply(res,e.status||500,{error:e.status?e.message:'خطأ في خادم سين وجيم'})}
