@@ -90,7 +90,7 @@ test('homepage ordering and inline viewer script are valid',()=>{
  const arcade=home.indexOf('id="arcade"'),seen=home.indexOf('id="seen"'),majlis=home.indexOf('id="majlis"');
  assert.ok(arcade>=0&&arcade<seen&&seen<majlis,'majlis must remain the final game section');
  const html=fs.readFileSync(require('node:path').join(__dirname,'seen.html'),'utf8');
- const script=html.match(/<script>([\\s\\S]*?)<\\/script>/);
+ const script=html.match(/<script>([\s\S]*?)<\/script>/);
  assert.ok(script,'trivia browser script exists');
  new vm.Script(script[1],{filename:'seen.html'});
 });
