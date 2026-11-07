@@ -22,9 +22,9 @@ async function call(endpoint,data={},method='POST',id=''){
 }
 test('bank tracks real progress toward 2000 unique questions per category',()=>{
  assert.equal(questions.length,14);
- assert.ok(questions.reduce((n,c)=>n+c.tiers.flat().length,0)>=1428);
+ assert.ok(questions.reduce((n,c)=>n+c.tiers.flat().length,0)>=1764);
  for(const c of questions){
-  assert.ok(c.tiers.every(t=>t.length>=34),c.id+' needs at least 26 questions per tier');
+  assert.ok(c.tiers.every(t=>t.length>=42),c.id+' needs at least 26 questions per tier');
   assert.equal(c.target,2000);
   assert.equal(c.count,c.tiers.flat().length);
   assert.equal(c.remaining,2000-c.count);
@@ -167,11 +167,11 @@ test('new rooms reuse browser rotation without repeating questions until tier de
  assert.equal(result.data.state.slots.length,36);
 });
 
-test('batches 004 through 007 contain balanced tiers for every category',()=>{
+test('batches 004 through 009 contain balanced tiers for every category',()=>{
  const fs=require('node:fs'),path=require('node:path');
  const ids=questions.map(c=>c.id);
  for(const id of ids){
-  for(const batch of ['004','005','006','007']){
+  for(const batch of ['004','005','006','007','008','009']){
    const pack=JSON.parse(fs.readFileSync(path.join(__dirname,'seen-question-packs',id+'-batch-'+batch+'.json'),'utf8'));
    assert.equal(pack.category,id);
    assert.equal(pack.questions.length,12);
@@ -181,11 +181,24 @@ test('batches 004 through 007 contain balanced tiers for every category',()=>{
  }
 });
 
-test('every category includes at least 102 original questions, balanced by value',()=>{
+test('every category includes at least 126 original questions, balanced by value',()=>{
  const totals=questions.map(c=>({category:c.id,count:c.tiers.flat().length,byTier:c.tiers.map(t=>t.length)}));
  assert.equal(totals.length,14);
  for(const c of totals){
-  assert.ok(c.count>=102,c.category+' has only '+c.count);
-  assert.ok(c.byTier.every(n=>n>=34),c.category+' is missing questions in a point tier');
+  assert.ok(c.count>=126,c.category+' has only '+c.count);
+  assert.ok(c.byTier.every(n=>n>=42),c.category+' is missing questions in a point tier');
+ }
+});
+
+test('every 008/009 question has unique normalized text within its category',()=>{
+ const fs=require('node:fs'),path=require('node:path');
+ const normalized=s=>String(s).normalize('NFKC').replace(/[\\u064B-\\u065F\\u0670\\u0640]/g,'').replace(/[^\\p{L}\\p{N}]+/gu,' ').trim().toLowerCase();
+ for(const cat of questions){
+  const keys=cat.tiers.flat().map(q=>normalized(q.question));
+  assert.equal(new Set(keys).size,keys.length,cat.id+' has a normalized duplicate');
+  for(const batch of ['008','009']){
+   const pack=JSON.parse(fs.readFileSync(path.join(__dirname,'seen-question-packs',cat.id+'-batch-'+batch+'.json'),'utf8'));
+   assert.ok(pack.questions.every(q=>q.question.length>15&&q.answer.length>0));
+  }
  }
 });
