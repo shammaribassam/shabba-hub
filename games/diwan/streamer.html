@@ -1,13 +1,9 @@
 <!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ديوان أبو البسم — لوحة الستريمر</title><link rel="stylesheet" href="style.css"></head><body>
 <header><h1>۞ ديوان أبو البسم ۞</h1><p>مجلس الشعر في الأندلس — لوحة مقدم الديوان</p></header><div class="tabs"><a href="viewer.html" target="_blank">افتح صفحة المتابعين ↗</a></div>
-<section class="diwan-audio-player" id="diwanAudioPlayer" aria-label="التحكم بصوت الديوان">
-  <div class="diwan-audio-heading"><span>♫ حنين القصور — صوت الديوان</span><small id="diwanAudioStatus" role="status" aria-live="polite">جاهز للتشغيل</small></div>
+<section class="diwan-audio-player" id="diwanAudioPlayer" aria-label="تشغيل وإيقاف موسيقى الديوان">
+  <div class="diwan-audio-heading"><span>♫ ديوان أبو البسم — الخلفية الموسيقية</span><small id="diwanAudioStatus" role="status" aria-live="polite">جاهزة للتشغيل</small></div>
   <div class="diwan-audio-controls">
-    <button type="button" id="diwanAudioPlay">▶ تشغيل</button>
-    <button type="button" id="diwanAudioMute">🔊 كتم</button>
-    <label for="diwanAudioVolume">مستوى الصوت</label>
-    <input id="diwanAudioVolume" type="range" min="0" max="100" step="1" value="22" aria-label="مستوى صوت الخلفية">
-    <output id="diwanAudioVolumeText" for="diwanAudioVolume">22٪</output>
+    <button type="button" id="diwanAudioPlay" aria-pressed="false">▶ تشغيل</button>
   </div>
   <audio id="diwanBackgroundAudio" src="diwan-background.mp3" preload="metadata" loop playsinline></audio>
 </section>
