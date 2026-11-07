@@ -1,0 +1,65 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "في Uncharted، ما اسم صديق نيثان دريك المسن الذي يلقبه سولي؟",
+      "answer": "فيكتور سوليفان",
+      "value": 200
+    },
+    {
+      "question": "في God of War، ما اسم ابن كريتوس في السلسلة الإسكندنافية؟",
+      "answer": "أتريوس",
+      "value": 200
+    },
+    {
+      "question": "في Red Dead Redemption 2، ما اسم حصان آرثر الذي يمكن للاعب تسميته؟",
+      "answer": "يختار اللاعب اسمه",
+      "value": 200
+    },
+    {
+      "question": "في GTA San Andreas، ما اسم شقيق كارل جونسون الأكبر؟",
+      "answer": "شون جونسون (سويت)",
+      "value": 200
+    },
+    {
+      "question": "في Resident Evil Village، ما اسم ابنة إيثان وميا وينترز؟",
+      "answer": "روزماري وينترز",
+      "value": 400
+    },
+    {
+      "question": "في The Witcher 3، ما اسم الحصان الذي يمتطيه جيرالت عادة؟",
+      "answer": "روتش",
+      "value": 400
+    },
+    {
+      "question": "في Elden Ring، من زعيم أكاديمية رايا لوكاريا؟",
+      "answer": "رينالا ملكة البدر",
+      "value": 400
+    },
+    {
+      "question": "في Sekiro، ما اسم الشينوبي الذي يخدمه وولف قبل أحداث اللعبة؟",
+      "answer": "كورو الوريث الإلهي",
+      "value": 400
+    },
+    {
+      "question": "في Dark Souls III، من الزعيم الذي يقاتل اللاعب في منطقة Profaned Capital؟",
+      "answer": "يورم العملاق",
+      "value": 600
+    },
+    {
+      "question": "في Hollow Knight، من الحالم الموجود في Deepnest؟",
+      "answer": "هيراه الوحش (Herrah the Beast)",
+      "value": 600
+    },
+    {
+      "question": "في Bloodborne، من الزعيم الذي يظهر في Upper Cathedral Ward؟",
+      "answer": "المبعوث السماوي (Celestial Emissary)",
+      "value": 600
+    },
+    {
+      "question": "في Resident Evil Revelations، ما اسم السفينة التي تجري عليها غالبية الأحداث؟",
+      "answer": "كوين زينوبيا (Queen Zenobia)",
+      "value": 600
+    }
+  ]
+}
