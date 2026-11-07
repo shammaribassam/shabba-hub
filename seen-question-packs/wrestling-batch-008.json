@@ -1,0 +1,65 @@
+{
+  "category": "wrestling",
+  "questions": [
+    {
+      "question": "من المصارع المعروف بلقب The Heartbreak Kid؟",
+      "answer": "شون مايكلز",
+      "value": 200
+    },
+    {
+      "question": "من المصارع الذي اشتهر بلقب The Viper؟",
+      "answer": "راندي أورتن",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2008؟",
+      "answer": "جون سينا",
+      "value": 200
+    },
+    {
+      "question": "من المصارع الذي اشتهر بحركة Tombstone Piledriver؟",
+      "answer": "أندرتيكر",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2007؟",
+      "answer": "أندرتيكر",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة WWE في WrestleMania 30 بالمباراة الثلاثية؟",
+      "answer": "دانيال براين",
+      "value": 400
+    },
+    {
+      "question": "من أول مصارع فاز بحقيبة Money in the Bank عام 2005؟",
+      "answer": "إيدج",
+      "value": 400
+    },
+    {
+      "question": "من فاز بأول مباراة Royal Rumble عام 1988؟",
+      "answer": "جيم دوغان",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة G1 Climax في NJPW عام 2016؟",
+      "answer": "كيني أوميغا",
+      "value": 600
+    },
+    {
+      "question": "من فاز ببطولة Best of the Super Juniors في NJPW عام 2017؟",
+      "answer": "كوشيدا",
+      "value": 600
+    },
+    {
+      "question": "من كان أول بطل IWGP United States Heavyweight عام 2017؟",
+      "answer": "كيني أوميغا",
+      "value": 600
+    },
+    {
+      "question": "من كان أول بطل AEW TNT عام 2020؟",
+      "answer": "كودي رودز",
+      "value": 600
+    }
+  ]
+}
