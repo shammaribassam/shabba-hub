@@ -191,7 +191,7 @@ function chatMessage(platform,channel,username,message){
  const text=String(message||'').trim(),name=String(username||'').trim().slice(0,65);
  if(!text||!name)return 0;
  for(const r of rooms.values()){
-  if(r.expires<Date.now>()||r.settings[platform]!==channel)continue;
+  if(r.expires<Date.now()||r.settings[platform]!==channel)continue;
   if(/^!\s*انضم$/u.test(text)){
    if(!r.players.some(p=>p.platform===platform&&p.name.toLowerCase()===name.toLowerCase())){
     try{addPlayer(r,name,platform);broadcast(r);count++}catch(_){}
