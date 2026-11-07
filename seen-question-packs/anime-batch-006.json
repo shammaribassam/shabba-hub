@@ -1,0 +1,65 @@
+{
+  "category": "anime",
+  "questions": [
+    {
+      "question": "في One Piece، من والد لوفي وقائد الجيش الثوري؟",
+      "answer": "مونكي دي دراغون",
+      "value": 200
+    },
+    {
+      "question": "في Jujutsu Kaisen، من المعلم الذي يغطي عينيه غالبًا ويستخدم تقنية اللانهائية؟",
+      "answer": "ساتورو غوجو",
+      "value": 200
+    },
+    {
+      "question": "في Dragon Ball، ما اسم والد فيجيتا؟",
+      "answer": "الملك فيجيتا",
+      "value": 200
+    },
+    {
+      "question": "في Demon Slayer، من رفيق تانجيرو الذي يستخدم تنفس الرعد؟",
+      "answer": "زينيتسو أغاتسوما",
+      "value": 200
+    },
+    {
+      "question": "في Hunter x Hunter، من رئيس جمعية الصيادين الذي قاتل ميرويم؟",
+      "answer": "إسحاق نيتيرو",
+      "value": 400
+    },
+    {
+      "question": "في Naruto، ما اسم والد غارا والكازيكاغي الرابع؟",
+      "answer": "راسا",
+      "value": 400
+    },
+    {
+      "question": "في One Piece، ما اسم السيف الملعون الذي اشتراه زورو في لوغتاون؟",
+      "answer": "سانداي كيتتسو",
+      "value": 400
+    },
+    {
+      "question": "في Fullmetal Alchemist: Brotherhood، من الخيميائي المعروف بلقب القرمزي؟",
+      "answer": "سولف جي كيمبلي",
+      "value": 400
+    },
+    {
+      "question": "في One Piece، من عضو CP9 الذي يمتلك فاكهة باب الباب؟",
+      "answer": "بلونو",
+      "value": 600
+    },
+    {
+      "question": "في Demon Slayer، من حامل رتبة القمر العلوي الخامس؟",
+      "answer": "غيوكو",
+      "value": 600
+    },
+    {
+      "question": "في Bleach، ما اسم زانباكتو بياكويا كوتشيكي؟",
+      "answer": "سينبونزاكورا",
+      "value": 600
+    },
+    {
+      "question": "في Fullmetal Alchemist: Brotherhood، من القائدة العسكرية المسؤولة عن حصن بريغز؟",
+      "answer": "أوليفييه ميرا أرمسترونغ",
+      "value": 600
+    }
+  ]
+}
