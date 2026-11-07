@@ -1,0 +1,35 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "من أدى شخصية جاك في فيلم Titanic عام 1997؟",
+      "answer": "ليوناردو دي كابريو",
+      "value": 200
+    },
+    {
+      "question": "ما اسم عالم الآثار المغامر بطل سلسلة أفلام Indiana Jones؟",
+      "answer": "إنديانا جونز",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم The Godfather عام 1972؟",
+      "answer": "فرانسيس فورد كوبولا",
+      "value": 400
+    },
+    {
+      "question": "من أدى دور فورست غامب في الفيلم الذي يحمل اسمه؟",
+      "answer": "توم هانكس",
+      "value": 400
+    },
+    {
+      "question": "من ألّف موسيقى فيلم The Good, the Bad and the Ugly؟",
+      "answer": "إنيو موريكوني",
+      "value": 600
+    },
+    {
+      "question": "من أدى دور تيرينس فليتشر في فيلم Whiplash؟",
+      "answer": "جي كي سيمونز",
+      "value": 600
+    }
+  ]
+}
