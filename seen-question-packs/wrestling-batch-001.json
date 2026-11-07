@@ -1,0 +1,35 @@
+{
+  "category": "wrestling",
+  "questions": [
+    {
+      "question": "من المصارع الذي اشتهر باسم The Rock؟",
+      "answer": "دواين جونسون",
+      "value": 200
+    },
+    {
+      "question": "من فاز بمباراة رويال رامبل للرجال عام 2023؟",
+      "answer": "كودي رودز",
+      "value": 200
+    },
+    {
+      "question": "من واجه أندرتيكر في ريسلمانيا 25؟",
+      "answer": "شون مايكلز",
+      "value": 400
+    },
+    {
+      "question": "من صرف حقيبة Money in the Bank وفاز ببطولة WWE في ريسلمانيا 31؟",
+      "answer": "سيث رولينز",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة G1 Climax في اتحاد NJPW عام 2016؟",
+      "answer": "كيني أوميغا",
+      "value": 600
+    },
+    {
+      "question": "من انتزع بطولة AEW العالمية من كريس جيريكو في Revolution 2020؟",
+      "answer": "جون موكسلي",
+      "value": 600
+    }
+  ]
+}
