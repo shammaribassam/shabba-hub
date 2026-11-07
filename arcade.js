@@ -53,7 +53,7 @@ function chatCommand(platform,channel,username,message){
  }
  return count;
 }
-function publicRoom(r){return {code:r.code,game:r.game,phase:r.phase,round:r.round,revision:r.rev,players:r.players.map(p=>({id:p.id,name:p.name,alive:p.alive,seat:p.seat||null,choice:p.choice||null,skip:p.skip||false,shield:!!p.shield})),active:r.active,holder:r.holder,doors:r.doors,boxes:r.boxes.map(b=>({id:b.id,effect:r.opened?b.effect:undefined})),opened:r.opened,shot:r.opened?r.shotTarget:null,limit:r.limit,log:r.log.slice(-12),winner:r.winner,settings:r.settings,chat:Object.fromEntries(Object.entries(r.settings).map(([p,c])=>[p,{channel:c,...chat.status(p,c)}])),spin:r.spin||0,now:Date.now()}}
+function publicRoom(r){return {code:r.code,game:r.game,phase:r.phase,round:r.round,revision:r.rev,players:r.players.map(p=>({id:p.id,name:p.name,alive:p.alive,seat:p.seat||null,choice:p.choice||null,skip:p.skip||false,shield:!!p.shield})),active:r.active,holder:r.holder,bombExplosion:r.bombExplosion||null,doors:r.doors,boxes:r.boxes.map(b=>({id:b.id,effect:r.opened?b.effect:undefined})),opened:r.opened,shot:r.opened?r.shotTarget:null,limit:r.limit,log:r.log.slice(-12),winner:r.winner,settings:r.settings,chat:Object.fromEntries(Object.entries(r.settings).map(([p,c])=>[p,{channel:c,...chat.status(p,c)}])),spin:r.spin||0,now:Date.now()}}
 function broadcast(r){r.rev++;const data='data: '+JSON.stringify(publicRoom(r))+'\n\n';for(const res of streams.get(r.code)||[])try{res.write(data)}catch(_){}}
 function get(c){const r=rooms.get(String(c||''));if(!r||r.expires<Date.now())err(404,'الغرفة غير موجودة أو انتهت');r.expires=Date.now()+TTL;return r}
 function host(r,b){if(b.hostToken!==r.hostToken)err(403,'صلاحية المقدم مطلوبة')}
@@ -85,7 +85,7 @@ function start(r){
  if(r.players.length<2)err(409,'يلزم لاعبان على الأقل');
  if(r.phase==='playing')err(409,'الجولة بدأت بالفعل');
  if(r.phase==='finished')err(409,'اللعبة انتهت؛ أنشئ غرفة جديدة');
- r.round++;r.phase='playing';r.startedAt=Date.now();clearTimer(r);r.active=null;r.holder=null;r.shotTarget=null;r.opened=false;
+ r.round++;r.phase='playing';r.startedAt=Date.now();clearTimer(r);r.active=null;r.holder=null;r.bombExplosion=null;r.shotTarget=null;r.opened=false;
  for(const p of r.players){p.choice=null;p.seat=null}
  const a=active(r);
  if(r.game==='roulette'){r.spin=(r.spin||0)+1;r.active=pick(a).id;log(r,'🎡 صاحب الدور: '+a.find(p=>p.id===r.active).name)}
@@ -95,7 +95,7 @@ function start(r){
  if(r.game==='boxes'){const effects=shuffle(['eliminate','shield','rescue','swap',...Array(Math.max(0,a.length-4)).fill('safe')].slice(0,a.length));r.boxes=effects.map((effect,i)=>({id:i+1,effect}));log(r,'🎁 اختاروا الصناديق، كل صندوق يحمل مفاجأة')}
  if(r.game==='shot'){r.shotTarget=pick(a).id;log(r,'🎯 جاهزة الطلقة الغادرة؛ ينتظر كشف المقدم')}
 }
-function tick(r){if(r.game==='bomb'&&r.phase==='playing'&&r.deadline&&Date.now()>=r.deadline){const p=r.players.find(p=>p.id===r.holder);if(p){p.alive=false;log(r,'💥 خرج '+p.name)}clearTimer(r);if(!finish(r))r.phase='between';broadcast(r)}}
+function tick(r){if(r.game==='bomb'&&r.phase==='playing'&&r.deadline&&Date.now()>=r.deadline){const p=r.players.find(p=>p.id===r.holder);if(p){p.alive=false;r.bombExplosion={id:p.id,name:p.name};log(r,'💥 انفجرت القنبلة مع '+p.name)}clearTimer(r);if(!finish(r))r.phase='between';broadcast(r)}}
 function action(r,b,byHost){
  tick(r);
  const type=String(b.type||'');
@@ -141,9 +141,9 @@ function hostAction(r,b){
  const type=String(b.type||'');
  if(type==='connectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');let channel;try{channel=chat.clean(platform,b.channel)}catch(e){err(400,e.message)}const previous=r.settings[platform];r.settings[platform]=channel;log(r,'💬 ربط '+platform+': '+channel);if(previous&&previous!==channel)chat.disconnect(platform,previous);chat.connect(platform,channel);return}
  if(type==='disconnectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');const previous=r.settings[platform];delete r.settings[platform];if(previous)chat.disconnect(platform,previous);log(r,'🔌 فصل '+platform);return}
- if(type==='switchGame'){if(!GAMES.includes(b.game))err(400,'اختر لعبة صحيحة');r.game=b.game;r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.doors=[];r.boxes=[];r.opened=false;r.shotTarget=null;r.limit=0;r.spin=0;clearTimer(r);for(const p of r.players){p.alive=true;p.seat=null;p.choice=null;p.skip=false;p.shield=false}r.log=[];log(r,'🎮 لعبة جديدة بنفس الغرفة وربط الشات');return}
+ if(type==='switchGame'){if(!GAMES.includes(b.game))err(400,'اختر لعبة صحيحة');r.game=b.game;r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.bombExplosion=null;r.doors=[];r.boxes=[];r.opened=false;r.shotTarget=null;r.limit=0;r.spin=0;clearTimer(r);for(const p of r.players){p.alive=true;p.seat=null;p.choice=null;p.skip=false;p.shield=false}r.log=[];log(r,'🎮 لعبة جديدة بنفس الغرفة وربط الشات');return}
  if(type==='start'){start(r);return}
- if(type==='reset'){r.players=[];r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.doors=[];r.boxes=[];r.shotTarget=null;r.log=[];clearTimer(r);return}
+ if(type==='reset'){r.players=[];r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.bombExplosion=null;r.doors=[];r.boxes=[];r.shotTarget=null;r.log=[];clearTimer(r);return}
  if(type==='open'){
   if(r.phase!=='ready')err(409,'الجولة ليست جاهزة');
   r.phase='playing';if(r.game==='bomb')endAt(r,r.remaining);
@@ -216,7 +216,7 @@ async function handle(req,res,url){
   if(url.pathname==='/api/arcade/create'){
    if(rooms.size>=150)err(503,'الغرف ممتلئة');
    if(!GAMES.includes(b.game))err(400,'اختر لعبة صحيحة');
-   const r={code:code(),game:b.game,hostToken:id(),players:[],phase:'lobby',round:0,rev:1,expires:Date.now()+TTL,active:null,holder:null,doors:[],boxes:[],opened:false,shotTarget:null,limit:0,log:[],winner:null,settings:{},deadline:0,remaining:0,startedAt:0,spin:0};
+   const r={code:code(),game:b.game,hostToken:id(),players:[],phase:'lobby',round:0,rev:1,expires:Date.now()+TTL,active:null,holder:null,bombExplosion:null,doors:[],boxes:[],opened:false,shotTarget:null,limit:0,log:[],winner:null,settings:{},deadline:0,remaining:0,startedAt:0,spin:0};
    rooms.set(r.code,r);return send(res,201,{room:r.code,hostToken:r.hostToken,state:publicRoom(r)})
   }
   const r=get(b.room);tick(r);
