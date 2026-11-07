@@ -1,0 +1,65 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "من أدى دور فورست غامب في الفيلم الذي يحمل اسمه؟",
+      "answer": "توم هانكس",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور هاري بوتر في الأفلام السينمائية؟",
+      "answer": "دانيال رادكليف",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم Avatar الصادر عام 2009؟",
+      "answer": "جيمس كاميرون",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور توني ستارك في أفلام Marvel؟",
+      "answer": "روبرت داوني جونيور",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم Fight Club عام 1999؟",
+      "answer": "ديفيد فينشر",
+      "value": 400
+    },
+    {
+      "question": "من أدى دور الكابتن ميلر في Saving Private Ryan؟",
+      "answer": "توم هانكس",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم The Pianist عام 2002؟",
+      "answer": "رومان بولانسكي",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Amélie عام 2001؟",
+      "answer": "جان بيير جونيه",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Stalker السوفيتي عام 1979؟",
+      "answer": "أندريه تاركوفسكي",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم A Man Escaped الفرنسي عام 1956؟",
+      "answer": "روبير بريسون",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The 400 Blows عام 1959؟",
+      "answer": "فرانسوا تروفو",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The Red Shoes البريطاني عام 1948 مع إيمريك برسبرغر؟",
+      "answer": "مايكل باول",
+      "value": 600
+    }
+  ]
+}
