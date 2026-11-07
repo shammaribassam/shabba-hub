@@ -115,3 +115,18 @@ test('new games avoid repeating a category question until its tier pool is exhau
  }
  assert.equal(seen.size,144);
 });
+
+test('point tiers always match the competitive 200/400/600 board',()=>{
+ const expected=[200,400,600];
+ for(const category of questions){
+  assert.equal(category.target,2000);
+  assert.ok(category.count<=2000);
+  for(let tier=0;tier<3;tier++){
+   for(const q of category.tiers[tier]){
+    assert.equal(q.value,expected[tier],category.id+': '+q.question);
+    assert.ok(q.question.trim().length>8);
+    assert.ok(q.answer.trim().length>0);
+   }
+  }
+ }
+});
