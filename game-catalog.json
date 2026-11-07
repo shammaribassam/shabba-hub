@@ -26,6 +26,15 @@
       "viewerPath": "/quiz/viewer.html"
     },
     {
+      "id": "seen",
+      "title": "سين وجيم أبو البسم",
+      "access": "free",
+      "status": "available",
+      "priceHalalas": 0,
+      "streamerPath": "/seen.html",
+      "viewerPath": "/seen.html?view=1"
+    },
+    {
       "id": "arena",
       "title": "بسام أرينا",
       "access": "premium",
