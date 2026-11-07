@@ -1,0 +1,65 @@
+{
+  "category": "series",
+  "questions": [
+    {
+      "question": "من الممثل الذي أدى شخصية دين وينشستر في Supernatural؟",
+      "answer": "جنسن آكلز",
+      "value": 200
+    },
+    {
+      "question": "من الممثل الذي أدى شخصية جيسي بينكمان في Breaking Bad؟",
+      "answer": "آرون بول",
+      "value": 200
+    },
+    {
+      "question": "في Breaking Bad، ما الاسم الذي يفضله ابن والتر وايت لنفسه؟",
+      "answer": "فلين",
+      "value": 200
+    },
+    {
+      "question": "في أي مدينة إنجليزية تدور أحداث Peaky Blinders؟",
+      "answer": "برمنغهام",
+      "value": 200
+    },
+    {
+      "question": "في Stranger Things، ما اسم مركز التسوق الرئيسي في الموسم الثالث؟",
+      "answer": "ستاركورت مول",
+      "value": 400
+    },
+    {
+      "question": "في Game of Thrones، ما اسم السيف الصغير الذي تملكه آريا ستارك؟",
+      "answer": "نيدل (Needle)",
+      "value": 400
+    },
+    {
+      "question": "في Supernatural، ما طراز سيارة دين وينشستر الشهيرة وسنة صنعها؟",
+      "answer": "شيفروليه إمبالا 1967",
+      "value": 400
+    },
+    {
+      "question": "في The Boys، من عضو The Seven الذي يتمتع بقدرة الاختفاء في الموسم الأول؟",
+      "answer": "ترانسلوسنت",
+      "value": 400
+    },
+    {
+      "question": "في Lost، من الرجل الذي كان يضغط الزر في محطة البجعة قبل ديزموند؟",
+      "answer": "كيلفن إنمان",
+      "value": 600
+    },
+    {
+      "question": "في Supernatural، ما اسم ابن كراولي البشري؟",
+      "answer": "غافين ماكلاود",
+      "value": 600
+    },
+    {
+      "question": "في Dark، ما اسم ابنة هانا كانفالد وأيغون تيدمان؟",
+      "answer": "سيلجا",
+      "value": 600
+    },
+    {
+      "question": "في Succession، ما اسم الزوجة الثالثة للوجان روي؟",
+      "answer": "مارسيا روي",
+      "value": 600
+    }
+  ]
+}
