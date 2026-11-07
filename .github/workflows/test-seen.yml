@@ -5,6 +5,7 @@ on:
     paths:
       - 'seen.js'
       - 'seen-questions.js'
+      - 'seen-question-packs/**'
       - 'seen.html'
       - 'seen.test.js'
       - 'arcade-chat.js'
