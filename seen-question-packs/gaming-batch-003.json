@@ -1,0 +1,65 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "من بطل لعبة Ghost of Tsushima؟",
+      "answer": "جين ساكاي",
+      "value": 200
+    },
+    {
+      "question": "في EA Sports FC، ما اسم طور بناء الفريق باستخدام بطاقات اللاعبين؟",
+      "answer": "Ultimate Team",
+      "value": 200
+    },
+    {
+      "question": "من الشخصية الرئيسية التي يتحكم بها اللاعب في Marvel's Spider-Man عام 2018؟",
+      "answer": "بيتر باركر",
+      "value": 200
+    },
+    {
+      "question": "ما اسم المملكة التي تجري فيها أحداث The Legend of Zelda: Breath of the Wild؟",
+      "answer": "هايرول",
+      "value": 200
+    },
+    {
+      "question": "في BioShock Infinite، ما اسم الفتاة التي يرافقها بوكر ديويت؟",
+      "answer": "إليزابيث",
+      "value": 400
+    },
+    {
+      "question": "في Resident Evil Village، ما اسم ابنة إيثان وينترز؟",
+      "answer": "روزماري وينترز",
+      "value": 400
+    },
+    {
+      "question": "ما اسم المدينة الخيالية التي تدور فيها أحداث GTA IV؟",
+      "answer": "ليبرتي سيتي",
+      "value": 400
+    },
+    {
+      "question": "في Persona 5، ما الاسم الحركي لبطل اللعبة ضمن Phantom Thieves؟",
+      "answer": "جوكر",
+      "value": 400
+    },
+    {
+      "question": "في Bloodborne، ما اسم الزعيم الذي يظهر بعد استخدام ثلاثة أثلاث من الحبل السري ورفض عرض غيرمان؟",
+      "answer": "Moon Presence",
+      "value": 600
+    },
+    {
+      "question": "في Resident Evil 2 Remake، ما اسم مختبر أمبريلا السري تحت مدينة راكون؟",
+      "answer": "NEST",
+      "value": 600
+    },
+    {
+      "question": "في Dark Souls الأولى، ما اسم الأفعى البدائية التي تشجع اللاعب على رفض ربط النار؟",
+      "answer": "داركستوكر كاث (Darkstalker Kaathe)",
+      "value": 600
+    },
+    {
+      "question": "في Sekiro، من الخصم الذي يقاتله وولف بعد إيما في نهاية مسار Shura؟",
+      "answer": "إيشين أشينا",
+      "value": 600
+    }
+  ]
+}
