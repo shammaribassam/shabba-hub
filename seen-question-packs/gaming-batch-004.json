@@ -1,0 +1,65 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "في Mass Effect، ما لقب القائد الذي يلعب بشخصيته اللاعب؟",
+      "answer": "شيبارد",
+      "value": 200
+    },
+    {
+      "question": "ما اسم صديق سونيك الثعلب ذي الذيلين؟",
+      "answer": "تيلز",
+      "value": 200
+    },
+    {
+      "question": "من الشخصية الرئيسية في لعبة Red Dead Redemption الأولى؟",
+      "answer": "جون مارستون",
+      "value": 200
+    },
+    {
+      "question": "في Resident Evil 2، ما اسم الشرطي الشاب الذي يصل إلى راكون سيتي؟",
+      "answer": "ليون إس. كينيدي",
+      "value": 200
+    },
+    {
+      "question": "من الخصم الرئيسي لكريتوس في God of War الصادرة عام 2018؟",
+      "answer": "بالدور",
+      "value": 400
+    },
+    {
+      "question": "في The Witcher 3، ما اسم لعبة البطاقات التي يمكن لجيرالت لعبها؟",
+      "answer": "غوينت",
+      "value": 400
+    },
+    {
+      "question": "في Resident Evil 3، من الشخصية التي يطاردها نيميسيس؟",
+      "answer": "جيل فالنتاين",
+      "value": 400
+    },
+    {
+      "question": "في Dark Souls، ما اسم الفارس الذي يشتهر بمدح الشمس؟",
+      "answer": "سولير من أستورا",
+      "value": 400
+    },
+    {
+      "question": "في Metal Gear Solid 3، ما اسم القناص العجوز الذي يواجهه سنيك؟",
+      "answer": "ذا إند (The End)",
+      "value": 600
+    },
+    {
+      "question": "في إضافة The Old Hunters من Bloodborne، من الزعيم الأخير في منطقة ساحل الصيد؟",
+      "answer": "يتيم كوس (Orphan of Kos)",
+      "value": 600
+    },
+    {
+      "question": "في Hollow Knight، ما اسم الزعيم النهائي في Pantheon of Hallownest؟",
+      "answer": "Absolute Radiance",
+      "value": 600
+    },
+    {
+      "question": "في Resident Evil Code: Veronica، ما اسم الأخوين من عائلة آشفورد؟",
+      "answer": "ألفريد وأليكسيا آشفورد",
+      "value": 600
+    }
+  ]
+}
