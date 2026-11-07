@@ -1,0 +1,65 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "في Minecraft، ما اسم الزعيم الذي يعيش في بُعد The End؟",
+      "answer": "إندر دراغون",
+      "value": 200
+    },
+    {
+      "question": "في Resident Evil 5، من شريكة كريس ريدفيلد في أفريقيا؟",
+      "answer": "شيفا ألومار",
+      "value": 200
+    },
+    {
+      "question": "في Red Dead Redemption الأولى، من العميل الفيدرالي الذي يبتز جون مارستون؟",
+      "answer": "إدغار روس",
+      "value": 200
+    },
+    {
+      "question": "في The Witcher 3، من ابنة الإمبراطور إمهير التي يبحث عنها جيرالت؟",
+      "answer": "سيري",
+      "value": 200
+    },
+    {
+      "question": "في God of War III، من الإله الذي يقتله كريتوس أولًا خلال المعركة الافتتاحية؟",
+      "answer": "بوسيدون",
+      "value": 400
+    },
+    {
+      "question": "في Elden Ring، من الزعيم الذي يحرس مدخل أكاديمية رايا لوكاريا في ساحة كبيرة؟",
+      "answer": "الذئب الأحمر لراداغون",
+      "value": 400
+    },
+    {
+      "question": "في Assassin's Creed II، ما اسم عم إيتزيو أوديتوري الذي يستقبله في مونتيريجيوني؟",
+      "answer": "ماريو أوديتوري",
+      "value": 400
+    },
+    {
+      "question": "في Metal Gear Solid 2، من الشخصية التي يلعب بها اللاعب خلال غالبية أحداث Big Shell؟",
+      "answer": "رايدن",
+      "value": 400
+    },
+    {
+      "question": "في Bloodborne، ما اسم الزعيم الذي يظهر في كنيسة الكابوس بعد هزيمة لودفيغ في إضافة The Old Hunters؟",
+      "answer": "لورنس، أول نائب (Laurence, the First Vicar)",
+      "value": 600
+    },
+    {
+      "question": "في Sekiro، من الزعيم الذي يواجهه وولف في نهاية مسار Shura بعد إيما؟",
+      "answer": "إيشين أشينا",
+      "value": 600
+    },
+    {
+      "question": "في Dark Souls II، ما اسم الزعيم الذي يواجهه اللاعب في نهاية منطقة Shrine of Amana؟",
+      "answer": "شيطان الأغنية (Demon of Song)",
+      "value": 600
+    },
+    {
+      "question": "في Hollow Knight، ما اسم زعيم Deepnest الذي يتنكر في هيئة شخصية اللاعب؟",
+      "answer": "نوسك (Nosk)",
+      "value": 600
+    }
+  ]
+}
