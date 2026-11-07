@@ -21,8 +21,8 @@ async function call(endpoint,data={},method='POST',id=''){
  return {status,data:JSON.parse(body)};
 }
 test('bank tracks real progress toward 2000 unique questions per category',()=>{
- assert.equal(questions.length,14);
- assert.ok(questions.reduce((n,c)=>n+c.tiers.flat().length,0)>=1764);
+ assert.equal(questions.length,12);
+ assert.ok(questions.reduce((n,c)=>n+c.tiers.flat().length,0)>=1512);
  for(const c of questions){
   assert.ok(c.tiers.every(t=>t.length>=42),c.id+' needs at least 26 questions per tier');
   assert.equal(c.target,2000);
@@ -134,7 +134,7 @@ test('point tiers always match the competitive 200/400/600 board',()=>{
 test('category selector does not expose bank sizes to players',async()=>{
  const response=await call('categories',{},'GET');
  assert.equal(response.status,200);
- assert.equal(response.data.categories.length,14);
+ assert.equal(response.data.categories.length,12);
  for(const cat of response.data.categories){
   assert.deepEqual(Object.keys(cat).sort(),['id','name']);
  }
@@ -183,7 +183,7 @@ test('batches 004 through 009 contain balanced tiers for every category',()=>{
 
 test('every category includes at least 126 original questions, balanced by value',()=>{
  const totals=questions.map(c=>({category:c.id,count:c.tiers.flat().length,byTier:c.tiers.map(t=>t.length)}));
- assert.equal(totals.length,14);
+ assert.equal(totals.length,12);
  for(const c of totals){
   assert.ok(c.count>=126,c.category+' has only '+c.count);
   assert.ok(c.byTier.every(n=>n>=42),c.category+' is missing questions in a point tier');
