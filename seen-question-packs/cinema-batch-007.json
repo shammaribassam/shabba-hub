@@ -1,0 +1,65 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "من أدى دور بلاك بانثر في فيلم Black Panther عام 2018؟",
+      "answer": "تشادويك بوزمان",
+      "value": 200
+    },
+    {
+      "question": "ما اسم سلسلة الأفلام التي تظهر فيها شخصية دومينيك توريتو؟",
+      "answer": "Fast & Furious",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور دكتور سترينج في أفلام مارفل؟",
+      "answer": "بنديكت كامبرباتش",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور ديدبول في أفلامه السينمائية؟",
+      "answer": "ريان رينولدز",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم The Social Network الصادر عام 2010؟",
+      "answer": "ديفيد فينشر",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم The Truman Show الصادر عام 1998؟",
+      "answer": "بيتر وير",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Pan's Labyrinth الصادر عام 2006؟",
+      "answer": "غييرمو ديل تورو",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Her الصادر عام 2013؟",
+      "answer": "سبايك جونز",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم The Night of the Hunter الصادر عام 1955؟",
+      "answer": "تشارلز لوتون",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The Third Man الصادر عام 1949؟",
+      "answer": "كارول ريد",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The Conversation الصادر عام 1974؟",
+      "answer": "فرانسيس فورد كوبولا",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The Asphalt Jungle الصادر عام 1950؟",
+      "answer": "جون هيوستن",
+      "value": 600
+    }
+  ]
+}
