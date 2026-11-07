@@ -1,0 +1,65 @@
+{
+  "category": "wrestling",
+  "questions": [
+    {
+      "question": "من المصارع المعروف بلقب The Big Red Machine؟",
+      "answer": "كين",
+      "value": 200
+    },
+    {
+      "question": "من المصارع الذي اشتهر بحركة People's Elbow؟",
+      "answer": "ذا روك",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2009؟",
+      "answer": "راندي أورتن",
+      "value": 200
+    },
+    {
+      "question": "من المصارع المعروف بلقب The Animal؟",
+      "answer": "باتيستا",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2011؟",
+      "answer": "ألبرتو ديل ريو",
+      "value": 400
+    },
+    {
+      "question": "من واجه أندرتيكر في WrestleMania 28 في مباراة Hell in a Cell؟",
+      "answer": "تربل إتش",
+      "value": 400
+    },
+    {
+      "question": "من كان أول فريق فاز ببطولة AEW World Tag Team عام 2019؟",
+      "answer": "SCU (فرانكي كازاريان وسكوربيو سكاي)",
+      "value": 400
+    },
+    {
+      "question": "من كان أول بطل WWE 24/7 عام 2019؟",
+      "answer": "تيتوس أونيل",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة G1 Climax في NJPW عام 2014؟",
+      "answer": "كازوتشيكا أوكادا",
+      "value": 600
+    },
+    {
+      "question": "من فاز ببطولة Best of the Super Juniors في NJPW عام 2018؟",
+      "answer": "هيرومو تاكاهاشي",
+      "value": 600
+    },
+    {
+      "question": "من كان أول فريق فاز ببطولة NXT UK Tag Team عام 2019؟",
+      "answer": "غريزلد يونغ فيترنز (زاك غيبسون وجيمس دريك)",
+      "value": 600
+    },
+    {
+      "question": "من كان أول فريق فاز ببطولة ROH World Tag Team عام 2002؟",
+      "answer": "كريستوفر دانيلز ودونوفان مورغان",
+      "value": 600
+    }
+  ]
+}
