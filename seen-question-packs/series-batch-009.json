@@ -1,0 +1,65 @@
+{
+  "category": "series",
+  "questions": [
+    {
+      "question": "في Game of Thrones، ما اسم أخت جون سنو التي تدربت في برافوس؟",
+      "answer": "آريا ستارك",
+      "value": 200
+    },
+    {
+      "question": "في Supernatural، ما اسم شقيق دين وينشستر؟",
+      "answer": "سام وينشستر",
+      "value": 200
+    },
+    {
+      "question": "في Breaking Bad، ما اسم محامي والتر وايت وجيسي؟",
+      "answer": "سول غودمان",
+      "value": 200
+    },
+    {
+      "question": "في Stranger Things، ما اسم البلدة التي تدور فيها الأحداث؟",
+      "answer": "هوكينز",
+      "value": 200
+    },
+    {
+      "question": "في Better Call Saul، ما الاسم الحقيقي لسول غودمان؟",
+      "answer": "جيمي ماكغيل",
+      "value": 400
+    },
+    {
+      "question": "في Supernatural، ما اسم والد كاستييل والملائكة في عالم المسلسل؟",
+      "answer": "تشاك شورلي (الله)",
+      "value": 400
+    },
+    {
+      "question": "في Lost، من الشخصية التي كانت تُعرف بلقب Sawyer؟",
+      "answer": "جيمس فورد",
+      "value": 400
+    },
+    {
+      "question": "في Vikings، من ابن راغنار الذي أصبح ملكًا في النرويج وكان يُلقب بـ Ironside؟",
+      "answer": "بيورن أيرونسايد",
+      "value": 400
+    },
+    {
+      "question": "في Dark، من هو والد أولريش نيلسن؟",
+      "answer": "ترونته نيلسن",
+      "value": 600
+    },
+    {
+      "question": "في The Sopranos، ما اسم ابنة توني سوبرانو؟",
+      "answer": "ميدو سوبرانو",
+      "value": 600
+    },
+    {
+      "question": "في Supernatural، من الفارس الذي ظهر على هيئة رجل مسن يقود سيارة كاديلاك بيضاء في الموسم الخامس؟",
+      "answer": "الموت (Death)",
+      "value": 600
+    },
+    {
+      "question": "في Better Call Saul، من الشخصية التي قتلها لالو سالامانكا في شقة جيمي وكيم؟",
+      "answer": "هوارد هاملين",
+      "value": 600
+    }
+  ]
+}
