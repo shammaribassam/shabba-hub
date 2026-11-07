@@ -1,0 +1,65 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "من أدى دور جاك في فيلم Titanic عام 1997؟",
+      "answer": "ليوناردو دي كابريو",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم Jurassic Park الأصلي عام 1993؟",
+      "answer": "ستيفن سبيلبرغ",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور وولفرين في سلسلة X-Men السينمائية؟",
+      "answer": "هيو جاكمان",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور ثور في أفلام مارفل السينمائية؟",
+      "answer": "كريس هيمسوورث",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم The Grand Budapest Hotel عام 2014؟",
+      "answer": "ويس أندرسون",
+      "value": 400
+    },
+    {
+      "question": "من أدى دور أنطون تشيغور في No Country for Old Men؟",
+      "answer": "خافيير بارديم",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم The Departed عام 2006؟",
+      "answer": "مارتن سكورسيزي",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Arrival عام 2016؟",
+      "answer": "دينيس فيلنوف",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Rashomon الياباني عام 1950؟",
+      "answer": "أكيرا كوروساوا",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم The Seventh Seal السويدي عام 1957؟",
+      "answer": "إنغمار برغمان",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم Bicycle Thieves الإيطالي عام 1948؟",
+      "answer": "فيتوريو دي سيكا",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم Pickpocket الفرنسي عام 1959؟",
+      "answer": "روبير بريسون",
+      "value": 600
+    }
+  ]
+}
