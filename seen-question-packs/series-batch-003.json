@@ -1,0 +1,65 @@
+{
+  "category": "series",
+  "questions": [
+    {
+      "question": "في Breaking Bad، من الشاب الذي يعمل شريكًا لوالتر وايت؟",
+      "answer": "جيسي بينكمان",
+      "value": 200
+    },
+    {
+      "question": "في Game of Thrones، من الشخصية المعروفة بأم التنانين؟",
+      "answer": "دينيريس تارجاريان",
+      "value": 200
+    },
+    {
+      "question": "في The Walking Dead، من نائب الشريف الذي يقود الناجين في بدايات المسلسل؟",
+      "answer": "ريك غرايمز",
+      "value": 200
+    },
+    {
+      "question": "في Prison Break، من المهندس الذي يدخل السجن لإنقاذ أخيه؟",
+      "answer": "مايكل سكوفيلد",
+      "value": 200
+    },
+    {
+      "question": "في Supernatural، ما اسم الملاك الذي يساعد سام ودين وينشستر؟",
+      "answer": "كاستييل",
+      "value": 400
+    },
+    {
+      "question": "في Game of Thrones، ما اسم القارة التي تقع فيها وينترفيل؟",
+      "answer": "ويستروس",
+      "value": 400
+    },
+    {
+      "question": "في The Boys، من البطل الخارق صاحب السرعة ضمن فريق The Seven؟",
+      "answer": "إيه ترين (A-Train)",
+      "value": 400
+    },
+    {
+      "question": "في Better Call Saul، ما اسم المحامية التي تتزوج جيمي ماكغيل؟",
+      "answer": "كيم ويكسلر",
+      "value": 400
+    },
+    {
+      "question": "في Supernatural، ما اسم الشيطان ذي العينين الصفراوين الذي تسبب بمأساة عائلة وينشستر؟",
+      "answer": "عزازيل",
+      "value": 600
+    },
+    {
+      "question": "في The Wire، من زعيم تجارة المخدرات الذي تلاحقه الشرطة في الموسم الأول؟",
+      "answer": "أفون باركسديل",
+      "value": 600
+    },
+    {
+      "question": "في Breaking Bad، ما اسم الكيميائي الذي كان يعمل في مختبر غاس قبل تعاونه مع والتر؟",
+      "answer": "غيل بويتشر",
+      "value": 600
+    },
+    {
+      "question": "في Game of Thrones، ما اسم السيف الفاليري الذي أهداه جايمي لبرين؟",
+      "answer": "أوثكيبر (Oathkeeper)",
+      "value": 600
+    }
+  ]
+}
