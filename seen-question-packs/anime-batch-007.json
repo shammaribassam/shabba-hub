@@ -1,0 +1,65 @@
+{
+  "category": "anime",
+  "questions": [
+    {
+      "question": "في Naruto، من مؤسس كونوها الذي أصبح الهوكاغي الأول؟",
+      "answer": "هاشيراما سينجو",
+      "value": 200
+    },
+    {
+      "question": "في Dragon Ball، ما اسم كوكب موطن السايان الذي دمره فريزا؟",
+      "answer": "كوكب فيجيتا",
+      "value": 200
+    },
+    {
+      "question": "في Attack on Titan، من شقيق إيرين ييغر غير الشقيق؟",
+      "answer": "زيك ييغر",
+      "value": 200
+    },
+    {
+      "question": "في Jujutsu Kaisen، من الطالب الذي ابتلع إصبع سوكونا؟",
+      "answer": "يوجي إيتادوري",
+      "value": 200
+    },
+    {
+      "question": "في One Piece، ما اسم القرية التي نشأ فيها لوفي؟",
+      "answer": "قرية فوشا",
+      "value": 400
+    },
+    {
+      "question": "في Hunter x Hunter، ما اسم قدرة كيلوا التي تمنحه سرعة فائقة باستخدام الكهرباء؟",
+      "answer": "غودسبيد (Godspeed)",
+      "value": 400
+    },
+    {
+      "question": "في Naruto، من معلم ميناتو ناميكازي؟",
+      "answer": "جيرايا",
+      "value": 400
+    },
+    {
+      "question": "في Bleach، من قائدة الفرقة الرابعة التي اشتهرت بمهارات العلاج؟",
+      "answer": "ريتسو أونوهانا",
+      "value": 400
+    },
+    {
+      "question": "في Fullmetal Alchemist: Brotherhood، من الشاب الذي أصبح الوعاء الجديد لغريد؟",
+      "answer": "لين ياو",
+      "value": 600
+    },
+    {
+      "question": "في One Piece، من قائد قراصنة الشمس الذي حرر العبيد من ماريجوا؟",
+      "answer": "فيشر تايغر",
+      "value": 600
+    },
+    {
+      "question": "في Naruto، ما اسم تقنية الختم التي استخدمها ميناتو لاحتواء الكيوبي؟",
+      "answer": "شيكي فوجين (Reaper Death Seal)",
+      "value": 600
+    },
+    {
+      "question": "في Bleach، من حامل الرقم الأول بين الإسبادا في جيش آيزن؟",
+      "answer": "كايوتي ستارك",
+      "value": 600
+    }
+  ]
+}
