@@ -1,0 +1,95 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "من بطل سلسلة Uncharted الشهير بصيد الكنوز؟",
+      "answer": "ناثان دريك",
+      "value": 200
+    },
+    {
+      "question": "ما اسم الشخصية الرئيسية في سلسلة Halo؟",
+      "answer": "ماستر تشيف",
+      "value": 200
+    },
+    {
+      "question": "من بطل لعبة Assassin's Creed II؟",
+      "answer": "إيزيو أوديتوري",
+      "value": 200
+    },
+    {
+      "question": "ما اسم بطل GTA: San Andreas المعروف بلقب CJ؟",
+      "answer": "كارل جونسون",
+      "value": 200
+    },
+    {
+      "question": "من الشخصية التي تواجه ماريو غالبًا وتختطف الأميرة بيتش؟",
+      "answer": "باوزر",
+      "value": 200
+    },
+    {
+      "question": "ما اسم بطلة سلسلة Tomb Raider؟",
+      "answer": "لارا كروفت",
+      "value": 200
+    },
+    {
+      "question": "ما اسم بطل Resident Evil 7؟",
+      "answer": "إيثان وينترز",
+      "value": 400
+    },
+    {
+      "question": "من بطلة لعبة Horizon Zero Dawn؟",
+      "answer": "ألوي",
+      "value": 400
+    },
+    {
+      "question": "ما اسم الحصان الطيفي الذي يمتطيه اللاعب في Elden Ring؟",
+      "answer": "تورنت",
+      "value": 400
+    },
+    {
+      "question": "من شريكة كريس ريدفيلد الأساسية في Resident Evil 5؟",
+      "answer": "شيفا ألومار",
+      "value": 400
+    },
+    {
+      "question": "ما اسم الشركة المطورة للعبة Marvel's Spider-Man الصادرة عام 2018؟",
+      "answer": "إنسومنياك غيمز",
+      "value": 400
+    },
+    {
+      "question": "من الشخصية التي يقودها اللاعب في بداية Metal Gear Solid عام 1998؟",
+      "answer": "سوليد سنيك",
+      "value": 400
+    },
+    {
+      "question": "ما اسم زعيم النهاية الأساسية في Dark Souls III؟",
+      "answer": "Soul of Cinder",
+      "value": 600
+    },
+    {
+      "question": "من الشخصية التي يتحكم بها اللاعب في فصل Big Shell من Metal Gear Solid 2؟",
+      "answer": "رايدن",
+      "value": 600
+    },
+    {
+      "question": "في Resident Evil 4، ما اسم الطائفة التي تختطف آشلي غراهام؟",
+      "answer": "لوس إيلومينادوس",
+      "value": 600
+    },
+    {
+      "question": "في Elden Ring، من يحمل الرون العظيم لغير المولود؟",
+      "answer": "رينالا ملكة البدر",
+      "value": 600
+    },
+    {
+      "question": "ما اسم عميل بينكرتون الذي يطارد عصابة فان دير ليند مع إدغار روس في Red Dead Redemption 2؟",
+      "answer": "أندرو ميلتون",
+      "value": 600
+    },
+    {
+      "question": "في Bloodborne، من الزعيم الذي تواجهه إذا رفضت عرض غيرمان في النهاية؟",
+      "answer": "غيرمان الصياد الأول",
+      "value": 600
+    }
+  ]
+}
