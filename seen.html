@@ -57,7 +57,7 @@ input,select{border:1px solid #3d586b;background:#0b1a28;border-radius:10px;padd
      <label class="field">وقت السؤال<select id="duration"><option value="30">30 ثانية</option><option value="45">45 ثانية</option><option value="60" selected>60 ثانية</option><option value="90">90 ثانية</option></select></label>
      <label class="field">وقت السرقة<select id="stealDuration"><option value="10">10 ثوانٍ</option><option value="15" selected>15 ثانية</option><option value="20">20 ثانية</option></select></label>
     </div>
-    <h3 style="font-size:14px;margin:18px 0 5px">الفئات <span id="catCount" class="muted">0 / 6</span></h3><div id="categoryPicker" class="category-picker"></div>
+    <h3 style="font-size:14px;margin:18px 0 5px">الفئات <span id="catCount" class="muted">0 / 6</span></h3><p class="hint">الهدف 2,000 سؤال لكل فئة. الأعداد بجانب الفئات تبيّن الأسئلة الموجودة فعليًا في البنك، وتتحدّث مع إضافة دفعات جديدة.</p><div id="categoryPicker" class="category-picker"></div>
     <button id="start" class="primary" style="width:100%">ابدأ المسابقة</button>
    </section>
    <section id="questionPanel" class="question hidden">
@@ -228,7 +228,7 @@ async function init(){
 }
 function renderCategories(){
  $('catCount').textContent=selected.size+' / 6';
- $('categoryPicker').innerHTML=categories.map(c=>'<label class="cat-option"><input type="checkbox" data-category="'+esc(c.id)+'" '+(selected.has(c.id)?'checked':selected.size>=6?'disabled':'')+'><span>'+esc(c.name)+' <small class="muted">('+c.count+')</small></span></label>').join('');
+ $('categoryPicker').innerHTML=categories.map(c=>'<label class="cat-option"><input type="checkbox" data-category="'+esc(c.id)+'" '+(selected.has(c.id)?'checked':selected.size>=6?'disabled':'')+'><span>'+esc(c.name)+' <small class="muted">('+c.count+' / '+c.target+')</small></span></label>').join('');
 }
 $('categoryPicker').addEventListener('change',e=>{
  const id=e.target.dataset.category;if(!id)return;
