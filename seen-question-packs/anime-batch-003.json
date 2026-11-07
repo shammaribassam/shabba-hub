@@ -1,0 +1,65 @@
+{
+  "category": "anime",
+  "questions": [
+    {
+      "question": "في Naruto، من معلم الفريق السابع الأصلي؟",
+      "answer": "كاكاشي هاتاكي",
+      "value": 200
+    },
+    {
+      "question": "من طباخ قراصنة قبعة القش في One Piece؟",
+      "answer": "سانجي",
+      "value": 200
+    },
+    {
+      "question": "ما اسم ابن غوكو الأكبر في Dragon Ball؟",
+      "answer": "غوهان",
+      "value": 200
+    },
+    {
+      "question": "ما اسم الجدار الخارجي الذي سقط في بداية Attack on Titan؟",
+      "answer": "جدار ماريا",
+      "value": 200
+    },
+    {
+      "question": "في Naruto، ما اسم الوحش ذي الذيول التسعة؟",
+      "answer": "كوراما",
+      "value": 400
+    },
+    {
+      "question": "في Bleach، ما اسم زانباكتو إيتشيغو كوروساكي؟",
+      "answer": "زانغيتسو",
+      "value": 400
+    },
+    {
+      "question": "من طبيب قراصنة قبعة القش في One Piece؟",
+      "answer": "توني توني تشوبر",
+      "value": 400
+    },
+    {
+      "question": "في Demon Slayer، من الهاشيرا الذي يستخدم تنفس اللهب؟",
+      "answer": "كيوجورو رينغوكو",
+      "value": 400
+    },
+    {
+      "question": "في Hunter x Hunter، ما اسم الحارس الملكي الذي يستخدم قدرة Doctor Blythe؟",
+      "answer": "نيفيربيتو",
+      "value": 600
+    },
+    {
+      "question": "في One Piece، ما اسم الجزيرة السماوية التي توجد فيها منطقة Upper Yard؟",
+      "answer": "سكايبيا",
+      "value": 600
+    },
+    {
+      "question": "في Bleach، من زعيم الكوينسي الذي يُعرف بأبي الكوينسي؟",
+      "answer": "يوهاباخ",
+      "value": 600
+    },
+    {
+      "question": "في Naruto، ما اسم والد كاكاشي الذي لُقب بالناب الأبيض؟",
+      "answer": "ساكومو هاتاكي",
+      "value": 600
+    }
+  ]
+}
