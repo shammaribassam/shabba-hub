@@ -56,7 +56,7 @@ function endQuestion(r,pointsTeam=null){
  current.slot.used=true;
  if(pointsTeam!==null)log(r,'✓ '+r.names[pointsTeam]+' حصل على '+current.slot.value+' نقطة');
  else log(r,'— انتهى السؤال دون نقاط');
- r.turn=1-current.team;r.current=null;
+ r.turn=1-current.originalTeam;r.current=null;
  if(r.slots.every(s=>s.used))finish(r);else r.phase='board';
 }
 function beginSteal(r){
