@@ -59,6 +59,27 @@ a,.status,details summary{color:#f6cb79}
 .screen-role .bomb-explosion{font-size:clamp(28px,5.2vw,66px);padding:35px 22px}
 @keyframes bombFlash{0%{transform:scale(.85);opacity:0;box-shadow:0 0 0 #ff704400}65%{transform:scale(1.04);opacity:1;box-shadow:0 0 70px #ff7044aa}100%{transform:scale(1);opacity:1}}
 @media(prefers-reduced-motion:reduce){.bomb-explosion{animation:none}}
+
+/* Stylized, non-graphic six-chamber revolver game animation. */
+.shot-stage{width:min(95%,720px);margin:12px auto;text-align:center}
+.revolver-art{position:relative;width:min(88vw,530px);height:auto;aspect-ratio:2.35/1;margin:4px auto 20px;filter:drop-shadow(0 15px 25px #000b)}
+.gun-barrel{position:absolute;left:5%;top:35%;width:51%;height:14%;background:linear-gradient(#b4aaa4 0%,#666270 34%,#252a32 69%,#9a8c80 100%);border:3px solid #141720;border-radius:9px 2px 2px 9px}
+.gun-barrel:before{content:"";position:absolute;top:12%;left:-2%;width:5%;height:70%;background:#151721;border:2px solid #c4aa8a;border-radius:4px}
+.gun-frame{position:absolute;left:48%;top:30%;width:29%;height:30%;background:linear-gradient(145deg,#d0b8a1,#625962 64%,#242530);border:4px solid #1b1b24;border-radius:17px 24px 12px 8px}
+.gun-grip{position:absolute;left:67%;top:49%;width:18%;height:43%;background:repeating-linear-gradient(130deg,#54372b 0 7px,#694734 7px 12px);border:4px solid #151923;border-radius:3px 4px 18px 14px;transform:skewX(-15deg)}
+.gun-hammer{position:absolute;left:72%;top:22%;width:9%;height:13%;background:#88818a;border:3px solid #1b1b22;border-radius:10px 9px 2px 3px;transform:rotate(32deg)}
+.gun-trigger{position:absolute;left:57%;top:54%;width:16%;height:23%;border:6px solid #9f9190;border-top:0;border-radius:0 0 40% 60%;transform:rotate(-10deg)}
+.gun-cylinder{position:absolute;left:49%;top:20%;width:30%;aspect-ratio:1;background:radial-gradient(circle at 36% 28%,#e5d5ba,#a38e85 34%,#4f5662 72%,#17171f 100%);border:7px solid #25232a;border-radius:50%;box-shadow:0 5px 12px #000b,inset 0 0 0 5px #b49c8f;z-index:2}
+.gun-chamber{position:absolute;width:21%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#101219 0 35%,#473d44 42%,#c6ae91 55%,#29272d 70%);box-shadow:inset 0 2px 8px #0009;transform:translate(-50%,-50%)}
+.gun-chamber:nth-child(1){left:50%;top:17%}.gun-chamber:nth-child(2){left:79%;top:34%}.gun-chamber:nth-child(3){left:79%;top:66%}.gun-chamber:nth-child(4){left:50%;top:83%}.gun-chamber:nth-child(5){left:21%;top:66%}.gun-chamber:nth-child(6){left:21%;top:34%}
+.gun-cylinder:after{content:"";position:absolute;inset:43%;border-radius:50%;background:#ddc6a6;border:3px solid #4c3e40;box-shadow:0 0 5px #000a}
+.gun-cylinder.spinning{animation:revolverSpin 2.85s cubic-bezier(.15,.64,.08,1) both}
+@keyframes revolverSpin{0%{transform:rotate(0deg)}65%{transform:rotate(1300deg)}100%{transform:rotate(1800deg)}}
+.shot-outcome{min-height:70px;border-radius:17px;padding:16px 10px;font-weight:900;font-size:clamp(19px,3vw,35px);line-height:1.6;color:#ffdfa1;border:1px solid #b99058;background:#211821}
+.shot-outcome.hit{border-color:#e86a61;background:linear-gradient(135deg,#742832,#37161d);color:#fff4e4}
+.shot-outcome.empty{border-color:#7dbb82;background:linear-gradient(135deg,#235742,#162d2b);color:#e0ffe7}
+.screen-role .revolver-art{width:min(85vw,650px)}.screen-role .shot-outcome{font-size:clamp(25px,4.6vw,55px)}
+@media(prefers-reduced-motion:reduce){.gun-cylinder.spinning{animation:none}}
 </style></head><body><main><header><div><b style="color:var(--cyan)">BSM WORLD</b> · ألعاب أبو البسم</div><a id="backToHome" href="/">⌂ الرئيسية</a></header>
 <h1 id="arcadeHeading">🎮 ألعاب أبو البسم</h1><p id="arcadeSubtitle">اختر لعبتك وابدأ التحدي.</p>
 <div id="localModeInfo" class="notice hide">🏠 <b>وضع المجلس والاستراحة:</b> ما تحتاج بث ولا ربط شات. المقدم ينشئ غرفة ويرسل رابط اللاعبين، ويقدر يعرض شاشة اللعبة على التلفزيون.</div>
@@ -83,12 +104,12 @@ a,.status,details summary{color:#f6cb79}
  <div id="doorsTools" class="notice hide"><b>🚪 أبواب المصير العشوائية</b><p class="small">بعد اختيار اللاعبين، حدد عدد الناجين وسيختارهم النظام عشوائيًا.</p><div class="flex"><input id="doorWinners" type="number" min="1" value="1" placeholder="عدد الناجين"><button class="gold" onclick="revealDoors()">🎲 كشف الأبواب عشوائيًا</button></div></div>
  <div id="rouletteTools" class="notice hide"><b>🎡 قرار صاحب الدور</b><p class="small" id="rouletteActive"></p><div class="flex"><input id="rouletteTarget" type="number" placeholder="رقم اللاعب"><button class="danger" onclick="rouletteAct('kick')">🚫 طرد</button><button class="secondary" onclick="rouletteAct('revive')">❤️ إنعاش</button><button class="secondary" onclick="rouletteAct('skip')">⏭️ سكيب</button></div></div><p class="sub" id="hostHint"></p><details id="advancedTools"><summary>⚙️ أدوات إضافية للمقدم</summary><div class="flex"><input id="hostPlayer" type="number" placeholder="رقم اللاعب"><select id="hostMove"><option value="skip">سكيب</option><option value="kick">طرد</option><option value="revive">إنعاش</option><option value="choose">اختيار باب</option><option value="save">زر النجاة</option><option value="pass">تمرير القنبلة</option><option value="box">اختيار صندوق</option></select><input id="hostTarget" type="number" placeholder="رقم الهدف"><button onclick="hostMove()">تنفيذ نيابة عن اللاعب</button></div><div class="flex" style="margin-top:12px"><input id="editTarget" type="number" placeholder="رقم اللاعب"><button class="danger" onclick="host('eliminate',{target:num('editTarget')})">استبعاد</button><button class="secondary" onclick="host('revive',{target:num('editTarget')})">إرجاع</button></div><div class="flex" style="margin-top:12px"><input id="qualify" placeholder="أرقام المتأهلين: 1,2,3" class="grow"><button class="gold" onclick="qualify()">اعتماد المتأهلين</button><button class="gold" onclick="reveal()">كشف الأبواب / الصناديق</button></div><p class="small muted">في الأبواب: اكتب أرقام المتأهلين ثم اضغط كشف الأبواب. في الصناديق: اضغط كشف بعد اختيار الجميع. في الطلقة الغادرة: ابدأ الجولة ثم اضغط كشف الطلقة. أوامر المقدم لا تُعرض للاعبين.</p></details></div>
  <div class="panel" id="playerControls"><h2>🎯 دور اللاعب</h2><div id="myIdentity" class="status"></div><p class="sub" id="actionHint"></p><details id="playerExtra"><summary>أوامر إضافية</summary><div class="flex"><select id="moveType"><option value="skip">⏭️ سكيب</option><option value="kick">🚫 طرد</option><option value="revive">❤️ إنعاش</option><option value="choose">🚪 اختيار باب</option><option value="save">🚨 نجاة</option><option value="pass">💣 تمرير</option><option value="box">🎁 صندوق</option></select><input id="target" type="number" placeholder="رقم الهدف"><button onclick="move()">تنفيذ الأمر</button></div></details><div class="tiles" id="quick" style="margin-top:15px"></div></div>
- <div class="panel hero" id="arena"><div class="big" id="heroEmoji">🎮</div><div id="rouletteWheel" class="wheel-wrap hide"><div class="wheel-pointer">▼</div><div id="wheelDisk" class="wheel-disk"></div><div id="wheelResult" class="wheel-result"></div></div><h2 id="heroText"></h2><div id="bombExplosionBanner" class="bomb-explosion hide" role="status" aria-live="polite"></div><div id="tileArea" class="tiles"></div><div class="notice" id="champion" style="display:none"></div></div>
+ <div class="panel hero" id="arena"><div class="big" id="heroEmoji">🎮</div><div id="rouletteWheel" class="wheel-wrap hide"><div class="wheel-pointer">▼</div><div id="wheelDisk" class="wheel-disk"></div><div id="wheelResult" class="wheel-result"></div></div><h2 id="heroText"></h2><div id="shotStage" class="shot-stage hide"><div class="revolver-art" role="img" aria-label="رسم مبسط لمسدس لعبة بست خانات دوارة"><div class="gun-barrel"></div><div class="gun-hammer"></div><div class="gun-grip"></div><div class="gun-trigger"></div><div class="gun-frame"></div><div id="shotCylinder" class="gun-cylinder"><i class="gun-chamber"></i><i class="gun-chamber"></i><i class="gun-chamber"></i><i class="gun-chamber"></i><i class="gun-chamber"></i><i class="gun-chamber"></i></div></div><div id="shotOutcome" class="shot-outcome" role="status" aria-live="polite"></div></div><div id="bombExplosionBanner" class="bomb-explosion hide" role="status" aria-live="polite"></div><div id="tileArea" class="tiles"></div><div class="notice" id="champion" style="display:none"></div></div>
  <div class="panel"><h2>👥 المشاركون <span id="count"></span></h2><div class="players" id="players"></div></div>
  <details class="panel"><summary>📜 أحداث اللعبة</summary><div class="log" id="log"></div></details>
 </section><div id="toast"></div>
 <script>
-const G={roulette:['🎡','روليت الغدر','السكيب مرة واحدة لكل لاعب، والطرد والإنعاش لصاحب الدور فقط'],doors:['🚪','أبواب المصير','اللاعب يختار بابًا، والمقدم يحدد الناجين ويكشف النتيجة'],survival:['🚨','زر النجاة','أول اللاعبين ضغطًا يتأهلون'],bomb:['💣','القنبلة الموقوتة','مؤقت مخفي والقنبلة تنتقل بين اللاعبين'],boxes:['🎁','الصناديق الغامضة','كل صندوق فيه مفاجأة: أمان، حصانة، إقصاء، إنقاذ أو تبديل مصير'],shot:['🎯','الطلقة الغادرة','النظام يختار لاعبًا عشوائيًا في كل جولة ويكشفه المقدم']};
+const G={roulette:['🎡','روليت الغدر','السكيب مرة واحدة لكل لاعب، والطرد والإنعاش لصاحب الدور فقط'],doors:['🚪','أبواب المصير','اللاعب يختار بابًا، والمقدم يحدد الناجين ويكشف النتيجة'],survival:['🚨','زر النجاة','أول اللاعبين ضغطًا يتأهلون'],bomb:['💣','القنبلة الموقوتة','مؤقت مخفي والقنبلة تنتقل بين اللاعبين'],boxes:['🎁','الصناديق الغامضة','كل صندوق فيه مفاجأة: أمان، حصانة، إقصاء، إنقاذ أو تبديل مصير'],shot:['🎯','الطلقة الغادرة','المخزن يدور؛ طلقة واحدة حقيقية من 6، والفاضية تنجي اللاعب']};
 const landingParams=new URLSearchParams(location.search);
 const majlisMode=landingParams.get('mode')==='majlis';
 const chosenGame=G[landingParams.get('game')]?landingParams.get('game'):null;
@@ -98,7 +119,7 @@ const RULES={
  survival:{intro:'تحدّي سرعة بين جميع المشاركين.',how:'لما يفتح المقدم الجولة، اضغط زر النجاة بأسرع وقت. أول من يضغطون حتى يكتمل عدد المتأهلين ينجون، والباقون يخرجون.',win:'تستمر الجولات حتى يبقى ناجٍ واحد.'},
  bomb:{intro:'قنبلة بمؤقت مخفي تنتقل بين اللاعبين.',how:'اللاعب اللي عنده القنبلة يمرّرها بسرعة إلى لاعب آخر قبل انفجارها. عند انتهاء المؤقت يخرج حامل القنبلة.',win:'آخر لاعب يبقى بعد جولات القنبلة يفوز.'},
  boxes:{intro:'صناديق حظ وغدر ومفاجآت بدل صندوق التاج الواحد.',how:'كل لاعب يختار صندوقًا مختلفًا. يكشف المقدم بعد اختيار الجميع؛ قد يظهر أمان، أو حصانة من إقصاء واحد، أو إنقاذ لاعب مستبعد، أو تبديل مصير، أو إقصاء. ويكمل الناجون للجولة التالية.',win:'آخر لاعب يبقى في المنافسة يفوز.'},
- shot:{intro:'لعبة سادسة مستقلة بالكامل عن الصناديق، تعتمد على الاختيار العشوائي.',how:'المقدم يبدأ الجولة؛ النظام يختار لاعبًا عشوائيًا سرًا، ثم يكشفه المقدم بزر «كشف الطلقة». يخرج اللاعب المختار رمزيًا وتبدأ الجولة التالية بين الباقين.',win:'آخر لاعب يبقى يفوز.'}
+ shot:{intro:'لعبة حظ بمخزن مسدس افتراضي يدور وفيه طلقة حقيقية واحدة من ست خانات.',how:'المقدم يبدأ الجولة فيختار النظام لاعبًا عشوائيًا سرًا. بعد ضغط «كشف الطلقة» يدور المخزن على الشاشة، ثم تظهر النتيجة: إذا الطلقة فاضية ينجو اللاعب، وإذا حقيقية يُستبعد من اللعبة رمزيًا. ما فيه أي مشاهد عنف.',win:'تستمر الجولات لين يبقى لاعب واحد.'}
 };
 let room=new URLSearchParams(location.search).get('room')||'',role=new URLSearchParams(location.search).get('role')||'',hostToken='',playerToken='',playerId=0,state=null,source=null;
 const el=id=>document.getElementById(id),num=id=>Number(el(id).value);
@@ -145,8 +166,37 @@ function drawWheel(s){
   if(index>=0){const desired=(360-((index+.5)*angle)%360)%360;const current=((wheelRotation%360)+360)%360;const delta=(desired-current+360)%360;wheelRotation+=1800+delta;disk.style.transform='rotate('+wheelRotation+'deg)';result.textContent='🎡 الروليت يدور...';if(wheelTimer)clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>{wheelTimer=null;result.textContent='🎯 '+wheelName(people[index].name);el('heroText').textContent='🎯 صاحب الدور: '+people[index].name},5100)}
  }else if(s.phase!=='playing'){if(wheelTimer){clearTimeout(wheelTimer);wheelTimer=null}result.textContent=''}
 }
+
+let shotLastKey='',shotAnimating=false,shotAnimationTimer=null;
+function drawShot(s){
+ const stage=el('shotStage'),outcome=el('shotOutcome'),cylinder=el('shotCylinder');
+ const isShot=s.game==='shot',revealed=isShot&&s.opened&&!!s.shotResult;
+ stage.classList.toggle('hide',!isShot);
+ const key=revealed?s.code+':'+s.round:'';
+ if(key!==shotLastKey){
+  shotLastKey=key;
+  clearTimeout(shotAnimationTimer);shotAnimationTimer=null;
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const length=reduced?350:2900;
+  const elapsed=revealed?Math.max(0,(s.now||Date.now())-(s.shotRevealedAt||0)):0;
+  const delay=revealed?Math.max(0,length-elapsed):0;
+  shotAnimating=delay>0;
+  if(shotAnimating)shotAnimationTimer=setTimeout(()=>{shotAnimating=false;shotAnimationTimer=null;render()},delay);
+ }
+ cylinder.classList.toggle('spinning',shotAnimating);
+ outcome.classList.remove('hit','empty');
+ if(!revealed)outcome.textContent='🎯 المخزن جاهز... ينتظر كشف المقدم';
+ else if(shotAnimating)outcome.textContent='🔄 المخزن يدور... هل الطلقة فاضية؟';
+ else {
+  const person=s.players.find(p=>p.id===s.shot)?.name||'اللاعب';
+  const hit=s.shotResult==='hit';
+  outcome.classList.add(hit?'hit':'empty');
+  outcome.textContent=hit?'💥 طلقة حقيقية! استُبعد '+person:'✨ الطلقة فاضية! نجا '+person;
+ }
+}
+
 function render(){
- if(!state)return;const s=state,g=G[s.game];document.body.classList.toggle('screen-role',role==='screen');drawWheel(s);el('arena').classList.toggle('roulette-active',s.game==='roulette'&&s.players.length>0);const visible=(id,on)=>el(id).classList.toggle("hide",!on);visible("startBtn",s.phase==="lobby");visible("openBtn",s.phase==="ready");visible("stopBtn",s.phase==="playing"&&["bomb","survival"].includes(s.game));visible("nextBtn",s.phase==="between");visible("endBtn",s.game==="roulette"&&s.phase==="playing");visible("playerExtra",s.game==="roulette"||s.game==="bomb");visible("boxesRevealBtn",s.game==="boxes"&&s.phase==="playing");visible("shotRevealBtn",s.game==="shot"&&s.phase==="playing");visible("doorsTools",s.game==="doors"&&s.phase==="playing");visible("rouletteTools",s.game==="roulette"&&s.phase==="playing");el("rouletteActive").textContent=s.active?"صاحب الدور: "+(s.players.find(p=>p.id===s.active)?.name||""):"";el("waitingCount").textContent=s.players.length+" مشارك";el("invitePanel").classList.toggle("hide",s.phase!=="lobby");if(document.activeElement!==el('switchGameSelect'))el('switchGameSelect').value=s.game;el('gameTitle').textContent=g[0]+' '+g[1];const rules=RULES[s.game];el('rulesPanel').classList.toggle('hide',role!=='host');el('rulesIntro').textContent=rules.intro;el('rulesHow').textContent=rules.how;el('rulesWin').textContent=rules.win;el('roomCode').textContent=room;el('phase').textContent=({lobby:'التسجيل مفتوح',ready:'بانتظار المقدم',playing:'الجولة جارية',between:'انتهت الجولة',finished:'انتهت اللعبة'})[s.phase];el('hostControls').classList.toggle('hide',role!=='host');el('playerControls').classList.toggle('hide',role!=='player');el('hostHint').textContent=g[2];el('actionHint').textContent=g[2];el('myIdentity').textContent='رقمك في اللعبة: '+playerId;const names={twitch:'تويتش',kick:'كيك',tiktok:'تيك توك'},states={connected:'🟢',connecting:'🟡',waiting:'🟡',error:'🔴',idle:'⚪'};let linked=0;
+ if(!state)return;const s=state,g=G[s.game];document.body.classList.toggle('screen-role',role==='screen');drawWheel(s);drawShot(s);el('arena').classList.toggle('roulette-active',s.game==='roulette'&&s.players.length>0);const visible=(id,on)=>el(id).classList.toggle("hide",!on);visible("startBtn",s.phase==="lobby");visible("openBtn",s.phase==="ready");visible("stopBtn",s.phase==="playing"&&["bomb","survival"].includes(s.game));visible("nextBtn",s.phase==="between");visible("endBtn",s.game==="roulette"&&s.phase==="playing");visible("playerExtra",s.game==="roulette"||s.game==="bomb");visible("boxesRevealBtn",s.game==="boxes"&&s.phase==="playing");visible("shotRevealBtn",s.game==="shot"&&s.phase==="playing");visible("doorsTools",s.game==="doors"&&s.phase==="playing");visible("rouletteTools",s.game==="roulette"&&s.phase==="playing");el("rouletteActive").textContent=s.active?"صاحب الدور: "+(s.players.find(p=>p.id===s.active)?.name||""):"";el("waitingCount").textContent=s.players.length+" مشارك";el("invitePanel").classList.toggle("hide",s.phase!=="lobby");if(document.activeElement!==el('switchGameSelect'))el('switchGameSelect').value=s.game;el('gameTitle').textContent=g[0]+' '+g[1];const rules=RULES[s.game];el('rulesPanel').classList.toggle('hide',role!=='host');el('rulesIntro').textContent=rules.intro;el('rulesHow').textContent=rules.how;el('rulesWin').textContent=rules.win;el('roomCode').textContent=room;el('phase').textContent=({lobby:'التسجيل مفتوح',ready:'بانتظار المقدم',playing:'الجولة جارية',between:'انتهت الجولة',finished:'انتهت اللعبة'})[s.phase];el('hostControls').classList.toggle('hide',role!=='host');el('playerControls').classList.toggle('hide',role!=='player');el('hostHint').textContent=g[2];el('actionHint').textContent=g[2];el('myIdentity').textContent='رقمك في اللعبة: '+playerId;const names={twitch:'تويتش',kick:'كيك',tiktok:'تيك توك'},states={connected:'🟢',connecting:'🟡',waiting:'🟡',error:'🔴',idle:'⚪'};let linked=0;
  for(const p of ['twitch','kick','tiktok']){const info=s.chat?.[p],channel=s.settings?.[p],input=el(p+'Channel');if(channel&&document.activeElement!==input)input.value=channel;if(channel)linked++;el(p+'Status').textContent=channel?(states[info?.state]||'⚪')+' @'+channel+' — '+(info?.detail||'جارٍ الإعداد'):'⚪ غير مربوط'}
  el('chatBadge').textContent=linked+' / 3';el('chatDetails').classList.toggle('hide',majlisMode);
  const a=s.players.filter(p=>p.alive);el('count').textContent='('+a.length+' نشط / '+s.players.length+')';
@@ -157,10 +207,10 @@ function render(){
  if(bombBlasted)title='💥 انتهت جولة القنبلة!';
  if(s.game==='survival'&&s.phase==='playing')title='🚨 اضغط النجاة الآن! ('+a.filter(p=>p.choice==='saved').length+'/'+s.limit+')';
  if(s.game==='boxes'&&s.opened)title='🎁 انكشفت مفاجآت الصناديق';
-  if(s.game==='shot')title=s.opened&&s.shot?'🎯 الطلقة الغادرة اختارت: '+(s.players.find(p=>p.id===s.shot)?.name||'لاعب'):'🎯 الطلقة الغادرة جاهزة — ينتظر كشف المقدم';
+  if(s.game==='shot')title=shotAnimating?'🔄 مخزن الطلقات يدور...':s.opened?'🎯 انكشفت نتيجة الطلقة':'🎯 الطلقة الغادرة جاهزة — ينتظر كشف المقدم';
  el('heroText').textContent=title;
  const bombBanner=el('bombExplosionBanner');bombBanner.classList.toggle('hide',!bombBlasted);bombBanner.textContent=bombBlasted?'💥 انفجرت القنبلة مع '+s.bombExplosion.name+'!':'';
- el('champion').style.display=s.winner?'block':'none';if(s.winner)el('champion').textContent='🏆 بطل اللعبة: '+(s.players.find(p=>p.id===s.winner)?.name||'');
+ el('champion').style.display=s.winner&&!shotAnimating?'block':'none';if(s.winner)el('champion').textContent='🏆 بطل اللعبة: '+(s.players.find(p=>p.id===s.winner)?.name||'');
  const tiles=el('tileArea');tiles.replaceChildren();const quick=el('quick');quick.replaceChildren();
  let options=[],kind='';
  if(s.game==='doors'&&s.phase==='playing'){options=s.doors.map(d=>d.id);kind='choose'}
