@@ -1,0 +1,95 @@
+{
+  "category": "wrestling",
+  "questions": [
+    {
+      "question": "من المصارع الذي اشتهر بلقب Rated-R Superstar؟",
+      "answer": "إيدج",
+      "value": 200
+    },
+    {
+      "question": "من المصارع المعروف بلقب The Game؟",
+      "answer": "تربل إتش",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2024؟",
+      "answer": "كودي رودز",
+      "value": 200
+    },
+    {
+      "question": "ما اسم الاتحاد الأمريكي للمصارعة الذي تأسس عام 2019 ويختصر AEW؟",
+      "answer": "All Elite Wrestling",
+      "value": 200
+    },
+    {
+      "question": "من المصارع المعروف بلقب The Phenomenal One؟",
+      "answer": "إيه جي ستايلز",
+      "value": 200
+    },
+    {
+      "question": "من المصارع المعروف بلقب The Heartbreak Kid؟",
+      "answer": "شون مايكلز",
+      "value": 200
+    },
+    {
+      "question": "من فاز بأول مباراة Royal Rumble عام 1988؟",
+      "answer": "جيم دوغان",
+      "value": 400
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2007؟",
+      "answer": "أندرتيكر",
+      "value": 400
+    },
+    {
+      "question": "من هزم جون سينا في SummerSlam 2014 وانتزع منه بطولة WWE العالمية للوزن الثقيل؟",
+      "answer": "بروك ليسنر",
+      "value": 400
+    },
+    {
+      "question": "من كان أول بطل Universal في WWE عام 2016؟",
+      "answer": "فين بالور",
+      "value": 400
+    },
+    {
+      "question": "من واجه رومان رينز في الحدث الرئيسي لليلة الثانية من WrestleMania 39؟",
+      "answer": "كودي رودز",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة NXT أمام جوني غارغانو في TakeOver XXV عام 2019؟",
+      "answer": "آدم كول",
+      "value": 400
+    },
+    {
+      "question": "من كان أول بطل TNT في اتحاد AEW عام 2020؟",
+      "answer": "كودي رودز",
+      "value": 600
+    },
+    {
+      "question": "من فاز ببطولة King of the Ring عام 1993؟",
+      "answer": "بريت هارت",
+      "value": 600
+    },
+    {
+      "question": "من فاز ببطولة G1 Climax في اتحاد NJPW عام 2018؟",
+      "answer": "هيروشي تاناهاشي",
+      "value": 600
+    },
+    {
+      "question": "من فاز بأول بطولة WWE للولايات المتحدة بعد إعادة تقديمها عام 2003؟",
+      "answer": "إيدي غيريرو",
+      "value": 600
+    },
+    {
+      "question": "من أول مصارع فاز برويال رامبل بعد دخوله برقم 1؟",
+      "answer": "شون مايكلز",
+      "value": 600
+    },
+    {
+      "question": "من كان آخر بطل للعالم للوزن الثقيل في اتحاد ECW الأصلي قبل توقفه عام 2001؟",
+      "answer": "راينو",
+      "value": 600
+    }
+  ]
+}
