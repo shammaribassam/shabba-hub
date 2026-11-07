@@ -1,0 +1,65 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "في The Legend of Zelda، إلى أي شعب خيالي ينتمي لينك؟",
+      "answer": "الهيليان",
+      "value": 200
+    },
+    {
+      "question": "في EA Sports FC، ما اسم الطور الذي يلعب فيه الأصدقاء بشخصياتهم ضمن نادٍ واحد؟",
+      "answer": "Clubs (الأندية)",
+      "value": 200
+    },
+    {
+      "question": "في Elden Ring، من الشخصية التي تساعد اللاعب على رفع مستواه عند مواقع النعمة؟",
+      "answer": "ميلينا",
+      "value": 200
+    },
+    {
+      "question": "في Uncharted 4، ما اسم شقيق نيثان دريك؟",
+      "answer": "سام دريك",
+      "value": 200
+    },
+    {
+      "question": "في Resident Evil 2، من والد شيري بيركين والعالم المرتبط بفيروس G؟",
+      "answer": "ويليام بيركين",
+      "value": 400
+    },
+    {
+      "question": "في Assassin's Creed Valhalla، ما اسم شخصية اللاعب الرئيسية؟",
+      "answer": "إيفور",
+      "value": 400
+    },
+    {
+      "question": "في Red Dead Redemption 2، من قائد عصابة أودريسكول المنافسة؟",
+      "answer": "كولم أودريسكول",
+      "value": 400
+    },
+    {
+      "question": "في Sekiro، ما اسم الوريث الإلهي الذي يحميه وولف؟",
+      "answer": "كورو",
+      "value": 400
+    },
+    {
+      "question": "في Hollow Knight، من الزعيم الذي يواجهه اللاعب في Queen's Gardens؟",
+      "answer": "ترايتر لورد (Traitor Lord)",
+      "value": 600
+    },
+    {
+      "question": "في Bloodborne، ما اسم زعيم Nightmare Frontier؟",
+      "answer": "أميغدالا (Amygdala)",
+      "value": 600
+    },
+    {
+      "question": "في Dark Souls III، من زعيم Consumed King's Garden؟",
+      "answer": "أوسيروس الملك المستهلك (Oceiros)",
+      "value": 600
+    },
+    {
+      "question": "في Resident Evil 0، ما اسم السجين السابق الذي يرافق ريبيكا تشامبرز؟",
+      "answer": "بيلي كوين",
+      "value": 600
+    }
+  ]
+}
