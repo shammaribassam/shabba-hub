@@ -165,7 +165,7 @@ function hostAction(r,b){
  }
  const c=r.current;
  if(!c||r.phase!=='question')fail(409,'افتح سؤالًا أولًا');
- if(type==='reveal'){c.revealed=true;log(r,'👁️ كشف المقدم الإجابة');return}
+ if(type==='reveal'){c.revealed=true;log(r,'👁️ كشف المقدم الإجابة (لا يمكن السرقة بعد الكشف)');return}
  if(type==='pause'){if(!c.paused&&!c.waiting){c.remaining=Math.max(0,c.deadline-Date.now());c.deadline=0;c.paused=true}return}
  if(type==='resume'){if(c.paused&&!c.waiting){c.deadline=Date.now()+c.remaining;c.paused=false}return}
  if(type==='manualAnswer'){
@@ -175,7 +175,7 @@ function hostAction(r,b){
   c.waiting=true;c.deadline=0;log(r,'🗣️ إجابة شفوية بانتظار تحكيم المقدم');return;
  }
  if(type==='wrong'){
-  if(c.stage==='question')beginSteal(r);
+  if(c.stage==='question'&&!c.revealed)beginSteal(r);
   else endQuestion(r);
   return;
  }
@@ -192,6 +192,7 @@ function chatMessage(platform,channel,username,message){
  if(!text||!name)return 0;
  for(const r of rooms.values()){
   if(r.expires<Date.now()||r.settings[platform]!==channel)continue;
+  if(tick(r))broadcast(r);
   if(/^!\s*انضم$/u.test(text)){
    if(!r.players.some(p=>p.platform===platform&&p.name.toLowerCase()===name.toLowerCase())){
     try{addPlayer(r,name,platform);broadcast(r);count++}catch(_){}
