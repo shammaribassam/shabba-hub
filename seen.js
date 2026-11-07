@@ -96,11 +96,15 @@ function selectSlots(ids,rotation){
    let deck=shuffleDeck(pool,progress.seed),picked=[];
    while(picked.length<2){
     if(progress.offset>=deck.length){
-     progress={seed:crypto.randomBytes(8).toString('hex'),offset:0};
-     deck=shuffleDeck(pool,progress.seed);
+     // Do not skip an item in a fresh deck when the previous cycle ends
+     // mid-round. Reshuffle until the first item differs from the one picked.
+     do {
+      progress={seed:crypto.randomBytes(8).toString('hex'),offset:0};
+      deck=shuffleDeck(pool,progress.seed);
+     } while(picked.some(q=>q.id===deck[0].id));
     }
     const next=deck[progress.offset++];
-    if(!picked.some(q=>q.id===next.id))picked.push(next);
+    picked.push(next);
    }
    rotation[key]=progress;
    for(const q of picked)slots.push({...q,category:cat.id,used:false});
