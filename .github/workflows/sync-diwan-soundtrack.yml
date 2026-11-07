@@ -1,0 +1,36 @@
+name: Sync Diwan soundtrack into the Hub
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-diwan-soundtrack.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  sync-soundtrack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Shabba Hub
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Copy the new song from the original Diwan repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/shammaribassam/diwan-abu-albasm.git /tmp/diwan-source
+          test -s /tmp/diwan-source/diwan-abu-albasm.mp3
+          mkdir -p games/diwan
+          cp /tmp/diwan-source/diwan-abu-albasm.mp3 games/diwan/diwan-abu-albasm.mp3
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add games/diwan/diwan-abu-albasm.mp3
+          if git diff --cached --quiet; then
+            echo 'Soundtrack already synchronized.'
+          else
+            git commit -m "Sync new Diwan soundtrack from original repository"
+            git push origin HEAD:main
+          fi
