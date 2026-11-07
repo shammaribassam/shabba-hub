@@ -1,0 +1,65 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "في Ghost of Tsushima، ما اسم عم جين ساكاي؟",
+      "answer": "اللورد شيمورا",
+      "value": 200
+    },
+    {
+      "question": "في GTA V، من الشخصيات الثلاث الذي يسكن في مقطورة ببلين كاونتي؟",
+      "answer": "تريفور فيليبس",
+      "value": 200
+    },
+    {
+      "question": "في The Last of Us، ما اسم ابنة جويل؟",
+      "answer": "سارة",
+      "value": 200
+    },
+    {
+      "question": "في Resident Evil 4، من عميل الحكومة الذي يسعى لإنقاذ آشلي؟",
+      "answer": "ليون إس. كينيدي",
+      "value": 200
+    },
+    {
+      "question": "في Mass Effect، ما اسم سفينة القائد شيبارد؟",
+      "answer": "نورماندي",
+      "value": 400
+    },
+    {
+      "question": "في Elden Ring، ما اسم المقر الذي يجتمع فيه عدد من الشخصيات ويضم الحداد هيوغ؟",
+      "answer": "Roundtable Hold (المائدة المستديرة)",
+      "value": 400
+    },
+    {
+      "question": "في God of War Ragnarök، ما اسم شقيق فريا؟",
+      "answer": "فراير",
+      "value": 400
+    },
+    {
+      "question": "في Ghost of Tsushima، ما اسم اللصة التي تساعد جين ساكاي في بداية اللعبة؟",
+      "answer": "يونا",
+      "value": 400
+    },
+    {
+      "question": "في Hollow Knight، من الحالم الموجود في برج المراقب؟",
+      "answer": "لوريين المراقب",
+      "value": 600
+    },
+    {
+      "question": "في Dark Souls الأولى، من الزعيم الاختياري في Painted World of Ariamis؟",
+      "answer": "كروس بريد بريسيلا (Crossbreed Priscilla)",
+      "value": 600
+    },
+    {
+      "question": "في Bloodborne، من الزعيم الذي ينتظر اللاعب فوق سطح قلعة كاينهرست؟",
+      "answer": "الشهيد لوغاريوس (Martyr Logarius)",
+      "value": 600
+    },
+    {
+      "question": "في Metal Gear Solid 3، من عضو وحدة الكوبرا الذي يستخدم الدبابير في القتال؟",
+      "answer": "ذا بين (The Pain)",
+      "value": 600
+    }
+  ]
+}
