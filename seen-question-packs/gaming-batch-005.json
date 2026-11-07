@@ -1,0 +1,65 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "في GTA V، من الشخصية التي تعيش في لوس سانتوس مع زوجته وطفليه؟",
+      "answer": "مايكل دي سانتا",
+      "value": 200
+    },
+    {
+      "question": "من بطل Assassin's Creed Origins؟",
+      "answer": "بايك من سيوة",
+      "value": 200
+    },
+    {
+      "question": "في Minecraft، ما المادة المستخدمة لبناء إطار بوابة العالم السفلي؟",
+      "answer": "الأوبسيديان",
+      "value": 200
+    },
+    {
+      "question": "من الشخصية الرئيسية في لعبة Death Stranding؟",
+      "answer": "سام بورتر بريدجز",
+      "value": 200
+    },
+    {
+      "question": "في Elden Ring، ما اسم العاصمة الملكية في الأراضي الوسطى؟",
+      "answer": "ليندل",
+      "value": 400
+    },
+    {
+      "question": "في Resident Evil 7، ما اسم العائلة التي تحتجز إيثان وينترز؟",
+      "answer": "عائلة بيكر",
+      "value": 400
+    },
+    {
+      "question": "في Red Dead Redemption 2، من صديق جون الذي يساعده في بناء منزله خلال الخاتمة؟",
+      "answer": "تشارلز سميث",
+      "value": 400
+    },
+    {
+      "question": "في The Witcher 3، ما اسم الساحرة ذات الشعر الأسود المرتبطة بجيرالت؟",
+      "answer": "ينيفر من فينغربيرغ",
+      "value": 400
+    },
+    {
+      "question": "في Elden Ring، ما اسم زعيم قلعة سول في قمم العمالقة؟",
+      "answer": "القائد نيال",
+      "value": 600
+    },
+    {
+      "question": "في Metal Gear Solid الأولى، من انتحل هوية رئيس DARPA دونالد أندرسون؟",
+      "answer": "ديكوي أوكتوبس",
+      "value": 600
+    },
+    {
+      "question": "في Sekiro، من الخصم الذي يقاتله وولف أعلى قلعة أشينا بعد رفض قانون البومة الحديدي؟",
+      "answer": "البومة الشينوبي العظيم",
+      "value": 600
+    },
+    {
+      "question": "في Dark Souls III، من الزعيم الاختياري الشهير في منطقة Archdragon Peak؟",
+      "answer": "الملك عديم الاسم (Nameless King)",
+      "value": 600
+    }
+  ]
+}
