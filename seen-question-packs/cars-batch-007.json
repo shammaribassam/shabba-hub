@@ -1,0 +1,65 @@
+{
+  "category": "cars",
+  "questions": [
+    {
+      "question": "ما الشركة التي تصنع سيارة تشالنجر؟",
+      "answer": "دودج",
+      "value": 200
+    },
+    {
+      "question": "ما الشركة التي تصنع سيارة فورستر؟",
+      "answer": "سوبارو",
+      "value": 200
+    },
+    {
+      "question": "ما الشركة التي تنتج سيارة سيلفرادو؟",
+      "answer": "شيفروليه",
+      "value": 200
+    },
+    {
+      "question": "ما الشركة التي تصنع سيارة RAV4؟",
+      "answer": "تويوتا",
+      "value": 200
+    },
+    {
+      "question": "ما اختصار نظام حقن الوقود المباشر داخل الأسطوانات في محركات البنزين؟",
+      "answer": "GDI",
+      "value": 400
+    },
+    {
+      "question": "ما اسم نظام الدفع الرباعي الشهير لدى أودي؟",
+      "answer": "quattro",
+      "value": 400
+    },
+    {
+      "question": "ما اسم نظام التحكم بتوقيت الصمامات لدى نيسان؟",
+      "answer": "CVTC",
+      "value": 400
+    },
+    {
+      "question": "ما اسم تقنية التحكم بتوقيت عمود الكامات لدى بورشه؟",
+      "answer": "VarioCam",
+      "value": 400
+    },
+    {
+      "question": "ما رمز محرك BMW M3 من جيل E92 ذي الثماني أسطوانات؟",
+      "answer": "S65B40",
+      "value": 600
+    },
+    {
+      "question": "ما رمز محرك Nissan 300ZX Z32 بنسخة التيربو المزدوج؟",
+      "answer": "VG30DETT",
+      "value": 600
+    },
+    {
+      "question": "ما رمز محرك Toyota MR2 Turbo من الجيل SW20؟",
+      "answer": "3S-GTE",
+      "value": 600
+    },
+    {
+      "question": "ما رمز محرك Honda Integra Type R DC2 في النسخة اليابانية؟",
+      "answer": "B18C",
+      "value": 600
+    }
+  ]
+}
