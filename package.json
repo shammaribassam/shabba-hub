@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check arcade.js && node --check arcade-chat.js && node --check seen.js && node --check seen-questions.js"
+    "check": "node --check server.js && node --check arcade.js && node --check arcade-chat.js && node --check seen.js && node --check seen-questions.js && npm test",
+    "test": "node --test seen.test.js"
   },
   "engines": {
     "node": ">=18"
