@@ -1,0 +1,65 @@
+{
+  "category": "series",
+  "questions": [
+    {
+      "question": "في Stranger Things، ما اسم أخ ماكس غير الشقيق؟",
+      "answer": "بيلي هارغروف",
+      "value": 200
+    },
+    {
+      "question": "في Supernatural، ما اسم والدة سام ودين وينشستر؟",
+      "answer": "ماري وينشستر",
+      "value": 200
+    },
+    {
+      "question": "في Game of Thrones، ما اسم الذئب الرهيب الذي يرافق جون سنو؟",
+      "answer": "غوست (Ghost)",
+      "value": 200
+    },
+    {
+      "question": "في The Last of Us، ما اسم شقيق جويل؟",
+      "answer": "تومي",
+      "value": 200
+    },
+    {
+      "question": "في Supernatural، من والد جاك كْلاين النيفيليم؟",
+      "answer": "لوسيفر",
+      "value": 400
+    },
+    {
+      "question": "في Breaking Bad، ما اسم زوجة هانك شريدر؟",
+      "answer": "ماري شريدر",
+      "value": 400
+    },
+    {
+      "question": "في Peaky Blinders، ما اسم عمة تومي التي تدير أعمال العائلة؟",
+      "answer": "بولي غراي",
+      "value": 400
+    },
+    {
+      "question": "في Lost، ما اسم الفيزيائي الذي يجري أبحاثًا حول السفر عبر الزمن؟",
+      "answer": "دانيال فاراداي",
+      "value": 400
+    },
+    {
+      "question": "في Supernatural، من حلت محل الموت الأصلي بصفتها تجسيد الموت؟",
+      "answer": "بيلي (Billie)",
+      "value": 600
+    },
+    {
+      "question": "في The Sopranos، ما اسم صاحب مطعم فيزوفيو وصديق توني؟",
+      "answer": "آرتي بوكو",
+      "value": 600
+    },
+    {
+      "question": "في Lost، من كان مسؤولًا عن بناء مساكن مبادرة دارما وعاش في الجزيرة مع زوجته إيمي؟",
+      "answer": "هوراس غودسبيد",
+      "value": 600
+    },
+    {
+      "question": "في Dark، من والد نوح المعروف باسم هانو تاوبر؟",
+      "answer": "بارتوش تيدمان",
+      "value": 600
+    }
+  ]
+}
