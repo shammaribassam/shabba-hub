@@ -1,0 +1,65 @@
+{
+  "category": "wrestling",
+  "questions": [
+    {
+      "question": "من المصارع المعروف بلقب The Scottish Warrior؟",
+      "answer": "درو ماكنتاير",
+      "value": 200
+    },
+    {
+      "question": "من المصارع الذي اشتهر بحركة 619؟",
+      "answer": "ري ميستيريو",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2019؟",
+      "answer": "سيث رولينز",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2017؟",
+      "answer": "راندي أورتن",
+      "value": 200
+    },
+    {
+      "question": "من فاز ببطولة WWE بعد صرف حقيبة Money in the Bank في SummerSlam 2013؟",
+      "answer": "راندي أورتن",
+      "value": 400
+    },
+    {
+      "question": "من كان أول بطل NXT North American عام 2018؟",
+      "answer": "آدم كول",
+      "value": 400
+    },
+    {
+      "question": "من هزم سي إم بانك في WrestleMania 29؟",
+      "answer": "أندرتيكر",
+      "value": 400
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2016؟",
+      "answer": "تربل إتش",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة G1 Climax في اتحاد NJPW عام 2015؟",
+      "answer": "هيروشي تاناهاشي",
+      "value": 600
+    },
+    {
+      "question": "من كان أول بطل IWGP Intercontinental عام 2011؟",
+      "answer": "MVP",
+      "value": 600
+    },
+    {
+      "question": "من فاز ببطولة Best of the Super Juniors في NJPW عام 2016؟",
+      "answer": "ويل أوسبري",
+      "value": 600
+    },
+    {
+      "question": "من أول فريق فاز ببطولة AEW World Trios عام 2022؟",
+      "answer": "ذا إيليت (كيني أوميغا ويونغ باكس)",
+      "value": 600
+    }
+  ]
+}
