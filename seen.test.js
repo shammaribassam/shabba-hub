@@ -20,12 +20,16 @@ async function call(endpoint,data={},method='POST',id=''){
  await seen.handle(req,res,url);
  return {status,data:JSON.parse(body)};
 }
-test('question bank has 252 complete questions across 14 categories',()=>{
+test('bank tracks real progress toward 2000 unique questions per category',()=>{
  assert.equal(questions.length,14);
- assert.equal(questions.reduce((n,c)=>n+c.tiers.flat().length,0),252);
+ assert.equal(questions.reduce((n,c)=>n+c.tiers.flat().length,0),336);
  for(const c of questions){
-  assert.deepEqual(c.tiers.map(t=>t.length),[6,6,6]);
-  assert.equal(new Set(c.tiers.flat().map(q=>q.question)).size,18);
+  assert.deepEqual(c.tiers.map(t=>t.length),[8,8,8]);
+  assert.equal(c.target,2000);
+  assert.equal(c.count,24);
+  assert.equal(c.remaining,1976);
+  assert.equal(new Set(c.tiers.flat().map(q=>q.question)).size,24);
+  assert.equal(new Set(c.tiers.flat().map(q=>q.id)).size,24);
  }
 });
 test('two captains, turn-taking, steal, score, privacy and undo',async()=>{
@@ -93,4 +97,21 @@ test('homepage ordering and inline viewer script are valid',()=>{
  const script=html.match(/<script>([\s\S]*?)<\/script>/);
  assert.ok(script,'trivia browser script exists');
  new vm.Script(script[1],{filename:'seen.html'});
+});
+
+test('new games avoid repeating a category question until its tier pool is exhausted',async()=>{
+ const created=(await call('create')).data;
+ const host=(type,data={})=>call('host',{room:created.room,hostToken:created.hostToken,type,...data});
+ const categories=questions.slice(0,6).map(c=>c.id);
+ const seen=new Set();
+ for(let round=0;round<4;round++){
+  const started=(await host('start',{names:['A','B'],categories,duration:60,stealDuration:15})).data.state;
+  assert.equal(started.slots.length,36);
+  for(const slot of started.slots){
+   assert.equal(seen.has(slot.id),false,'repeated question before exhausting the tier');
+   seen.add(slot.id);
+  }
+  await host('reset');
+ }
+ assert.equal(seen.size,144);
 });
