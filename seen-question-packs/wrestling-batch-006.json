@@ -1,0 +1,65 @@
+{
+  "category": "wrestling",
+  "questions": [
+    {
+      "question": "من المصارع الذي اشتهر بحركة Stone Cold Stunner؟",
+      "answer": "ستيف أوستن",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2015؟",
+      "answer": "رومان رينز",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2014؟",
+      "answer": "باتيستا",
+      "value": 200
+    },
+    {
+      "question": "من المصارع الذي اشتهر بلقب The Celtic Warrior؟",
+      "answer": "شيمس",
+      "value": 200
+    },
+    {
+      "question": "من هزم بروك ليسنر في WrestleMania 35 لينتزع بطولة Universal؟",
+      "answer": "سيث رولينز",
+      "value": 400
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2012؟",
+      "answer": "شيمس",
+      "value": 400
+    },
+    {
+      "question": "من واجه أندرتيكر في WrestleMania 26 في مباراة المسيرة ضد السلسلة؟",
+      "answer": "شون مايكلز",
+      "value": 400
+    },
+    {
+      "question": "من كان أول بطل WWE Cruiserweight بعد إعادة تقديم اللقب عام 2016؟",
+      "answer": "تي جي بيركنز",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة G1 Climax في NJPW عام 2017؟",
+      "answer": "تيتسويا نايتو",
+      "value": 600
+    },
+    {
+      "question": "من كان أول بطل NEVER Openweight في NJPW عام 2012؟",
+      "answer": "ماساتو تاناكا",
+      "value": 600
+    },
+    {
+      "question": "من كان أول بطل ROH World Television عام 2010؟",
+      "answer": "إيدي إدواردز",
+      "value": 600
+    },
+    {
+      "question": "من كان حامل لقب AEW All-Atlantic عندما تغير اسمه إلى International عام 2023؟",
+      "answer": "أورنج كاسيدي",
+      "value": 600
+    }
+  ]
+}
