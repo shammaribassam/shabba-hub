@@ -130,3 +130,39 @@ test('point tiers always match the competitive 200/400/600 board',()=>{
   }
  }
 });
+
+test('category selector does not expose bank sizes to players',async()=>{
+ const response=await call('categories',{},'GET');
+ assert.equal(response.status,200);
+ assert.equal(response.data.categories.length,14);
+ for(const cat of response.data.categories){
+  assert.deepEqual(Object.keys(cat).sort(),['id','name']);
+ }
+ const fs=require('node:fs'),html=fs.readFileSync(require('node:path').join(__dirname,'seen.html'),'utf8');
+ assert.ok(!html.includes("c.count+' / '+c.target"));
+ assert.ok(!html.includes('الهدف 2,000 سؤال لكل فئة'));
+});
+test('new rooms reuse browser rotation without repeating questions until tier deck exhausted',async()=>{
+ const chosen=questions.slice(0,6).map(c=>c.id);
+ let rotation={};
+ const all=new Set();
+ for(let round=0;round<9;round++){
+  const created=(await call('create')).data;
+  const result=await call('host',{room:created.room,hostToken:created.hostToken,type:'start',names:['أ','ب'],categories:chosen,rotation});
+  assert.equal(result.status,200);
+  const {state}=result.data;
+  rotation=result.data.rotation;
+  assert.equal(state.slots.length,36);
+  assert.deepEqual([...state.categories].sort(),[...chosen].sort());
+  assert.equal(Object.keys(rotation).length,18);
+  for(const slot of state.slots){
+   assert.ok(!all.has(slot.id),'question repeated in a new room before its category tier exhausted');
+   all.add(slot.id);
+  }
+ }
+ assert.equal(all.size,324);
+ const created=(await call('create')).data;
+ const result=await call('host',{room:created.room,hostToken:created.hostToken,type:'start',names:['أ','ب'],categories:chosen,rotation});
+ assert.equal(result.status,200);
+ assert.equal(result.data.state.slots.length,36);
+});
