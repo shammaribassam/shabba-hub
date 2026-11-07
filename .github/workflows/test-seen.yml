@@ -1,0 +1,24 @@
+name: BSM trivia checks
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'seen.js'
+      - 'seen-questions.js'
+      - 'seen.html'
+      - 'seen.test.js'
+      - 'arcade-chat.js'
+      - 'server.js'
+      - 'package.json'
+      - '.github/workflows/test-seen.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate syntax and run team-game tests
+        run: npm run check
