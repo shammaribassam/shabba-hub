@@ -1,86 +1,82 @@
-/* Diwan ambient audio: independent from quiz state and chat connections. */
+/* Diwan background audio: low, balanced, continuous, with a single play/pause control. */
 (() => {
   'use strict';
   const audio = document.getElementById('diwanBackgroundAudio');
   const player = document.getElementById('diwanAudioPlayer');
   if (!audio || !player) return;
-  const playButton = document.getElementById('diwanAudioPlay');
-  const muteButton = document.getElementById('diwanAudioMute');
-  const volumeInput = document.getElementById('diwanAudioVolume');
-  const volumeText = document.getElementById('diwanAudioVolumeText');
+  const button = document.getElementById('diwanAudioPlay');
   const status = document.getElementById('diwanAudioStatus');
-  const STORE = 'diwanAbuAlbasmAudio.v1';
-  let userPaused = false;
-  let lastVolume = 0.22;
+  if (!button || !status) return;
 
-  function readPreferences() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORE) || '{}');
-      if (Number.isFinite(saved.volume)) audio.volume = Math.min(1, Math.max(0, saved.volume));
-      else audio.volume = 0.22;
-      audio.muted = !!saved.muted;
-    } catch (_) { audio.volume = 0.22; audio.muted = false; }
-    if (audio.volume > 0) lastVolume = audio.volume;
-  }
-  function persist() {
-    try { localStorage.setItem(STORE, JSON.stringify({volume: audio.volume, muted: audio.muted})); }
-    catch (_) { /* Settings remain usable without storage. */ }
-  }
-  function showStatus(message) { status.textContent = message; }
-  function updateUI() {
+  const NEW_TRACK = 'diwan-abu-albasm.mp3';
+  const OLD_TRACK = 'diwan-background.mp3';
+  let userPaused = false;
+  let legacyFallback = false;
+
+  // A steady, gentle background level, without a slider or extra controls.
+  audio.volume = 0.16;
+  audio.muted = false;
+  audio.loop = true;
+  audio.src = NEW_TRACK;
+
+  const show = message => { status.textContent = message; };
+  function update() {
     const playing = !audio.paused && !audio.ended;
-    playButton.textContent = playing ? '⏸ إيقاف مؤقت' : '▶ تشغيل';
-    playButton.setAttribute('aria-label', playing ? 'إيقاف المقطع مؤقتًا' : 'تشغيل المقطع');
-    muteButton.textContent = audio.muted || audio.volume === 0 ? '🔇 إلغاء الكتم' : '🔊 كتم';
-    muteButton.setAttribute('aria-pressed', String(audio.muted));
-    volumeInput.value = String(Math.round(audio.volume * 100));
-    volumeText.textContent = Math.round(audio.volume * 100) + '٪';
+    button.textContent = playing ? '⏸ إيقاف' : '▶ تشغيل';
+    button.setAttribute('aria-label', playing ? 'إيقاف موسيقى الديوان' : 'تشغيل موسيقى الديوان');
+    button.setAttribute('aria-pressed', String(playing));
   }
   async function start() {
-    userPaused = false;
+    if (userPaused) return;
     try {
       await audio.play();
-      showStatus('المقطع شغال ويتكرر تلقائيًا');
+      show('خلفية موسيقية هادئة — تكرار مستمر');
     } catch (_) {
-      showStatus('اضغط تشغيل للسماح بالصوت في المتصفح');
+      show(legacyFallback ? 'اضغط تشغيل للمقطع السابق' : 'اضغط تشغيل للسماح بالصوت');
     }
-    updateUI();
+    update();
   }
-  playButton.addEventListener('click', () => {
-    if (audio.paused) start();
-    else {
+
+  button.addEventListener('click', () => {
+    if (audio.paused) {
+      userPaused = false;
+      start();
+    } else {
       userPaused = true;
       audio.pause();
-      showStatus('الصوت متوقف مؤقتًا');
-      updateUI();
+      show('الصوت متوقف');
+      update();
     }
   });
-  muteButton.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    if (!audio.muted && audio.volume === 0) audio.volume = lastVolume || 0.22;
-    persist(); updateUI();
+  audio.addEventListener('play', () => {
+    show('خلفية موسيقية هادئة — تكرار مستمر');
+    update();
   });
-  volumeInput.addEventListener('input', () => {
-    const value = Math.max(0, Math.min(100, Number(volumeInput.value) || 0));
-    audio.volume = value / 100;
-    if (value > 0) { lastVolume = audio.volume; audio.muted = false; }
-    persist(); updateUI();
+  audio.addEventListener('pause', update);
+  audio.addEventListener('ended', update);
+  audio.addEventListener('error', () => {
+    // The new MP3 must be uploaded to the repo alongside this script.
+    // Until then, preserve working background music rather than breaking playback.
+    if (!legacyFallback) {
+      legacyFallback = true;
+      audio.src = OLD_TRACK;
+      audio.load();
+      if (!userPaused) start();
+    } else {
+      show('تعذّر تحميل المقطع الصوتي');
+      update();
+    }
   });
-  audio.addEventListener('play', () => { showStatus('المقطع شغال ويتكرر تلقائيًا'); updateUI(); });
-  audio.addEventListener('pause', updateUI);
-  audio.addEventListener('volumechange', updateUI);
-  audio.addEventListener('error', () => showStatus('تعذّر تحميل المقطع؛ تأكد من رفع ملف diwan-background.mp3'));
-  audio.loop = true;
-  readPreferences(); updateUI();
 
-  // Browsers often block audible autoplay. Try it once, then retry on the first
-  // ordinary site interaction. An explicit pause never restarts automatically.
+  update();
   start();
-  function startOnGesture(event) {
+  // Browsers do not always permit audible autoplay. Retry after the first
+  // site interaction, but never override an explicit pause.
+  function onGesture(event) {
     if (userPaused || !audio.paused) return;
     if (event.target instanceof Element && event.target.closest('#diwanAudioPlayer')) return;
     start();
   }
-  document.addEventListener('pointerdown', startOnGesture, {passive: true});
-  document.addEventListener('keydown', startOnGesture);
+  document.addEventListener('pointerdown', onGesture, { passive: true });
+  document.addEventListener('keydown', onGesture);
 })();
