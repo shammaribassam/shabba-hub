@@ -1,0 +1,65 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "من أدى دور هاري بوتر في سلسلة الأفلام؟",
+      "answer": "دانيال رادكليف",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور ثور في أفلام مارفل السينمائية؟",
+      "answer": "كريس هيمسوورث",
+      "value": 200
+    },
+    {
+      "question": "من أدى دور وولفرين في سلسلة أفلام X-Men؟",
+      "answer": "هيو جاكمان",
+      "value": 200
+    },
+    {
+      "question": "ما اسم فيلم بيكسار الذي يحكي عن مشاعر فتاة اسمها رايلي؟",
+      "answer": "Inside Out",
+      "value": 200
+    },
+    {
+      "question": "من أخرج فيلم The Shawshank Redemption؟",
+      "answer": "فرانك دارابونت",
+      "value": 400
+    },
+    {
+      "question": "من أدى دور مايكل كورليوني في ثلاثية The Godfather؟",
+      "answer": "آل باتشينو",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Get Out الصادر عام 2017؟",
+      "answer": "جوردان بيل",
+      "value": 400
+    },
+    {
+      "question": "ما اسم القمر الخيالي الذي تدور فيه أحداث فيلم Avatar عام 2009؟",
+      "answer": "باندورا",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Stalker السوفيتي عام 1979؟",
+      "answer": "أندريه تاركوفسكي",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم Bicycle Thieves الإيطالي عام 1948؟",
+      "answer": "فيتوريو دي سيكا",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم In the Mood for Love الصادر عام 2000؟",
+      "answer": "وونغ كار واي",
+      "value": 600
+    },
+    {
+      "question": "من أدى دور هاري لايم في فيلم The Third Man عام 1949؟",
+      "answer": "أورسون ويلز",
+      "value": 600
+    }
+  ]
+}
