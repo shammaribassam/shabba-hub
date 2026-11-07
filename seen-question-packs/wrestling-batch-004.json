@@ -1,0 +1,65 @@
+{
+  "category": "wrestling",
+  "questions": [
+    {
+      "question": "من المصارع الذي اشتهر بحركة RKO؟",
+      "answer": "راندي أورتن",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2020؟",
+      "answer": "درو ماكنتاير",
+      "value": 200
+    },
+    {
+      "question": "من المصارع الذي يُلقب بـ The American Dragon؟",
+      "answer": "براين دانيلسون",
+      "value": 200
+    },
+    {
+      "question": "من فاز برويال رامبل الرجال عام 2021؟",
+      "answer": "إيدج",
+      "value": 200
+    },
+    {
+      "question": "من هزم دانيال براين ليفوز ببطولة WWE في WrestleMania 35؟",
+      "answer": "كوفي كينغستون",
+      "value": 400
+    },
+    {
+      "question": "من كان أول بطل NXT في WWE عام 2012؟",
+      "answer": "سيث رولينز",
+      "value": 400
+    },
+    {
+      "question": "من هزم أندرتيكر في WrestleMania 33؟",
+      "answer": "رومان رينز",
+      "value": 400
+    },
+    {
+      "question": "من فاز بأول مباراة Elimination Chamber عام 2002؟",
+      "answer": "شون مايكلز",
+      "value": 400
+    },
+    {
+      "question": "من فاز ببطولة G1 Climax في اتحاد NJPW عام 2020؟",
+      "answer": "كوتا إيبوشي",
+      "value": 600
+    },
+    {
+      "question": "من فاز ببطولة Best of the Super Juniors في NJPW عام 2019؟",
+      "answer": "ويل أوسبري",
+      "value": 600
+    },
+    {
+      "question": "من كان أول بطل ROH Pure عام 2004؟",
+      "answer": "إيه جي ستايلز",
+      "value": 600
+    },
+    {
+      "question": "من كان أول بطل AEW All-Atlantic عام 2022 قبل إعادة تسمية اللقب؟",
+      "answer": "باك (PAC)",
+      "value": 600
+    }
+  ]
+}
