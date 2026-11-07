@@ -1,0 +1,35 @@
+{
+  "category": "anime",
+  "questions": [
+    {
+      "question": "ما اسم شقيقة تانجيرو كامادو؟",
+      "answer": "نيزوكو",
+      "value": 200
+    },
+    {
+      "question": "في أي أنمي تظهر شخصية إدوارد إلريك؟",
+      "answer": "Fullmetal Alchemist",
+      "value": 200
+    },
+    {
+      "question": "من قائد جماعة العناكب في Hunter x Hunter؟",
+      "answer": "كرولو لوسيلفر",
+      "value": 400
+    },
+    {
+      "question": "من تحمل قوة العملاق الأنثى في Attack on Titan؟",
+      "answer": "آني ليونهارت",
+      "value": 400
+    },
+    {
+      "question": "في Death Note، ما اسم المحقق الذي يستخدم الحرف N خلفًا لـ L؟",
+      "answer": "نير",
+      "value": 600
+    },
+    {
+      "question": "من ورث عملاق المطرقة الحربية بعد لارا تايبور في Attack on Titan؟",
+      "answer": "إيرين ييغر",
+      "value": 600
+    }
+  ]
+}
