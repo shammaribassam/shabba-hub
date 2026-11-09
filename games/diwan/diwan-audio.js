@@ -14,7 +14,7 @@
   let legacyFallback = false;
 
   // A steady, gentle background level, without a slider or extra controls.
-  audio.volume = 0.16;
+  audio.volume = 0.03;
   audio.muted = false;
   audio.loop = true;
   audio.src = NEW_TRACK;
