@@ -1,0 +1,50 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "ما اسم بطل لعبة Ghost of Tsushima؟",
+      "answer": "جين ساكاي",
+      "value": 200
+    },
+    {
+      "question": "ما اسم المدينة التي تدور فيها أحداث Resident Evil 2؟",
+      "answer": "راكون سيتي",
+      "value": 200
+    },
+    {
+      "question": "ما اسم الحصان الأساسي لآرثر مورغان في بداية Red Dead Redemption 2؟",
+      "answer": "تينيسي ووكر",
+      "value": 400
+    },
+    {
+      "question": "في Elden Ring، من أول زعيم رئيسي يحرس مدخل قلعة ستورمفيل؟",
+      "answer": "مارغيت",
+      "value": 200
+    },
+    {
+      "question": "ما اسم المنظمة التي يعمل معها ليون كينيدي في Resident Evil 4؟",
+      "answer": "الحكومة الأمريكية",
+      "value": 400
+    },
+    {
+      "question": "ما اسم الأخ الأكبر لدانتـي في Devil May Cry؟",
+      "answer": "فيرجيل",
+      "value": 200
+    },
+    {
+      "question": "في The Last of Us Part II، ما اسم المدينة التي تقيم فيها إيلي بداية اللعبة؟",
+      "answer": "جاكسون",
+      "value": 400
+    },
+    {
+      "question": "في God of War Ragnarök، من هو والد ثور؟",
+      "answer": "أودين",
+      "value": 200
+    },
+    {
+      "question": "ما اسم المملكة التي تقع فيها مدينة نوفِيغراد في The Witcher 3؟",
+      "answer": "ريدانيا",
+      "value": 600
+    }
+  ]
+}
