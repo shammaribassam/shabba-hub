@@ -147,7 +147,7 @@ a,.status,details summary{color:#f6cb79}
 <path d="M477 150 L524 156" stroke="#26252b" stroke-width="11"/><circle cx="526" cy="158" r="8" fill="#d8c4a5" stroke="#27242b" stroke-width="4"/>
 <circle cx="323" cy="196" r="8" fill="#e4c6a4" stroke="#2a2531" stroke-width="4"/>
 </svg></div><div id="shotOutcome" class="shot-outcome" role="status" aria-live="polite">🎯 المخزن جاهز... ينتظر كشف المقدم</div></div><div id="bombExplosionBanner" class="bomb-explosion hide" role="status" aria-live="polite"></div><div id="tileArea" class="tiles"></div><div class="notice" id="champion" style="display:none"></div></div>
- <div class="panel"><h2>👥 المشاركون <span id="count"></span></h2><div class="players" id="players"></div></div>
+ <div class="panel"><h2>👥 المشاركون <span id="count"></span></h2><div class="players" id="players"></div><div id="bannedPanel" class="hide" style="margin-top:18px"><h3>🚪 المطرودون من الجلسة</h3><div id="bannedPlayers" class="flex"></div></div></div>
  <details class="panel"><summary>📜 أحداث اللعبة</summary><div class="log" id="log"></div></details>
 </section><div id="toast"></div>
 <script>
@@ -177,7 +177,7 @@ let poller=null;function enter(){el('choose').classList.add('hide');el('joinPane
 async function create(game){try{const d=await api('create',{game});room=d.room;hostToken=d.hostToken;role='host';save();state=d.state;enter();render()}catch(e){toast(e.message)}}
 async function join(){try{room=el('roomInput').value.trim();const d=await api('join',{room,name:el('nameInput').value.trim()});playerToken=d.playerToken;playerId=d.playerId;role='player';save();state=d.state;enter();render()}catch(e){toast(e.message)}}
 function showJoin(){el('choose').classList.add('hide');el('joinPanel').classList.remove('hide');el('roomInput').focus()}
-function rouletteAct(type){if(!state||!state.active)return toast('انتظر اختيار صاحب الدور');sendMove(type,num('rouletteTarget'),state.active)}
+function rouletteAct(type){if(!state||!state.active||wheelTimer||state.spinUntil>Date.now())return toast('انتظر توقف الروليت');sendMove(type,num('rouletteTarget'),state.active)}
 function switchGame(){const game=el('switchGameSelect').value;if(!state||game===state.game)return toast('هذه اللعبة الحالية');if(!confirm('تغيير اللعبة سيبدأ جولة جديدة بنفس رقم الغرفة وسيعيد جميع المشاركين. متابعة؟'))return;host('switchGame',{game})}
 function revealDoors(){const limit=Number(el('doorWinners').value);if(!Number.isInteger(limit)||limit<1)return toast('حدد عدد الناجين');host('reveal',{limit})}
 function connectPlatform(platform){const channel=el(platform+'Channel').value.trim();if(!channel)return toast('اكتب اسم قناتك أولًا');host('connectChat',{platform,channel})}
@@ -193,19 +193,40 @@ let wheelLastKey='',wheelRotation=0,wheelTimer=null;
 function wheelName(name){return String(name||'').replace(/^(tiktok|twitch|kick):/i,'')}
 function drawWheel(s){
  const wrap=el('rouletteWheel'),disk=el('wheelDisk'),result=el('wheelResult');
- wrap.classList.toggle('hide',s.game!=='roulette'||!s.players.length);
- if(s.game!=='roulette'||!s.players.length)return;
+ const show=s.game==='roulette'&&s.players.length>0;
+ wrap.classList.toggle('hide',!show);
+ if(!show){
+  if(wheelTimer)clearTimeout(wheelTimer);wheelTimer=null;wheelLastKey='';wheelRotation=0;result.textContent='';return
+ }
  const people=s.players.filter(p=>p.alive),n=people.length;
- if(!n)return;
+ if(!n){if(wheelTimer)clearTimeout(wheelTimer);wheelTimer=null;result.textContent='';disk.replaceChildren();return}
  const angle=360/n;
  disk.style.background='conic-gradient('+people.map((p,i)=>(i%2?'#a64355':'#176a72')+' '+(i*angle)+'deg '+((i+1)*angle)+'deg').join(',')+')';
  disk.replaceChildren();
- people.forEach((p,i)=>{const t=document.createElement('span');t.className='wheel-name';const name=wheelName(p.name);t.textContent=name.length>12?name.slice(0,11)+'…':name;const theta=(i+.5)*angle*Math.PI/180;const radius=36;t.style.transform='translate(-50%,-50%) translate('+Math.sin(theta)*radius+'%, '+(-Math.cos(theta))*radius+'%) rotate('+((i+.5)*angle)+'deg)';t.style.left=(50+Math.sin(theta)*34)+'%';t.style.top=(50-Math.cos(theta)*34)+'%';t.style.transform='translate(-50%,-50%) rotate('+((i+.5)*angle)+'deg)';disk.append(t)});
+ people.forEach((p,i)=>{
+  const t=document.createElement('span');t.className='wheel-name';
+  const name=wheelName(p.name);t.textContent=name.length>12?name.slice(0,11)+'…':name;
+  const theta=(i+.5)*angle*Math.PI/180;
+  t.style.left=(50+Math.sin(theta)*34)+'%';t.style.top=(50-Math.cos(theta)*34)+'%';
+  t.style.transform='translate(-50%,-50%) rotate('+((i+.5)*angle)+'deg)';
+  disk.append(t)
+ });
  const center=document.createElement('div');center.className='wheel-center';disk.append(center);
  const key=s.code+':'+(s.spin||0);
  if(s.phase==='playing'&&s.active&&key!==wheelLastKey){
   wheelLastKey=key;const index=people.findIndex(p=>p.id===s.active);
-  if(index>=0){const desired=(360-((index+.5)*angle)%360)%360;const current=((wheelRotation%360)+360)%360;const delta=(desired-current+360)%360;wheelRotation+=1800+delta;disk.style.transform='rotate('+wheelRotation+'deg)';result.textContent='🎡 الروليت يدور...';if(wheelTimer)clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>{wheelTimer=null;result.textContent='🎯 '+wheelName(people[index].name);el('heroText').textContent='🎯 صاحب الدور: '+people[index].name},5100)}
+  if(index>=0){
+   const desired=(360-((index+.5)*angle)%360)%360,current=((wheelRotation%360)+360)%360,delta=(desired-current+360)%360;
+   const remaining=Math.max(0,Math.min(5100,(s.spinUntil||s.now+5100)-s.now));
+   wheelRotation+=1800+delta;
+   if(wheelTimer){clearTimeout(wheelTimer);wheelTimer=null}
+   disk.style.transition=remaining?'transform '+(remaining/1000)+'s cubic-bezier(.12,.76,.14,1)':'none';
+   disk.style.transform='rotate('+wheelRotation+'deg)';
+   if(remaining){
+    result.textContent='🎡 الروليت يدور...';
+    wheelTimer=setTimeout(()=>{wheelTimer=null;result.textContent='🎯 '+wheelName(people[index].name);render()},remaining+60);
+   }else result.textContent='🎯 '+wheelName(people[index].name);
+  }
  }else if(s.phase!=='playing'){if(wheelTimer){clearTimeout(wheelTimer);wheelTimer=null}result.textContent=''}
 }
 
@@ -363,6 +384,7 @@ function render(){
  el('chatBadge').textContent=linked+' / 3';el('chatDetails').classList.toggle('hide',majlisMode);
  const a=s.players.filter(p=>p.alive);el('count').textContent='('+a.length+' نشط / '+s.players.length+')';
  el('players').replaceChildren();for(const p of s.players){const d=document.createElement('div');d.className='player'+(!p.alive?' out':'')+(((s.game!=='roulette'||!wheelTimer)&&s.active===p.id)||s.holder===p.id?' active':'');const b=document.createElement('strong');b.textContent='#'+p.id+' '+p.name;const t=document.createElement('small');t.textContent=!p.alive?'مستبعد':p.choice?'اختيار '+p.choice:s.active===p.id?(s.game==='roulette'&&wheelTimer?'مشارك':'صاحب الدور'):s.holder===p.id?'حامل القنبلة':'مشارك';d.append(b,t);if(role==='host'){const remove=document.createElement('button');remove.textContent='🚪 طرد من الجلسة';remove.title='إزالة المشارك من جميع ألعاب الغرفة';remove.onclick=()=>{if(confirm('طرد '+p.name+' من الجلسة كاملة؟'))host('removePlayer',{playerId:p.id})};d.append(remove)}el('players').append(d)}
+ const bans=Array.isArray(s.banned)?s.banned:[];el('bannedPanel').classList.toggle('hide',role!=='host'||!bans.length);el('bannedPlayers').replaceChildren();if(role==='host')for(const name of bans){const b=document.createElement('button');b.className='secondary';b.textContent='↩️ السماح بعودة '+name;b.onclick=()=>host('unbanPlayer',{name});el('bannedPlayers').append(b)}
  const bombBlasted=s.game==='bomb'&&!!s.bombExplosion;el('heroEmoji').textContent=bombBlasted?'💥':g[0];let title=({lobby:'بانتظار انضمام اللاعبين',ready:'المقدم يجهّز الجولة',playing:'الجولة شغّالة',between:'انتهت الجولة — ابدأ التالية',finished:'🏆 انتهت اللعبة'})[s.phase];
  if(s.game==='roulette'&&s.active)title=wheelTimer?'🎡 الروليت يدور...':'🎯 صاحب الدور: '+(s.players.find(p=>p.id===s.active)?.name||'');
  if(s.game==='bomb'&&s.holder&&!bombBlasted)title='💣 القنبلة عند '+(s.players.find(p=>p.id===s.holder)?.name||'');
@@ -379,7 +401,7 @@ function render(){
  if(s.game==='boxes'&&(s.phase==='playing'||s.opened)){options=s.boxes.map(b=>b.id);kind='box'}
  if(options.length){for(const n of options){const occupied=s.game!=='doors'&&s.players.some(p=>p.alive&&(p.seat===n||p.choice===n));const t=document.createElement('button');t.className='tile'+(occupied?' taken':'');const box=s.game==='boxes'?s.boxes.find(b=>b.id===n):null;const effectLabel=({eliminate:'🚫 إقصاء',shield:'🛡️ حصانة',rescue:'❤️ إنقاذ',swap:'🎭 تبديل مصير',safe:'✨ أمان'})[box?.effect];t.textContent=(s.game==='doors'?'🚪':'🎁')+' '+n+(effectLabel?' — '+effectLabel:'');t.disabled=occupied||s.opened||s.phase!=='playing';t.onclick=()=>role==='player'?sendMove(kind,n):null;tiles.append(t)}}
  if(role==='player'&&s.game==='survival'&&s.phase==='playing'){const b=document.createElement('button');b.className='tile';b.textContent='🚨 نجاة!';b.onclick=()=>sendMove('save');quick.append(b)}
- if(role==='player'&&s.game==='roulette'&&s.active===playerId){const b=document.createElement('button');b.textContent='⏭️ سكيب';b.onclick=()=>sendMove('skip');quick.append(b)}
+ if(role==='player'&&s.game==='roulette'&&s.active===playerId&&!wheelTimer&&s.spinUntil<=Date.now()){const b=document.createElement('button');b.textContent='⏭️ سكيب';b.onclick=()=>sendMove('skip');quick.append(b)}
  el('log').replaceChildren();for(const line of [...s.log].reverse()){const d=document.createElement('div');d.textContent=line;el('log').append(d)}
  if(role==='screen'){el('hostControls').classList.add('hide');el('playerControls').classList.add('hide')}
 }
