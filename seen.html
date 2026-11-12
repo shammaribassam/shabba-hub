@@ -93,7 +93,7 @@ input,select{border:1px solid #3d586b;background:#0b1a28;border-radius:10px;padd
    <section class="panel host-only">
     <h2>👥 المشاركون <span id="playerCount" class="muted"></span></h2>
     <div class="flex"><input id="playerName" placeholder="اسم مشارك يدوي"><button id="addPlayer" class="btn">إضافة</button></div>
-    <div id="players" style="margin-top:13px;max-height:430px;overflow:auto"></div>
+    <div id="players" style="margin-top:13px;max-height:430px;overflow:auto"></div><div id="bannedPlayers" style="margin-top:14px"></div>
    </section>
    <section class="panel"><h2>📋 سجل الجولة</h2><div id="log" class="log">لا توجد أحداث بعد</div></section>
   </aside>
@@ -176,8 +176,9 @@ function renderPlayers(){
  $('playerCount').textContent='('+state.players.length+')';
  $('players').innerHTML=state.players.length?state.players.map(p=>{
   const captain=state.captains.includes(p.id);
-  return '<div class="player"><div class="player-name">'+esc(p.name)+(captain?' 👑':'')+'</div><small>'+esc(p.platform)+'</small><div class="player-controls"><select data-assign="'+esc(p.id)+'"><option value="" '+(p.team===null?'selected':'')+'>بدون فريق</option><option value="0" '+(p.team===0?'selected':'')+'>'+esc(state.names[0])+'</option><option value="1" '+(p.team===1?'selected':'')+'>'+esc(state.names[1])+'</option></select><button class="btn small" data-captain="'+esc(p.id)+'" '+(p.team===null?'disabled':'')+'>قائد</button><button class="btn small red" data-remove="'+esc(p.id)+'">×</button></div></div>';
+  return '<div class="player"><div class="player-name">'+esc(p.name)+(captain?' 👑':'')+'</div><small>'+esc(p.platform)+'</small><div class="player-controls"><select data-assign="'+esc(p.id)+'"><option value="" '+(p.team===null?'selected':'')+'>بدون فريق</option><option value="0" '+(p.team===0?'selected':'')+'>'+esc(state.names[0])+'</option><option value="1" '+(p.team===1?'selected':'')+'>'+esc(state.names[1])+'</option></select><button class="btn small" data-captain="'+esc(p.id)+'" '+(p.team===null?'disabled':'')+'>قائد</button><button class="btn small red" data-remove="'+esc(p.id)+'">🚪 طرد من الجلسة</button></div></div>';
  }).join(''):'<p class="hint">بانتظار المشاركين. اكتبوا !انضم في الشات أو أضفهم يدويًا.</p>';
+ $('bannedPlayers').innerHTML=state.banned?.length?'<h3>🚪 المطرودون من الجلسة</h3>'+state.banned.map((p,i)=>'<button class="btn small" data-unban="'+i+'">↩️ السماح بعودة '+esc(p.name)+' ('+esc(p.platform)+')</button>').join(''):'';
 }
 function renderChat(){
  const root=$('chatControls');if(document.activeElement&&root.contains(document.activeElement)&&document.activeElement.tagName==='INPUT')return;
@@ -261,8 +262,9 @@ $('players').addEventListener('change',e=>{const id=e.target.dataset.assign;if(i
 $('players').addEventListener('click',e=>{
  const c=e.target.closest('[data-captain]'),d=e.target.closest('[data-remove]');
  if(c){const p=state.players.find(p=>p.id===c.dataset.captain);if(p?.team!==null)host('captain',{playerId:p.id,team:p.team})}
- if(d&&confirm('حذف المشارك من الغرفة؟'))host('removePlayer',{playerId:d.dataset.remove});
+ if(d&&confirm('طرد المشارك من الجلسة كاملة؟'))host('removePlayer',{playerId:d.dataset.remove});
 });
+$('bannedPlayers').addEventListener('click',e=>{const b=e.target.closest('[data-unban]');if(!b)return;const p=state.banned?.[Number(b.dataset.unban)];if(p)host('unbanPlayer',{name:p.name,platform:p.platform})});
 $('chatControls').addEventListener('click',e=>{
  const c=e.target.closest('[data-connect]'),d=e.target.closest('[data-disconnect]');
  if(c){const platform=c.dataset.connect,channel=$('channel-'+platform).value;host('connectChat',{platform,channel})}
