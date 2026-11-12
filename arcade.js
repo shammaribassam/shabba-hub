@@ -26,7 +26,7 @@ function chatCommand(platform,channel,username,message){
    // Joining must use !انضم. Other game actions do not require an exclamation.
    if(cmd?.[1]==='انضم'&&!cmd[2]){
     if(!/^[!！]\s*انضم$/u.test(text))continue;
-    if(r.phase==='lobby'&&!p&&r.players.length<100){p={id:r.players.length+1,name,token:id(),alive:true,seat:null,choice:null,skip:false};r.players.push(p);log(r,'💬 انضم '+name);broadcast(r);count++}
+    if(r.phase==='lobby'&&!p&&r.players.length<100){p={id:Math.max(0,...r.players.map(p=>p.id))+1,name,token:id(),alive:true,seat:null,choice:null,skip:false};r.players.push(p);log(r,'💬 انضم '+name);broadcast(r);count++}
     continue;
    }
    if(!p||!p.alive||r.phase!=='playing')continue;
@@ -142,6 +142,7 @@ function hostAction(r,b){
  if(type==='connectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');let channel;try{channel=chat.clean(platform,b.channel)}catch(e){err(400,e.message)}const previous=r.settings[platform];r.settings[platform]=channel;log(r,'💬 ربط '+platform+': '+channel);if(previous&&previous!==channel)chat.disconnect(platform,previous);chat.connect(platform,channel);return}
  if(type==='disconnectChat'){const platform=String(b.platform||'');if(!['kick','twitch','tiktok'].includes(platform))err(400,'منصة غير معروفة');const previous=r.settings[platform];delete r.settings[platform];if(previous)chat.disconnect(platform,previous);log(r,'🔌 فصل '+platform);return}
  if(type==='switchGame'){if(!GAMES.includes(b.game))err(400,'اختر لعبة صحيحة');r.game=b.game;r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.bombExplosion=null;r.doors=[];r.boxes=[];r.opened=false;r.shotTarget=null;r.shotResult=null;r.shotRevealedAt=null;r.limit=0;r.spin=0;clearTimer(r);for(const p of r.players){p.alive=true;p.seat=null;p.choice=null;p.skip=false;p.shield=false}r.log=[];log(r,'🎮 لعبة جديدة بنفس الغرفة وربط الشات');return}
+ if(type==='removePlayer'){const p=r.players.find(p=>p.id===Number(b.playerId));if(!p)err(404,'المشارك غير موجود');r.players=r.players.filter(x=>x!==p);if(r.active===p.id)r.active=null;if(r.holder===p.id)r.holder=null;if(r.winner===p.id)r.winner=null;if(r.shotTarget===p.id)r.shotTarget=null;log(r,'🚪 أخرج المقدم '+p.name+' من الجلسة');return}
  if(type==='start'){start(r);return}
  if(type==='reset'){r.players=[];r.phase='lobby';r.round=0;r.winner=null;r.active=null;r.holder=null;r.bombExplosion=null;r.doors=[];r.boxes=[];r.shotTarget=null;r.shotResult=null;r.shotRevealedAt=null;r.log=[];clearTimer(r);return}
  if(type==='open'){
@@ -230,7 +231,7 @@ async function handle(req,res,url){
    const name=safe(b.name);if(!name)err(400,'اكتب اسمك');
    if(/^(twitch|kick|tiktok):/i.test(name))err(400,'اختر اسمًا بدون اسم المنصة؛ هذا التنسيق محجوز للشات');
    if(r.players.some(p=>p.name.toLowerCase()===name.toLowerCase()))err(409,'الاسم مستخدم');
-   const p={id:r.players.length+1,name,token:id(),alive:true,seat:null,choice:null,skip:false,shield:false};
+   const p={id:Math.max(0,...r.players.map(p=>p.id))+1,name,token:id(),alive:true,seat:null,choice:null,skip:false,shield:false};
    r.players.push(p);broadcast(r);return send(res,201,{playerToken:p.token,playerId:p.id,state:publicRoom(r)})
   }
   if(url.pathname==='/api/arcade/action'){const isHost=b.hostToken===r.hostToken;action(r,b,isHost);broadcast(r);return send(res,200,{ok:true,state:publicRoom(r)})}
