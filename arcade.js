@@ -88,7 +88,7 @@ function start(r){
  r.round++;r.phase='playing';r.startedAt=Date.now();clearTimer(r);r.active=null;r.holder=null;r.bombExplosion=null;r.shotTarget=null;r.shotResult=null;r.shotRevealedAt=null;r.opened=false;
  for(const p of r.players){p.choice=null;p.seat=null}
  const a=active(r);
- if(r.game==='roulette'){r.spin=(r.spin||0)+1;r.active=pick(a).id;log(r,'🎡 صاحب الدور: '+a.find(p=>p.id===r.active).name)}
+ if(r.game==='roulette'){r.spin=(r.spin||0)+1;r.active=pick(a).id;log(r,'🎡 الروليت يدور...')}
  if(r.game==='doors'){r.doors=Array.from({length:Math.min(18,a.length)},(_,i)=>({id:i+1,result:null}));log(r,'🚪 اختاروا الأبواب')}
  if(r.game==='survival'){r.limit=Math.min(8,Math.max(1,a.length-1));log(r,'🚨 زر النجاة مفتوح الآن')}
  if(r.game==='bomb'){r.holder=pick(a).id;r.remaining=crypto.randomInt(12000,32001);endAt(r,r.remaining);log(r,'💣 القنبلة عند '+a.find(p=>p.id===r.holder).name)}
