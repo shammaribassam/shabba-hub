@@ -28,7 +28,7 @@ function publicState(r){
   names:r.names,scores:r.scores,turn:r.turn,
   categories:r.categories,
   slots:r.slots.map(s=>({id:s.id,category:s.category,value:s.value,used:s.used})),
-  players:r.players.map(p=>({id:p.id,name:p.name,platform:p.platform,team:p.team})),
+  players:r.players.map(p=>({id:p.id,name:p.name,platform:p.platform,team:p.team})),banned:r.banned.slice(),
   captains:r.captains,settings:r.settings,
   chat:Object.fromEntries(Object.entries(r.settings).map(([platform,channel])=>[platform,{channel,...chat.status(platform,channel)}])),
   current:r.current?{
@@ -115,6 +115,7 @@ function selectSlots(ids,rotation){
 function ensureHost(r,b){if(typeof b.hostToken!=='string'||b.hostToken!==r.hostToken)fail(403,'صلاحية المقدم مطلوبة')}
 function addPlayer(r,name,platform='manual'){
  name=clean(name);if(!name)fail(400,'اكتب اسم المشارك');
+ if(r.banned.some(x=>x.platform===platform&&x.name.toLowerCase()===name.toLowerCase()))fail(403,'المشارك مطرود من الجلسة');
  if(r.players.length>=limits.players)fail(409,'وصلت الغرفة للحد الأقصى');
  if(r.players.some(p=>p.platform===platform&&p.name.toLowerCase()===name.toLowerCase()))fail(409,'المشارك موجود مسبقًا');
  const p={id:token().slice(0,12),name,platform,team:null};
@@ -150,7 +151,15 @@ function hostAction(r,b){
  }
  if(type==='removePlayer'){
   const p=r.players.find(x=>x.id===b.playerId);if(!p)fail(404,'المشارك غير موجود');
-  r.players=r.players.filter(x=>x!==p);r.captains=r.captains.map(id=>id===p.id?null:id);return;
+  r.players=r.players.filter(x=>x!==p);r.captains=r.captains.map(id=>id===p.id?null:id);
+  if(!r.banned.some(x=>x.platform===p.platform&&x.name.toLowerCase()===p.name.toLowerCase()))r.banned.push({name:p.name,platform:p.platform});
+  log(r,'🚪 أخرج المقدم '+p.name+' من جلسة سين وجيم');return;
+ }
+ if(type==='unbanPlayer'){
+  const name=clean(b.name),platform=String(b.platform||'');
+  if(!r.banned.some(x=>x.platform===platform&&x.name.toLowerCase()===name.toLowerCase()))fail(404,'المشارك غير موجود في قائمة المطرودين');
+  r.banned=r.banned.filter(x=>!(x.platform===platform&&x.name.toLowerCase()===name.toLowerCase()));
+  log(r,'🔓 سمح المقدم بعودة '+name);return;
  }
  if(type==='start'||type==='restart'){
   if(type==='start'&&r.phase!=='lobby')fail(409,'اللعبة بدأت بالفعل');
@@ -277,7 +286,7 @@ async function handle(req,res,url){
   const b=await body(req);
   if(url.pathname==='/api/seen/create'){
    if(rooms.size>=limits.rooms)fail(503,'الغرف ممتلئة مؤقتًا');
-   const r={code:code(),hostToken:token(),phase:'lobby',rev:1,expires:Date.now()+TTL,names:['فريق الصقور','فريق الذئاب'],scores:[0,0],turn:0,categories:[],slots:[],players:[],captains:[null,null],settings:{},rotation:Object.create(null),startedOnce:false,current:null,log:[],winner:null,duration:60,stealDuration:15,lastAward:null};
+   const r={code:code(),hostToken:token(),phase:'lobby',rev:1,expires:Date.now()+TTL,names:['فريق الصقور','فريق الذئاب'],scores:[0,0],turn:0,categories:[],slots:[],players:[],banned:[],captains:[null,null],settings:{},rotation:Object.create(null),startedOnce:false,current:null,log:[],winner:null,duration:60,stealDuration:15,lastAward:null};
    rooms.set(r.code,r);return reply(res,201,{room:r.code,hostToken:r.hostToken,state:publicState(r)});
   }
   const r=room(b.room);if(tick(r))broadcast(r);
