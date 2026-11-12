@@ -1,0 +1,45 @@
+{
+  "category": "cinema",
+  "questions": [
+    {
+      "question": "في سلسلة أفلام Toy Story، ما اسم لعبة راعي البقر؟",
+      "answer": "وودي",
+      "value": 200
+    },
+    {
+      "question": "في فيلم Coco، ما اسم الطفل الذي يحلم بأن يصبح موسيقيًا؟",
+      "answer": "ميغيل",
+      "value": 200
+    },
+    {
+      "question": "من أدّى شخصية بول إيدجكومب في فيلم The Green Mile؟",
+      "answer": "توم هانكس",
+      "value": 400
+    },
+    {
+      "question": "في فيلم Interstellar، ما اسم ابنة كوبر؟",
+      "answer": "مورف",
+      "value": 400
+    },
+    {
+      "question": "من أدّى شخصية غوستاف إتش في فيلم The Grand Budapest Hotel؟",
+      "answer": "رالف فاينس",
+      "value": 400
+    },
+    {
+      "question": "من أخرج فيلم Seven Samurai الياباني عام 1954؟",
+      "answer": "أكيرا كوروساوا",
+      "value": 600
+    },
+    {
+      "question": "من أخرج فيلم 12 Angry Men الصادر عام 1957؟",
+      "answer": "سيدني لوميت",
+      "value": 600
+    },
+    {
+      "question": "في فيلم The Prestige، ما اسم شخصية الساحر التي يؤديها هيو جاكمان؟",
+      "answer": "روبرت أنجير",
+      "value": 600
+    }
+  ]
+}

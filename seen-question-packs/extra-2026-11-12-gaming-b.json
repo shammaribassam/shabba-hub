@@ -1,0 +1,45 @@
+{
+  "category": "gaming",
+  "questions": [
+    {
+      "question": "ما اسم المدينة الرئيسية في لعبة Cyberpunk 2077؟",
+      "answer": "نايت سيتي",
+      "value": 200
+    },
+    {
+      "question": "من بطلة لعبة Control الصادرة عام 2019؟",
+      "answer": "جيسي فايدن",
+      "value": 200
+    },
+    {
+      "question": "من بطل لعبة Star Wars Jedi: Fallen Order؟",
+      "answer": "كال كيستيس",
+      "value": 400
+    },
+    {
+      "question": "في Final Fantasy VII، ما اسم الشركة التي تستخرج طاقة الماكو؟",
+      "answer": "شينرا",
+      "value": 400
+    },
+    {
+      "question": "ما اسم المدينة التي تدور فيها أحداث لعبة Dishonored الأولى؟",
+      "answer": "دنوال",
+      "value": 400
+    },
+    {
+      "question": "في NieR:Automata، ما اسم الوحدة العسكرية التي تنتمي إليها 2B؟",
+      "answer": "يورها (YoRHa)",
+      "value": 600
+    },
+    {
+      "question": "في Final Fantasy X، ما اسم المدينة التي ينتمي إليها تيدوس؟",
+      "answer": "زاناركاند",
+      "value": 600
+    },
+    {
+      "question": "في Elden Ring، ما اسم السيف الذي يحصل عليه اللاعب بعد إكمال مهمة راني؟",
+      "answer": "سيف القمر المظلم (Dark Moon Greatsword)",
+      "value": 600
+    }
+  ]
+}
