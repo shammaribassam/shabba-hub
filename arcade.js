@@ -148,11 +148,10 @@ function hostAction(r,b){
   if(!r.banned.some(x=>x.toLowerCase()===p.name.toLowerCase()))r.banned.push(p.name);
   r.players=r.players.filter(x=>x!==p);
   const survivors=active(r);
-  if(r.active===p.id){
-   r.active=null;
-   if(r.game==='roulette'&&r.phase==='playing'&&survivors.length>1){
-    r.active=pick(survivors).id;r.spin=(r.spin||0)+1;r.spinUntil=Date.now()+5100;log(r,'🎡 الروليت يدور...');
-   }
+  if(r.active===p.id)r.active=null;
+  // Removing any wheel segment changes its geometry, so restart the spin fairly.
+  if(r.game==='roulette'&&r.phase==='playing'&&survivors.length>1){
+   r.active=pick(survivors).id;r.spin=(r.spin||0)+1;r.spinUntil=Date.now()+5100;log(r,'🎡 الروليت يدور...');
   }
   if(r.holder===p.id){r.holder=null;if(r.game==='bomb'&&r.phase==='playing'&&survivors.length>1){r.holder=pick(survivors).id;log(r,'💣 انتقلت القنبلة إلى '+survivors.find(x=>x.id===r.holder).name)}}
   if(r.shotTarget===p.id){r.shotTarget=null;if(r.game==='shot'&&r.phase==='playing'&&survivors.length>1)r.shotTarget=pick(survivors).id}
