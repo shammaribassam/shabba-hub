@@ -2,8 +2,8 @@
   "category": "gaming",
   "questions": [
     {
-      "question": "ما اسم بطل لعبة Ghost of Tsushima؟",
-      "answer": "جين ساكاي",
+      "question": "في Detroit: Become Human، ما اسم المحقق الآلي الذي يعمل مع هانك؟",
+      "answer": "كونور",
       "value": 200
     },
     {
@@ -17,9 +17,9 @@
       "value": 400
     },
     {
-      "question": "في Elden Ring، من أول زعيم رئيسي يحرس مدخل قلعة ستورمفيل؟",
-      "answer": "مارغيت",
-      "value": 200
+      "question": "في Alan Wake 2، ما اسم عميلة FBI القابلة للعب إلى جانب آلان؟",
+      "answer": "ساغا أندرسون",
+      "value": 400
     },
     {
       "question": "ما اسم المنظمة التي يعمل معها ليون كينيدي في Resident Evil 4؟",
